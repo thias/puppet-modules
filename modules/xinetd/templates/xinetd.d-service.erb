@@ -1,0 +1,84 @@
+# Configuration for <%= service_name %> using xinetd
+service <%= service_name %>
+{
+<% if service_id     -%>        id              = <%= service_id %>
+<% end -%>
+<% if service_type   -%>        type            = <%= service_type %>
+<% end -%>
+<% if group          -%>        group           = <%= group %>
+<% end -%>
+<% if flags          -%>        flags           = <%= flags %>
+<% end -%>
+        disable         = <%= disable %>
+        socket_type     = <%= socket_type %>
+        protocol        = <%= protocol %>
+        wait            = <%= wait %>
+        user            = <%= user %>
+<% if group          -%>        group           = <%= group %>
+<% end -%>
+<% if instances      -%>        instances       = <%= instances %>
+<% end -%>
+<% if nice           -%>        nice            = <%= nice %>
+<% end -%>
+        server          = <%= server %>
+<% if server_args    -%>        server_args     = <%= server_args %>
+<% end -%>
+<% if only_from      -%>        only_from       = <%= only_from %>
+<% end -%>
+<% if no_access      -%>        no_access       = <%= no_access %>
+<% end -%>
+<% if access_times   -%>        access_times    = <%= access_times %>
+<% end -%>
+<% if log_type       -%>        log_type        = <%= log_type %>
+<% end -%>
+<% if log_on_success -%>        log_on_success  = <%= log_on_success %>
+<% end -%>
+<% if log_on_failure -%>        log_on_failure  = <%= log_on_failure %>
+<% end -%>
+<% if rpc_version    -%>        rpc_version     = <%= rpc_version %>
+<% end -%>
+<% if rpc_number     -%>        rpc_number      = <%= rpc_number %>
+<% end -%>
+<% if env            -%>        env             = <%= env %>
+<% end -%>
+<% if passenv        -%>        passenv         = <%= passenv %>
+<% end -%>
+<% if port           -%>        port            = <%= port %>
+<% end -%>
+<% if redirect       -%>        redirect        = <%= redirect %>
+<% end -%>
+<% if bind           -%>        bind            = <%= bind %>
+<% end -%>
+<% if banner         -%>        banner          = <%= banner %>
+<% end -%>
+<% if banner_success -%>        banner_success  = <%= banner_success %>
+<% end -%>
+<% if banner_fail    -%>        banner_fail     = <%= banner_fail %>
+<% end -%>
+<% if per_source     -%>        per_source      = <%= per_source %>
+<% end -%>
+<% if cps            -%>        cps             = <%= cps %>
+<% end -%>
+<% if max_load       -%>        max_load        = <%= max_load %>
+<% end -%>
+<% if groups         -%>        groups          = <%= groups %>
+<% end -%>
+<% if mdns           -%>        mdns            = <%= mdns %>
+<% end -%>
+<% if umask          -%>        umask           = <%= umask %>
+<% end -%>
+<% if rlimit_as      -%>        rlimit_as       = <%= rlimit_as %>
+<% end -%>
+<% if rlimit_files   -%>        rlimit_files    = <%= rlimit_files %>
+<% end -%>
+<% if rlimit_cpu     -%>        rlimit_cpu      = <%= rlimit_cpu %>
+<% end -%>
+<% if rlimit_data    -%>        rlimit_data     = <%= rlimit_data %>
+<% end -%>
+<% if rlimit_rss     -%>        rlimit_rss      = <%= rlimit_rss %>
+<% end -%>
+<% if rlimit_stack   -%>        rlimit_stack    = <%= rlimit_stack %>
+<% end -%>
+<% if deny_time      -%>        deny_time       = <%= deny_time %>
+<% end -%>
+}
