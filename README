@@ -1,5 +1,12 @@
-Custom modules for Puppet.
+Custom modules for Puppet, made for RHEL/CentOS 5 and 6.
 More information about puppet at http://www.puppetlabs.com/
 
+All modules present here are either self-contained or depend on other modules
+present here. There are no external dependencies, apart for puppet anf facter.
+See each module's README file for more information.
+
 Copyright (c) 2011 Matthias Saou <thias@marmotte.net>
+
+Doc generated with :
+puppetdoc --all --mode rdoc --outputdir ./doc --modulepath modules --manifestdir /var/empty
 

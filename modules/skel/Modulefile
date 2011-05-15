@@ -1,0 +1,4 @@
+name 'skel'
+version '0.1.0'
+
+# dependency 'foo', '>= 0.1.0'
