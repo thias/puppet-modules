@@ -78,8 +78,11 @@
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
 <% if icmp_limit_enable -%>
 # Limit ICMP requests globally (prevent DoS)
--A INPUT -p icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
--A INPUT -p icmp -j DROP 
+-A INPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
+-A INPUT -p ipv6-icmp -j DROP 
+<% else -%>
+# Accept all ICMP (most types are required for IPv6 to work)
+-A INPUT -p ipv6-icmp -j ACCEPT
 <% end -%>
 # Reject known "crappy ports" connections to avoid logging overhead
 -A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED 
@@ -100,8 +103,8 @@
 -A INPUT -j CLOSED 
 <% if icmp_limit_enable -%>
 # Limit ICMP replies globally (prevent DoS)
--A OUTPUT -p icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
--A OUTPUT -p icmp -j DROP 
+-A OUTPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
+-A OUTPUT -p ipv6-icmp -j DROP 
 <% end -%>
 # Custom table to send back "connection refused" messages
 -A CLOSED -j REJECT --reject-with icmp6-port-unreachable 
