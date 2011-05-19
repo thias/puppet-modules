@@ -1,0 +1,243 @@
+#!/usr/bin/perl
+
+#
+# Check if http answer
+#
+#
+
+use strict;
+
+use lib "/usr/local/oco/bin/common";
+use functions;
+
+
+#-- Get info about server
+#my $HOST=`/sbin/ifconfig lo:0 | grep inet`;
+#$HOST=~ m/.*r:(\d+\.\d+\.\d+\.\d+).*/;
+my $HOST="<%= http_host %>";
+
+unless ($HOST)
+{
+	$HOST=`/sbin/ifconfig lo:1 | grep inet`;
+	$HOST=~ m/.*r:(\d+\.\d+\.\d+\.\d+).*/;
+	$HOST=$1;
+}
+
+
+# if $DEBUG==1 output will be stored in /usr/local/check/result_debug/check_name
+# if $DEBUG==0 output will be on STDOUT and STDERR
+my $DEBUG="1";
+
+# Paths to directories
+my $PREFIX	= "/usr/local/oco/";
+my $CHECK_STATE	= "result/";
+my $DEBUG_STATE	= "result_debug/";
+
+# check if there is perl module to capture STDOUT and STDERR
+# if no, $DEBUG=0
+if ($DEBUG) 
+{
+	if ( ! ((eval("require IO::Capture::ErrorMessages;")) && (eval("require IO::Capture::Stdout;")) ) )
+	{
+		$DEBUG=0;
+	}       
+}
+
+my $script_name	= $0;
+$script_name 	=~ s/(^.*\/)//;
+$script_name 	=~ s/\.pl$//;
+my $pid		= $$;
+
+my $RESUTLFILE	= $PREFIX.$CHECK_STATE.$script_name;
+my $DEBUGFILE	= $PREFIX.$DEBUG_STATE.$script_name;
+my $debug;
+my $errorCode	= "398";
+
+if (! functions::lock_check({lockfile => "/usr/local/oco/lock/$script_name.lock", pid => $pid}))
+{
+	exit;
+}
+
+eval 
+{
+        local $SIG{"ALRM"} = sub 
+	{
+                $errorCode = "350";
+                die;
+        };
+        alarm 180;
+        make_test();
+        alarm 0;
+};
+
+
+	open (FILE, ">$RESUTLFILE") || die ("cannot open file".$RESUTLFILE);
+	print FILE "$errorCode";
+	close (FILE);
+	if ($DEBUG) {
+		open (FILE, ">$DEBUGFILE") || die ("cannot open file".$DEBUGFILE);
+		print FILE $debug;
+		close (FILE);
+	}
+
+functions::unlock_check({lockfile => "/usr/local/oco/lock/$script_name.lock"});
+exit;
+
+
+sub make_test {
+	my $result;
+	my ($capture_err, $capture_out, @lines, $summary);
+
+	if ($DEBUG) {
+		$capture_err = IO::Capture::ErrorMessages->new();
+		$capture_out = IO::Capture::Stdout->new();
+		$capture_err->start();
+		$capture_out->start();
+	}
+	
+	$result=test_procedure(summary=>\$summary);
+
+	if ($DEBUG) {
+		$capture_err->stop();
+		$capture_out->stop();
+		$debug.= $summary;
+		@lines = $capture_out->read;
+		$debug.= join("",@lines);
+		@lines = $capture_err->read;
+		$debug.= join("",@lines);
+	}
+	return $result;
+}
+
+
+
+##############################################################
+# main test procedure
+##############################################################
+sub test_procedure {
+	use Data::Dumper;
+	use Getopt::Std;
+	use English;
+	use Socket;
+
+
+
+	my %args=@_;
+	my ($out1, $out2);
+	my $fail=0;
+
+	my $host=$HOST;
+
+
+	if ( ! ( check_http(out=>\$out1, ip=>$host)  ) ) {
+		$fail=1;
+	}
+	
+	
+	${$args{summary}}=$out1.$out2;
+	if ($fail == 0){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+##############################################################
+##############################################################
+##############################################################
+# other procedures for test
+##############################################################
+
+sub check_http {
+	my %args=@_;
+	my $ip=$args{ip};
+
+	my $TIMEOUT=30;
+	my ($err, $in, $TheContent);
+	$errorCode = 301;
+
+    eval {
+        local $SIG{ALRM} = sub { die "Timeout Alarm" };
+        alarm $TIMEOUT;
+        my $err = OpenSocket($ip, 80); # Open a connection to the server
+
+        if ($err ne "") { # Failure to open the socket
+			print $err;
+            $errorCode = 302;
+			return 0;
+        }
+
+        print S "GET <%= http_path %> HTTP/1.0\r\n";
+        print S "Host: $ip\r\n";
+        print S "User-Agent: OCO-check\r\n\r\n";
+
+        while ($in = <S>) {
+            $TheContent .= $in;  # Store data for later processing
+        }
+		print $TheContent;
+
+	# HTTP/1.1 200 OK
+
+        if ($TheContent =~ /^HTTP\/([\d\.]+)\s+(\d+)\b/) {
+            $errorCode = 200;
+        } else {
+            $errorCode = 300;
+        }
+
+        close(S);
+        alarm 0; # Cancel the alarm
+
+    };
+	if ($errorCode >=300) {
+		return 0;
+	}
+	return 1;
+}
+
+
+
+#
+# Make a Berkeley socket connection between this program and a TCP port
+# on another (or this) host. Port can be a number or a named service
+#
+# returns "" on success, or an error string on failure
+#
+sub OpenSocket {
+	my ($host, $port) = @_;
+
+	my $proto = (getprotobyname('tcp'))[2];
+
+	return ("could not get protocol") if (!defined $proto);
+
+	my $conn_port;
+
+	if ($port =~ /^\d+$/) {
+		$conn_port = $port;
+
+	} else {
+		$conn_port = (getservbyname($port, 'tcp'))[2];
+		return ("could not getservbyname for $port")
+				if (!defined $conn_port);
+	}
+
+	my $host_addr = (gethostbyname($host))[4];
+
+	return ("gethostbyname failure")
+				if (!defined $host_addr);
+
+	my $that = sockaddr_in ($conn_port, $host_addr);
+
+	if (!socket (S, &PF_INET, &SOCK_STREAM, $proto)) {
+
+		return ("socket: $!");
+	}
+
+	if (!connect (S, $that)) {
+		return ("connect: $!");
+	}
+
+	select(S); $| = 1; select(STDOUT);
+
+	"";
+}
+
