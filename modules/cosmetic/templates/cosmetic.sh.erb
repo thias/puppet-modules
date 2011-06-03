@@ -1,0 +1,14 @@
+# Since RHEL5, default is to not do this for uid < 100 but we want it
+if [ -n "$BASH_VERSION" -o -n "$KSH_VERSION" -o -n "$ZSH_VERSION" ]; then
+  # for bash, pdksh and zsh, only if no alias is already set
+  alias vi >/dev/null 2>&1 || alias vi=vim
+fi
+
+# Add history timestamp and ignore duplicate lines
+export HISTTIMEFORMAT="<%= histtimeformat %>"
+export HISTCONTROL=ignoredups
+
+<% if ps1 -%>
+export PS1="<%= ps1 %>"
+
+<% end -%>
