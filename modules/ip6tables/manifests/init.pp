@@ -68,7 +68,7 @@ define ip6tables (
         require   => Package["iptables-ipv6"],
         enable    => true,
         ensure    => running,
-        restart   => "/sbin/service ip6tables restart && /sbin/sysctl -p",
+        restart   => '/sbin/service ip6tables restart; RETVAL=$?; /sbin/sysctl -p; exit $RETVAL',
         hasstatus => true,
     }
 
