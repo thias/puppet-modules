@@ -1,0 +1,47 @@
+# Configuration file for the httpd service.
+
+#
+# The default processing model (MPM) is the process-based
+# 'prefork' model.  A thread-based model, 'worker', is also
+# available, but does not work with some modules (such as PHP).
+# The service must be stopped before changing this variable.
+#
+<% if worker -%>
+HTTPD=/usr/sbin/httpd.worker
+<% else -%>
+#HTTPD=/usr/sbin/httpd.worker
+<% end -%>
+
+#
+# To pass additional options (for instance, -D definitions) to the
+# httpd binary at startup, set OPTIONS here.
+#
+<% if options -%>
+OPTIONS="<%= options %>"
+<% else -%>
+#OPTIONS=
+<% end -%>
+
+#
+# By default, the httpd process is started in the C locale; to 
+# change the locale in which the server runs, the HTTPD_LANG
+# variable can be set.
+#
+<% if httpd_lang -%>
+HTTPD_LANG=<%= httpd_lang %>
+<% else -%>
+#HTTPD_LANG=C
+<% end -%>
+
+#
+# By default, the httpd process will create the file
+# /var/run/httpd/httpd.pid in which it records its process
+# identification number when it starts.  If an alternate location is
+# specified in httpd.conf (via the PidFile directive), the new
+# location needs to be reported in the PIDFILE.
+#
+<% if pidfile -%>
+PIDFILE=<%= pidfile %>
+<% else -%>
+#PIDFILE=/var/run/httpd/httpd.pid
+<% end -%>
