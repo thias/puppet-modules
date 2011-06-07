@@ -1,0 +1,9 @@
+<%= logrotate_files %> {
+    <%= logrotate_freq %>
+<% logrotate_opts.each do |opt| -%>
+    <%= opt %>
+<% end -%>
+    postrotate
+	    /bin/kill -HUP `cat /var/run/httpd.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}
