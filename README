@@ -1,12 +1,29 @@
-Custom modules for Puppet, made for RHEL/CentOS 5 and 6.
-More information about puppet at http://www.puppetlabs.com/
+Custom modules for Puppet, made for Red Hat Enterprise Linux and CentOS
+=======================================================================
 
-All modules present here are either self-contained or depend on other modules
-present here. There are no external dependencies, apart for puppet anf facter.
-See each module's README file for more information.
+Overview
+--------
+
+The modules present here are either self-contained or depend exclusively on
+other modules present here, detailed in each module's Modulefile.
+
+The modules should all be very easy to understand and reuse. See each module's
+README file for more information, as well as the auto-generated documentation.
+
+One of the goal is to only perform the repetitive and generic parts, leaving
+all specificties outside of modules, yet providing means to inteface them
+cleanly. A good example would be the ISC BIND DNS server, for which zone files
+installed with the provided definition automatically reload named when changed.
+
+Support
+-------
+
+More generic puppet documentation can be found at http://docs.puppetlabs.com/
+
+Documentation can be automatically generated with :
+puppetdoc --all --mode rdoc --outputdir ./doc --modulepath modules --manifestdir /var/empty
+
+The latest source for these modules can be found at https://github.com/thias
 
 Copyright (c) 2011 Matthias Saou <thias@marmotte.net>
-
-Doc generated with :
-puppetdoc --all --mode rdoc --outputdir ./doc --modulepath modules --manifestdir /var/empty
 
