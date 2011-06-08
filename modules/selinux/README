@@ -4,5 +4,5 @@ Summary::  Manage SELinux related settings
 Requires:: n/a
 Author::   Matthias Saou <thias@marmotte.net>
 License::  Apache License 2.0
-Tested::   puppet-0.25.4
+Tested::   puppet-2.6.8
 
