@@ -20,7 +20,7 @@ define selinux::audit2allow (
     include selinux
 
     # Parent directory and directory
-    file { "/etc/selinux/local": ensure => directory }
+    realize File["/etc/selinux/local"]
     file { "/etc/selinux/local/${title}": ensure => directory }
 
     # The deny messages we want to allow
