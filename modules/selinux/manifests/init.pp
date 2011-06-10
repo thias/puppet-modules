@@ -19,6 +19,8 @@ class selinux {
             ensure    => running,
             hasstatus => true,
         }
+        # The parent directory used from selinux::audit2allow
+        @@file { "/etc/selinux/local": ensure => directory }
     }
 
 }
