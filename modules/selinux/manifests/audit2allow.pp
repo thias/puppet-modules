@@ -8,10 +8,10 @@
 # You can get a list of existing loaded modules with : semodule -l
 #
 # Sample Usage :
-#    selinux::audit2allow { "mydaemon": }
-#    selinux::audit2allow { "myotherdaemon":
-#        source => "puppet:///files/myotherdaemon/selinux-messages",
-#    }
+#     selinux::audit2allow { 'mydaemon': }
+#     selinux::audit2allow { 'myotherdaemon':
+#         source => "puppet:///files/${::fqdn}/selinux-messages",
+#     }
 #
 define selinux::audit2allow (
     $source = false
@@ -20,7 +20,7 @@ define selinux::audit2allow (
     include selinux
 
     # Parent directory and directory
-    realize File["/etc/selinux/local"]
+    realize File['/etc/selinux/local']
     file { "/etc/selinux/local/${title}": ensure => directory }
 
     # The deny messages we want to allow
@@ -33,8 +33,8 @@ define selinux::audit2allow (
 
     # Reload the changes automatically
     exec { "audit2allow -M local${title} -i messages && semodule -i local${title}.pp":
-        require     => Package["audit2allow"],
-        path        => [ "/bin", "/usr/bin", "/sbin", "/usr/sbin" ],
+        require     => Package['audit2allow'],
+        path        => [ '/bin', '/usr/bin', '/sbin', '/usr/sbin' ],
         cwd         => "/etc/selinux/local/${title}",
         subscribe   => File["/etc/selinux/local/${title}/messages"],
         refreshonly => true,
