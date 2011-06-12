@@ -1,4 +1,9 @@
 name 'skel'
 version '0.1.0'
-
-# dependency 'foo', '>= 0.1.0'
+author 'Matthias Saou'
+summary 'Skeleton, this must be changed'
+description "Skeleton module, to be used for new modules, but this needs to be
+ changed nevertheless"
+license 'Apache'
+project_page 'http://glee.thias.es/'
+dependency ( 'foo', '>= 0.1.0' )
