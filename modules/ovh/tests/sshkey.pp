@@ -1,0 +1,1 @@
+ovh::sshkey { 'root': }

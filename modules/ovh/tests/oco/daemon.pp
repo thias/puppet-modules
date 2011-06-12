@@ -1,0 +1,1 @@
+include ovh::oco::daemon

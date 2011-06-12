@@ -1,8 +1,0 @@
-= Summary
-
-Summary::  OVH server specific configuration changes
-Requires:: n/a
-Author::   Matthias Saou <thias@marmotte.net>
-License::  Apache License 2.0
-Tested::   puppet-0.25.4
-
