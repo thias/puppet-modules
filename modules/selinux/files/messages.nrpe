@@ -41,3 +41,7 @@ avc:  denied  { execute } for  pid=25255 comm="MegaCli" path="/opt/lsi/3rdpartyl
 avc:  denied  { ioctl } for  pid=27995 comm="check_perc" path="/usr/share/perl5/strict.pm" dev=sda1 ino=397492 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
 #check_gdns needs access to execute a localhost connection through http
 avc:  denied  { name_connect } for  pid=9639 comm="check_gdns" dest=3506 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=tcp_socket
+# check_mysql
+avc:  denied  { search } for  pid=21526 comm="check_mysql" name="mysql" dev=xvda ino=459346 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:mysqld_db_t:s0 tclass=dir
+avc:  denied  { write } for  pid=30018 comm="check_mysql" name="mysql.sock" dev=xvda ino=459546 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:mysqld_var_run_t:s0 tclass=sock_file
+avc:  denied  { connectto } for  pid=31229 comm="check_mysql" path="/var/lib/mysql/mysql.sock" scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:mysqld_t:s0 tclass=unix_stream_socket
