@@ -40,5 +40,11 @@ define selinux::audit2allow (
         refreshonly => true,
     }
 
+    # Clean up the old naming, without the "local" prefix
+    file { [ "/etc/selinux/local/${title}/${title}.pp",
+             "/etc/selinux/local/${title}/${title}.te" ]:
+        ensure => absent,
+    }
+
 }
 
