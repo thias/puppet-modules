@@ -15,7 +15,6 @@
 #
 define apache-httpd (
     $ssl                    = false,
-    $php                    = false,
     # Options for the sysconfig file
     $options                = false,
     $httpd_lang             = false,
@@ -120,19 +119,10 @@ define apache-httpd (
     }
 
     # We use classes with inheritence in order to perform service overrides
-    # Use only if/else in order to be compatible with puppet 0.25
-    if $ssl and $php {
-        include apache-httpd::service::ssl-php
+    if $ssl {
+        include apache-httpd::service::ssl
     } else {
-        if $ssl {
-            include apache-httpd::service::ssl
-        } else {
-            if $php {
-                include apache-httpd::service::php
-            } else {
-                include apache-httpd::service::base
-            }
-        }
+        include apache-httpd::service::base
     }
 
 }
