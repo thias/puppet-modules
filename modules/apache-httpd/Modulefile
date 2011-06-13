@@ -1,5 +1,5 @@
 name 'apache-httpd'
-version '0.2.0'
+version '0.2.1'
 author 'Matthias Saou'
 summary 'Apache httpd server module'
 description "Apache httpd web server module, to enable and configure httpd with
