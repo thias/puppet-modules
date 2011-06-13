@@ -1,2 +1,8 @@
 name 'apache-httpd'
-version '0.1.0'
+version '0.2.0'
+author 'Matthias Saou'
+summary 'Apache httpd server module'
+description "Apache httpd web server module, to enable and configure httpd with
+ optional SSL and PHP support."
+license 'Apache'
+project_page 'http://glee.thias.es/'
