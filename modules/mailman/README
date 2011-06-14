@@ -1,8 +1,0 @@
-= Summary
-
-Summary::  Mailman mailing-lists server module
-Requires:: apache-httpd, postfix
-Author::   Matthias Saou <thias@marmotte.net>
-License::  Apache License 2.0
-Tested::   puppet-2.6.8
-
