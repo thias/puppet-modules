@@ -76,7 +76,7 @@ define apache-httpd (
     }
 
     # On RHEL5, this gets in the way... it should be configured from elsewhere
-    if ( $operatingsystem == 'RedHat' ) and ( $operatingsystemrelease < 6 ) {
+    if $::operatingsystem == 'RedHat' and $::operatingsystemrelease < 6 {
         # We can't 'ensure => absent' or it would reappear with updates
         apache-httpd::file { 'proxy_ajp.conf':
             source => 'puppet:///modules/apache-httpd/proxy_ajp.conf',
