@@ -49,7 +49,7 @@ define tlsfiles (
             content => $crtcontent,
         }
         # Intermediate, when not joined
-        if $intcert == true and $intjoin == false {
+        if $intcert != false and $intjoin == false {
             file { "${crtpath}/${intcert}.crt":
                 owner   => $owner,
                 group   => $group,
