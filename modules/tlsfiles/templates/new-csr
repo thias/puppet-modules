@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo -n "Fully qualified domain name to create the key and csr for? "
+read CN
+
+openssl genrsa -out "key/${CN}.key" 2048 && \
+    echo "Created key/${CN}.key"
+echo "Press a key to continue with the crt..."
+read
+openssl req -new -key "key/${CN}.key" -out "${CN}.csr" && \
+    echo "Created ${CN}.csr"
+
