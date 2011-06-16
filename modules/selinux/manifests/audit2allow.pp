@@ -14,7 +14,8 @@
 #     }
 #
 define selinux::audit2allow (
-    $source = false
+    $source  = false,
+    $content = false 
 ) {
 
     include selinux
@@ -24,11 +25,19 @@ define selinux::audit2allow (
     file { "/etc/selinux/local/${title}": ensure => directory }
 
     # The deny messages we want to allow
-    file { "/etc/selinux/local/${title}/messages":
-        source => $source ? {
+    if $content {
+        $messages_content = $content
+        $messages_source  = undef
+    } else {
+        $messages_content = undef
+        $messages_source  = $source ? {
             false   => "puppet:///modules/selinux/messages.${title}",
             default => $source,
-        },
+        }
+    }
+    file { "/etc/selinux/local/${title}/messages":
+        content => $messages_content,
+        source  => $messages_source,
     }
 
     # Reload the changes automatically
