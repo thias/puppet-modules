@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: bind::server</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">bind::server</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/root/thias-puppet-modules/modules/bind/manifests/server_pp.html">
+                /root/thias-puppet-modules/modules/bind/manifests/server.pp
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+ISC BIND <a href="server.html">server</a> module.
+</p>
+<p>
+Sample Usage :
+</p>
+<pre>
+   include bind::server
+</pre>
+<p>
+or
+</p>
+<pre>
+   class bind::server {
+       chroot        =&gt; false,
+       bindpkgprefix =&gt; &quot;bind97&quot;,
+   }
+</pre>
+
+    </div>
+
+
+   </div>
+
+<!-- if childs -->
+
+    <div id="method-list">
+      <h3 class="section-bar">Defines</h3>
+
+      <div class="name-list">
+      <a href="#M000008">conf</a>&nbsp;&nbsp;
+      <a href="#M000009">file</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Resources</h3>
+
+      <div class="name-list">
+      <a href="#R000011">File[$bindlogdir]</a>&nbsp;&nbsp;
+      <a href="#R000009">Package[$bindserverpkgname]</a>&nbsp;&nbsp;
+      <a href="#R000010">Service[&quot;named&quot;]</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <!-- if requires -->
+
+    <!-- if realizes -->
+
+    <div id="section">
+
+<!-- if facts -->
+
+<!-- if plugins -->
+
+<!-- if nodes -->
+
+<!-- if class -->
+
+
+
+
+
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Defines</h3>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <span class="method-name">conf</span><span class="method-args">( $dump_file =&gt; '/var/named/data/cache_dump.db', $directory =&gt; '/var/named', $listen_on_port =&gt; '53', $acls =&gt; 'false', $listen_on_addr =&gt; ['&quot;127.0.0.1&quot;'], $dnssec_lookaside =&gt; 'auto', $recursion =&gt; 'yes', $statistics_file =&gt; '/var/named/data/named_stats.txt', $listen_on_v6_port =&gt; '53', $version =&gt; 'false', $dnssec_validation =&gt; 'yes', $memstatistics_file =&gt; '/var/named/data/named_mem_stats.txt', $dnssec_enable =&gt; 'yes', $masters =&gt; 'false', $zones =&gt; 'false', $allow_query =&gt; ['&quot;localhost&quot;'], $listen_on_v6_addr =&gt; ['&quot;::1&quot;'] )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+ISC BIND <a href="server.html">server</a> template-based configuration
+definition.
+</p>
+<p>
+Sample Usage :
+</p>
+<pre>
+   bind::server::conf { '/etc/named.conf':
+       acls =&gt; {
+           'rfc1918' =&gt; [ '10/8', '172.16/12', '192.168/16' ],
+       },
+       masters =&gt; {
+           'mymasters' =&gt; [ '192.0.2.1', '198.51.100.1' ],
+       },
+       zones =&gt; {
+           'example.com' =&gt; [
+               'type master',
+               'file &quot;example.com&quot;',
+           ],
+           'example.org' =&gt; [
+               'type slave',
+               'file &quot;slaves/example.org&quot;',
+               'masters { mymasters; }',
+           ],
+       }
+   }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <span class="method-name">file</span><span class="method-args">( $group =&gt; 'named', $mode =&gt; '0640', $zonedir =&gt; '/var/named', $source, $owner =&gt; 'root' )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+ISC BIND <a href="server.html">server</a> template-based zone <a
+href="server.html#M000013">file</a> definition.
+</p>
+<p>
+Sample Usage :
+</p>
+<pre>
+   bind::server::file { &quot;example.com&quot;:
+       zonedir =&gt; &quot;/var/named/chroot/var/named&quot;,
+       source  =&gt; &quot;puppet:///files/dns/example.com&quot;,
+   }
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!-- if resource_list -->
+    <div id="resources">
+    <h3 class="section-bar">Resources</h3>
+
+      <div id="method-R000011" class="method-detail">
+        <a name="R000011"></a>
+
+        <div class="method-heading">
+          <span class="method-name">File[$bindlogdir]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">require => Package[$bindserverpkgname]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">ensure => directory</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">owner => "root"</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">group => "named"</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">mode => 0770</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">seltype => "named_log_t"</span><br />
+        </div>
+
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-R000009" class="method-detail">
+        <a name="R000009"></a>
+
+        <div class="method-heading">
+          <span class="method-name">Package[$bindserverpkgname]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">ensure => installed</span><br />
+        </div>
+
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-R000010" class="method-detail">
+        <a name="R000010"></a>
+
+        <div class="method-heading">
+          <span class="method-name">Service[&quot;named&quot;]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">require => Package[$bindserverpkgname]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">hasstatus => true</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">enable => true</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">ensure => running</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">restart => "/sbin/service named reload"</span><br />
+        </div>
+
+        <div class="method-description">
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

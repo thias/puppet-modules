@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: apache-httpd::service::base</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">apache-httpd::service::base</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/root/thias-puppet-modules/modules/apache-httpd/manifests/service/base_pp.html">
+                /root/thias-puppet-modules/modules/apache-httpd/manifests/service/base.pp
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Apache httpd web server <a href="../service.html">service</a> <a
+href="base.html">base</a> class. This class is not meant to be used on its
+own. It exists only because parametrized classes cannot be inherited
+reliably (as of 2.6.8), so we have the main apache-httpd definition
+wrapping around non-parametrized classes with inheritence.
+</p>
+
+    </div>
+
+
+   </div>
+
+<!-- if childs -->
+       <div id="childs">
+         <h3 class="section-bar">Inherited by</h3>
+         <div id="childs-list">
+           <span class="child-name"><a href="ssl.html">apache-httpd::service::ssl</a></span>
+         </div>
+       </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Resources</h3>
+
+      <div class="name-list">
+      <a href="#R000006">Service[&quot;httpd&quot;]</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <!-- if requires -->
+
+    <!-- if realizes -->
+
+    <div id="section">
+
+<!-- if facts -->
+
+<!-- if plugins -->
+
+<!-- if nodes -->
+
+<!-- if class -->
+
+
+
+
+
+
+
+    <!-- if method_list -->
+
+
+    <!-- if resource_list -->
+    <div id="resources">
+    <h3 class="section-bar">Resources</h3>
+
+      <div id="method-R000006" class="method-detail">
+        <a name="R000006"></a>
+
+        <div class="method-heading">
+          <span class="method-name">Service[&quot;httpd&quot;]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">ensure => running</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">enable => true</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">restart => "/sbin/service httpd reload"</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">hasstatus => true</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">require => Package["httpd"]</span><br />
+        </div>
+
+        <div class="method-description">
+          <p>
+Main <a href="../service.html">service</a>, modified in inherited classes
+</p>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

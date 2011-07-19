@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: apache-httpd</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">apache-httpd</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/root/thias-puppet-modules/modules/apache-httpd/manifests/init_pp.html">
+                /root/thias-puppet-modules/modules/apache-httpd/manifests/init.pp
+                </a>
+        <br />
+                <a href="../files/root/thias-puppet-modules/modules/apache-httpd/manifests/service/ssl_pp.html">
+                /root/thias-puppet-modules/modules/apache-httpd/manifests/service/ssl.pp
+                </a>
+        <br />
+                <a href="../files/root/thias-puppet-modules/modules/apache-httpd/manifests/service/base_pp.html">
+                /root/thias-puppet-modules/modules/apache-httpd/manifests/service/base.pp
+                </a>
+        <br />
+                <a href="../files/root/thias-puppet-modules/modules/apache-httpd/manifests/file_pp.html">
+                /root/thias-puppet-modules/modules/apache-httpd/manifests/file.pp
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+<!-- if childs -->
+
+    <div id="method-list">
+      <h3 class="section-bar">Defines</h3>
+
+      <div class="name-list">
+      <a href="#M000004">apache-httpd</a>&nbsp;&nbsp;
+      <a href="#M000005">file</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <!-- if requires -->
+
+    <!-- if realizes -->
+
+    <div id="section">
+
+<!-- if facts -->
+
+<!-- if plugins -->
+
+<!-- if nodes -->
+
+<!-- if class -->
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="apache-httpd/service.html" class="link">apache-httpd::service</a><br />
+
+    </div>
+
+
+
+
+
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Defines</h3>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <span class="method-name">apache-httpd</span><span class="method-args">( $documentroot =&gt; '/var/www/html', $group =&gt; 'apache', $maxspareservers =&gt; '8', $modules =&gt; ['&quot;authz_host&quot;', '&quot;include&quot;', '&quot;mime&quot;', '&quot;negotiation&quot;', '&quot;alias&quot;'], $timeout_seconds =&gt; '60', $ssl =&gt; 'false', $logrotate_opts =&gt; ['&quot;compress&quot;', '&quot;missingok&quot;', '&quot;notifempty&quot;', '&quot;sharedscripts&quot;'], $logrotate_freq =&gt; 'daily', $welcome =&gt; 'true', $extendedstatus =&gt; 'Off', $minspareservers =&gt; '2', $logrotate_files =&gt; '/var/log/httpd/*log', $serveradmin =&gt; 'root@localhost', $maxsparethreads =&gt; '75', $serverlimit =&gt; '256', $startservers =&gt; '4', $servertokens =&gt; 'Prod', $usecanonicalname =&gt; 'Off', $minsparethreads =&gt; '25', $maxclients =&gt; '256', $keepalivetimeout =&gt; '15', $pidfile =&gt; 'false', $serversignature =&gt; 'On', $user =&gt; 'apache', $listen =&gt; '80', $maxrequestsperchild =&gt; '4000', $threadsperchild =&gt; '32', $maxkeepaliverequests =&gt; '100', $keepalive =&gt; 'Off', $httpd_lang =&gt; 'false', $options =&gt; 'false' )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+Apache httpd web server definition.
+</p>
+<p>
+The title must be &#8216;prefork&#8217; (RHEL default) or
+&#8216;worker&#8217;. The defaults are as close as possible to the original
+RHEL defaults. The configuration files are based on RHEL6&#8216;s httpd 2.2
+files, but work fine with RHEL5&#8216;s 2.0 httpd.
+</p>
+<p>
+Note that by default a minimal set of modules is enabled in order to have
+the original testing page work, but passing an array of module names as the
+&#8216;modules&#8217; parameter resets them to only the &#8216;log&#8217;
+module.
+</p>
+<p>
+Sample Usage : apache-httpd { &#8216;prefork&#8217;:
+</p>
+<pre>
+    modules =&gt; [ 'mime' ],
+</pre>
+<p>
+}
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <span class="method-name">file</span><span class="method-args">( $group =&gt; 'root', $confd =&gt; '/etc/httpd/conf.d', $mode =&gt; '0644', $content =&gt; 'undef', $ensure =&gt; 'undef', $source =&gt; 'undef', $owner =&gt; 'root' )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+Apache httpd server configuration <a
+href="apache-httpd.html#M000005">file</a> definition.
+</p>
+<p>
+Sample Usage :
+</p>
+<pre>
+    apache-httpd::file { 'www.example.com.conf':
+        source =&gt; 'puppet:///files/apache-httpd/www.example.com.conf',
+    }
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!-- if resource_list -->
+
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

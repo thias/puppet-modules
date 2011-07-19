@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: xinetd</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">xinetd</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/root/thias-puppet-modules/modules/xinetd/manifests/init_pp.html">
+                /root/thias-puppet-modules/modules/xinetd/manifests/init.pp
+                </a>
+        <br />
+                <a href="../files/root/thias-puppet-modules/modules/xinetd/manifests/serviceconf_pp.html">
+                /root/thias-puppet-modules/modules/xinetd/manifests/serviceconf.pp
+                </a>
+        <br />
+                <a href="../files/root/thias-puppet-modules/modules/xinetd/manifests/service_pp.html">
+                /root/thias-puppet-modules/modules/xinetd/manifests/service.pp
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Summary</h1>
+<table>
+<tr><td valign="top">Summary:</td><td>Enable <a href="xinetd.html">xinetd</a>, enable existing services and
+configure new services
+
+</td></tr>
+<tr><td valign="top">Requires:</td><td>n/a
+
+</td></tr>
+<tr><td valign="top">Author:</td><td>Matthias Saou &lt;thias@marmotte.net&gt;
+
+</td></tr>
+<tr><td valign="top">License:</td><td>Apache License 2.0
+
+</td></tr>
+<tr><td valign="top">Tested:</td><td>puppet-0.25.4
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+<!-- if childs -->
+
+    <div id="method-list">
+      <h3 class="section-bar">Defines</h3>
+
+      <div class="name-list">
+      <a href="#M000007">service</a>&nbsp;&nbsp;
+      <a href="#M000006">serviceconf</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <!-- if requires -->
+
+    <!-- if realizes -->
+
+    <div id="section">
+
+<!-- if facts -->
+
+<!-- if plugins -->
+
+<!-- if nodes -->
+
+<!-- if class -->
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="xinetd/xinetd.html" class="link">xinetd::xinetd</a><br />
+
+    </div>
+
+
+
+
+
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Defines</h3>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <span class="method-name">service</span><span class="method-args">( $disable =&gt; 'no' )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+Enable and disable already defined <a href="xinetd.html">xinetd</a>
+services.
+</p>
+<p>
+Sample Usage :
+</p>
+<ul>
+<li>Enable rsyncd :
+
+<pre>
+ xinetd::service { &quot;rsync&quot;: }
+</pre>
+</li>
+<li>Disable rsyncd :
+
+<pre>
+ xinetd::service { &quot;rsync&quot;: disable =&gt; &quot;yes&quot; }
+</pre>
+</li>
+</ul>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <span class="method-name">serviceconf</span><span class="method-args">( $groups =&gt; 'false', $per_source =&gt; 'false', $group =&gt; 'false', $flags =&gt; 'false', $umask =&gt; 'false', $max_load =&gt; 'false', $instances =&gt; 'false', $env =&gt; 'false', $access_times =&gt; 'false', $rlimit_files =&gt; 'false', $banner =&gt; 'false', $port =&gt; 'false', $wait =&gt; 'no', $deny_time =&gt; 'false', $rlimit_data =&gt; 'false', $no_access =&gt; 'false', $protocol =&gt; 'tcp', $rpc_number =&gt; 'false', $server_args =&gt; 'false', $server, $service_id =&gt; 'false', $mdns =&gt; 'false', $cps =&gt; 'false', $service_type =&gt; 'false', $banner_success =&gt; 'false', $bind =&gt; 'false', $nice =&gt; 'false', $rlimit_rss =&gt; 'false', $rlimit_as =&gt; 'false', $banner_fail =&gt; 'false', $redirect =&gt; 'false', $passenv =&gt; 'false', $rpc_version =&gt; 'false', $disable =&gt; 'no', $ensure =&gt; 'present', $rlimit_stack =&gt; 'false', $rlimit_cpu =&gt; 'false', $log_on_failure =&gt; 'false', $only_from =&gt; 'false', $user =&gt; 'root', $log_on_success =&gt; 'false', $log_type =&gt; 'false', $socket_type =&gt; 'stream' )</span>
+        </div>
+
+        <div class="method-description">
+          <p>
+Create full configuration for new <a href="xinetd.html">xinetd</a>-based
+services.
+</p>
+<p>
+Parameters control the <a href="xinetd.html#M000007">service</a> options as
+documented in xinetd.conf(5).
+</p>
+<p>
+Sample Usage :
+</p>
+<ul>
+<li>Create and enable a new <a href="xinetd.html#M000007">service</a> for
+vmstat output :
+
+<pre>
+ xinetd::serviceconf { &quot;vmstat&quot;:
+     service_type =&gt; &quot;UNLISTED&quot;,
+     port         =&gt; &quot;24101&quot;,
+     user         =&gt; &quot;nobody&quot;,
+     server       =&gt; &quot;/usr/bin/vmstat&quot;,
+ }
+</pre>
+</li>
+<li>Remove the above <a href="xinetd.html#M000007">service</a> :
+
+<pre>
+ xinetd::serviceconf { &quot;vmstat&quot;:
+     server =&gt; &quot;/usr/bin/vmstat&quot;,
+     ensure =&gt; absent,
+ }
+</pre>
+</li>
+</ul>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!-- if resource_list -->
+
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

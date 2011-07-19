@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: cgit::cgit</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">cgit::cgit</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/root/thias-puppet-modules/modules/cgit/manifests/init_pp.html">
+                /root/thias-puppet-modules/modules/cgit/manifests/init.pp
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Cgit definition.
+</p>
+<p>
+Sample Usage :
+</p>
+<pre>
+    apache-httpd { 'worker':
+        modules   =&gt; [ 'mime', 'setenvif', 'alias', 'proxy', 'cgi' ],
+        keepalive =&gt; 'On',
+        user      =&gt; 'git',
+        group     =&gt; 'git',
+    }
+    class { 'cgit':
+        httpd_path      =&gt; '/git',
+        httpd_path_data =&gt; '/git-data',
+        clone_prefix    =&gt; 'git://git.marmotte.net',
+        css             =&gt; '/git-data/cgit.css',
+        logo            =&gt; '/git-data/pink-spaceinvader.png',
+        logo_link       =&gt; 'http://thias.marmotte.net/',
+        favicon         =&gt; 'http://thias.marmotte.net/favicon.ico',
+        snapshots       =&gt; 'tar.gz',
+        max_stats       =&gt; false,
+        root_title      =&gt; 'Git repositories on marmotte.net',
+        root_desc       =&gt; 'commit, push... et alors, la marmotte...',
+        repos           =&gt; [
+            'puppet-modules' =&gt; {
+                'url'   =&gt; 'puppet-modules',
+                'path'  =&gt; '/srv/git/repositories/puppet-modules.git',
+                'desc'  =&gt; 'Custom Puppet Modules',
+                'owner' =&gt; 'Matthias Saou',
+            }
+        ],
+    }
+</pre>
+
+    </div>
+
+
+   </div>
+
+<!-- if childs -->
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Resources</h3>
+
+      <div class="name-list">
+      <a href="#R000019">File[&quot;/etc/cgitrc&quot;]</a>&nbsp;&nbsp;
+      <a href="#R000020">File[&quot;/etc/httpd/conf.d/cgit.conf&quot;]</a>&nbsp;&nbsp;
+      <a href="#R000018">Package[&quot;cgit&quot;]</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <!-- if requires -->
+
+    <!-- if realizes -->
+
+    <div id="section">
+
+<!-- if facts -->
+
+<!-- if plugins -->
+
+<!-- if nodes -->
+
+<!-- if class -->
+
+
+
+
+
+
+
+    <!-- if method_list -->
+
+
+    <!-- if resource_list -->
+    <div id="resources">
+    <h3 class="section-bar">Resources</h3>
+
+      <div id="method-R000019" class="method-detail">
+        <a name="R000019"></a>
+
+        <div class="method-heading">
+          <span class="method-name">File[&quot;/etc/cgitrc&quot;]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">content => $content</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">source => $cgitrc_source</span><br />
+        </div>
+
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-R000020" class="method-detail">
+        <a name="R000020"></a>
+
+        <div class="method-heading">
+          <span class="method-name">File[&quot;/etc/httpd/conf.d/cgit.conf&quot;]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">content => template("cgit/httpd-cgit.conf.erb")</span><br />
+        </div>
+
+        <div class="method-description">
+          <p>
+Apache httpd configuration snippet
+</p>
+        </div>
+      </div>
+
+      <div id="method-R000018" class="method-detail">
+        <a name="R000018"></a>
+
+        <div class="method-heading">
+          <span class="method-name">Package[&quot;cgit&quot;]</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">ensure => installed</span><br />
+          &nbsp;&nbsp;&nbsp;<span class="method-args">require => Package["httpd"]</span><br />
+        </div>
+
+        <div class="method-description">
+          <p>
+Main package
+</p>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
