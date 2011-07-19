@@ -1,0 +1,9 @@
+name 'cgit'
+version '0.1.0'
+author 'Matthias Saou'
+summary 'Web interface for git repositories'
+description "Set up a cgit instance for giving access to git repositories
+ through a powerful web interface"
+license 'Apache'
+project_page 'http://glee.thias.es/'
+dependency ( 'apache-httpd', '>= 0.1.0' )
