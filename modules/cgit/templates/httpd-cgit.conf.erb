@@ -1,0 +1,7 @@
+<% if httpd_path -%>
+Alias <%= httpd_path_data %> /usr/share/cgit
+ScriptAlias <%= httpd_path %> /var/www/cgi-bin/cgit
+<% else -%>
+# Content disabled by passing 'httpd_path => false' to the cgit puppet class.
+# You're on your own to configure the (Script)Alias from some other file.
+<% end -%>
