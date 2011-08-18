@@ -1,7 +1,6 @@
 = Summary
 
 Summary::  Apache httpd server module
-Requires:: n/a
 Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
 Updated::  August 2011
