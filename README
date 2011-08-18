@@ -20,10 +20,11 @@ Support
 
 More generic puppet documentation can be found at http://docs.puppetlabs.com/
 
-Documentation can be automatically generated with :
-puppetdoc --all --mode rdoc --outputdir ./doc --modulepath modules --manifestdir /var/empty
+Documentation for the modules can be automatically generated (see the gendoc
+script) and an online snapshot found here :
+http://dl.marmotte.net/puppet/doc/
 
 The latest source for these modules can be found at https://github.com/thias
 
-Copyright (c) 2011 Matthias Saou <matthias@saou.eu>
+Copyright (c) 2011 Matthias Saou - http://matthias.saou.eu/
 
