@@ -25,5 +25,5 @@ puppetdoc --all --mode rdoc --outputdir ./doc --modulepath modules --manifestdir
 
 The latest source for these modules can be found at https://github.com/thias
 
-Copyright (c) 2011 Matthias Saou <thias@marmotte.net>
+Copyright (c) 2011 Matthias Saou <matthias@saou.eu>
 
