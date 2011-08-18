@@ -1,0 +1,13 @@
+= Summary
+
+Summary::  Skeleton module
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  August 2011
+
+= Sample Usage
+
+Basic foo :
+
+    include skel
+
