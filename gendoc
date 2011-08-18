@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# This is all quite ugly because puppetdoc is meant to be run on a real
+# puppet master, not just against standalone modules.
+
+# /data/software/puppet-modules
+REMOVE=`pwd`
+# /data
+START=`echo $REMOVE | cut -d / -f 1-2`
+# /../../..
+RELATIVE=`echo $REMOVE | sed 's|/[^/]*|/..|g'`
+
+rm -rf doc/
+puppetdoc \
+    --all \
+    --outputdir ./doc \
+    --mode rdoc \
+    --charset utf-8 \
+    --modulepath modules \
+    --manifestdir /var/empty
+mv doc/files${REMOVE}/modules doc/files/
+rm -rf doc/files${START}
+# Clean up
+find doc/files -name '*.html' -exec sed -i "s|${REMOVE}||g" {} \;
+find doc/files -name '*.html' -exec sed -i "s|${RELATIVE}/./|/|g" {} \;
+
+# Clean classes/definition pages
+find doc/classes -name '*.html' -exec sed -i "s|${REMOVE}||g" {} \;
+
