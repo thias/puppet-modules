@@ -9,9 +9,9 @@
 # 'modules' parameter resets them to only the 'log' module.
 #
 # Sample Usage :
-# apache-httpd { 'prefork':
-#     modules => [ 'mime' ],
-# }
+#     apache-httpd { 'prefork':
+#         modules => [ 'mime' ],
+#     }
 #
 define apache-httpd (
     $ssl                    = false,

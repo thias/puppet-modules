@@ -1,0 +1,55 @@
+= Summary
+
+Summary::  Apache httpd server module
+Requires:: n/a
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  August 2011
+
+= Sample Usage
+
+Sripped down instance running as the git user for the cgit cgi :
+
+    apache-httpd { 'worker':
+        modules   => [ 'mime', 'setenvif', 'alias', 'proxy', 'cgi' ],
+        keepalive => 'On',
+        user      => 'git',
+        group     => 'git',
+    }
+
+Complete instance with https and a typical and ready for php :
+
+    apache-httpd { 'prefork':
+        ssl     => true,
+        modules => [
+            'auth_basic',
+            'authn_file',
+            'authz_host',
+            'authz_user',
+            'mime',
+            'autoindex',
+            'negotiation',
+            'dir',
+            'alias',
+            'rewrite',
+            'proxy',
+        ],
+        welcome => false,
+    }
+
+Example entry you probably want to add to your site.pp to change some of the defaults globally :
+
+    Apache-Httpd {
+        extendedstatus => 'On',
+        serveradmin    => 'root@mydomain.example.com',
+    }
+
+Configuration snippets can be added from files or templates and will automatically reload httpd when changed :
+
+    apache-httpd::file { 'www.example.com.conf':
+        source => 'puppet:///files/mygreatcustomfiles/www.example.com.conf',
+    }
+    apache-httpd::file { 'global-alias.conf':
+        content => 'Alias /whatever /var/www/whatever',
+    }
+
