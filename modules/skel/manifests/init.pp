@@ -1,7 +1,7 @@
 # Skeleton module.
 #
 # Sample Usage :
-#     none
+#     include skel
 #
 class skel {
 }
