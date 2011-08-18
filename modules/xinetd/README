@@ -2,7 +2,7 @@
 
 Summary::  Enable xinetd, enable existing services and configure new services
 Requires:: n/a
-Author::   Matthias Saou <thias@marmotte.net>
+Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
 Tested::   puppet-0.25.4
 
