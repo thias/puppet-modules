@@ -1,0 +1,16 @@
+= Summary
+
+Summary::  lighttpd server module
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  August 2011
+
+= Sample Usage
+
+Trivial configuration to serve listings of the local FTP tree :
+
+    class { 'lighttpd':
+        server_document_root => '/var/ftp',
+        dir_listing_activate => 'enable',
+    }
+
