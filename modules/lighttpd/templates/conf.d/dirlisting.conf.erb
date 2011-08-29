@@ -1,0 +1,61 @@
+#######################################################################
+##
+##  Dirlisting Module 
+## ------------------- 
+##
+## See http://www.lighttpd.net/documentation/dirlisting.html
+##
+
+##
+## Enabled Directory listing
+##
+dir-listing.activate      = "<%= dir_listing_activate %>"
+
+##
+## Hide dot files from the listing?
+## By default they are listed.
+##
+dir-listing.hide-dotfiles = "<%= dir_listing_hide_dotfiles %>"
+
+##
+## list of regular expressions. Files that match any of the specified
+## regular expressions will be excluded from directory listings.
+##
+dir-listing.exclude       = (
+<% dir_listing_exclude.each do |exclude| -%>
+  "<%= exclude %>",
+<% end -%>
+)
+
+##
+## set a encoding for the generated directory listing
+##
+## If you file-system is not using ASCII you have to set the encoding of
+## the filenames as they are put into the HTML listing AS IS (with XML
+## encoding)
+##
+dir-listing.encoding = "<%= dir_listing_encoding %>"
+
+##
+## Specify the url to an optional CSS file. 
+##
+<% if dir_listing_external_css -%>
+dir-listing.external-css  = "<%= dir_listing_external_css %>"
+<% end -%>
+
+##
+## Include HEADER.txt files above the directory listing. 
+## You can disable showing the HEADER.txt in the listing. 
+##
+dir-listing.hide-header-file = "<%= dir_listing_hide_header_file %>"
+dir-listing.show-header = "<%= dir_listing_show_header %>"
+
+##
+## Include README.txt files above the directory listing. 
+## You can disable showing the README.txt in the listing. 
+##
+dir-listing.hide-readme-file = "<%= dir_listing_hide_readme_file %>"
+dir-listing.show-readme = "<%= dir_listing_show_readme %>"
+
+##
+#######################################################################
