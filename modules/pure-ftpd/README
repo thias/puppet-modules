@@ -1,0 +1,27 @@
+= Summary
+
+Summary::  Pure-FTPd server module
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  August 2011
+
+= Sample Usage
+
+Simple anonymous FTP server :
+
+    class { 'pure-ftpd':
+        anonymousonly => 'yes',
+    }
+
+Private FTP server, IPv4 only, with puredb accounts managed by ftpadmin :
+
+    class { 'pure-ftpd':
+        noanonymous       => 'yes',
+        puredb            => '/home/ftpadmin/pure-ftpd/pureftpd.pdb',
+        pamauthentication => 'no',
+        umask             => '113:002', # rw-rw-r-- files and rwxrwxr-x dirs
+        nochmod           => 'yes',
+        createhomedir     => 'yes',
+        ipv4only          => 'yes',
+    }
+
