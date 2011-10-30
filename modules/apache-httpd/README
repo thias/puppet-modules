@@ -26,7 +26,6 @@ Complete instance with https and a typical and ready for php :
             'authz_host',
             'authz_user',
             'mime',
-            'autoindex',
             'negotiation',
             'dir',
             'alias',
