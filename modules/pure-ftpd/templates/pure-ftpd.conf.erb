@@ -140,7 +140,11 @@ PureDB                      <%= puredb %>
 
 # Path to pure-authd socket (see README.Authentication-Modules)
 
+<% if extauth -%>
+ExtAuth                     <%= extauth %>
+<% else -%>
 # ExtAuth                       /var/run/ftpd.sock
+<% end -%>
 
 
 
