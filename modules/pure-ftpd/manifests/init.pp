@@ -19,6 +19,7 @@ class pure-ftpd (
     $dontresolve                = 'yes',
     $maxidletime                = '15',
     $puredb                     = false,
+    $extauth                    = false,
     $pamauthentication          = 'yes',
     $limitrecursion             = '10000 8',
     $anonymouscancreatedirs     = 'no',
