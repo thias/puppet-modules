@@ -1,8 +1,15 @@
 = Summary
 
 Summary::  Manage IPv4 iptables rules
-Requires:: n/a
 Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
-Tested::   puppet-2.6.8
+Updated::  November 2011
+
+= Sample Usage
+
+Simple rules to allow ssh, http and https globally :
+
+    iptables { '/etc/sysconfig/iptables':
+        tcpports => [ '22', '80', '443' ],
+    }
 
