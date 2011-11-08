@@ -14,7 +14,7 @@ class xinetd {
         require   => Package["xinetd"],
         enable    => true,
         ensure    => running,
-        restart   => "/sbin/service xinetd reload",
+        restart   => "/etc/init.d/xinetd reload",
         # on RHEL5 "xinetd is stopped" has an exit status of 0...
         #hasstatus => true,
     }
