@@ -22,6 +22,8 @@ define apache-httpd::file (
         source  => $source,
         content => $content,
         notify  => Service['httpd'],
+        # For the default parent directory
+        require => Package['httpd'],
     }
 }
 

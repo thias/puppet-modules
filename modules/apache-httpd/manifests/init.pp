@@ -101,7 +101,8 @@ define apache-httpd (
         }
     } else {
         apache-httpd::file { 'welcome.conf':
-            ensure => absent,
+            # Don't "absent" since the file comes back when httpd is updated
+            content => "# Default welcome page disabled\n",
         }
     }
 
