@@ -91,7 +91,7 @@
 <% end -%>
 # Reject known "crappy ports" connections to avoid logging overhead
 -A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED 
--A INPUT -p udp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED 
+-A INPUT -p udp -m multiport --dports 135,137,138,139,445,1026,17500 -j CLOSED 
 # Drop broadcast DHCP messages
 -A INPUT -p udp -m udp --sport 68 --dport 67 -j DROP 
 -A INPUT -p udp -m udp --sport 67 --dport 68 -j DROP 
@@ -128,7 +128,7 @@
 -A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED 
 <% end -%>
 COMMIT
-<% if nat -%>
+<% if nat or redirect_tcp_port -%>
 
 # NAT table, used for masquerading and DNAT
 *nat
