@@ -10,7 +10,7 @@
 class dhcpd (
     $configsource,
     $dhcpdargs = '',
-    $ensure = 'running',
+    $ensure = undef,
     $enable = true
 ) {
 

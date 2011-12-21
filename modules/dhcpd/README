@@ -3,13 +3,16 @@
 Summary::  DHCP Server module
 Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
-Updated::  November 2011
+Updated::  December 2011
 
 = Sample Usage
 
 Basic DHCP server (pre-created dhcpd.conf) :
 
-    class { 'dhcpd': configsource => 'puppet:///files/dhcpd.conf-foo' }
+    class { 'dhcpd':
+        configsource => 'puppet:///files/dhcpd.conf-foo',
+        ensure       => 'running',
+    }
 
 Example trivial dhcpd.conf content (useful for PXE/ks networks) :
 
