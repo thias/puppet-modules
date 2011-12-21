@@ -28,6 +28,11 @@
 #             }
 #         ],
 #     }
+#     # Default is apache:root
+#     file { '/var/cache/cgit':
+#         ensure => directory,
+#         owner  => 'git',
+#     }
 #
 class cgit (
     httpd_path = '/cgit',
