@@ -8,7 +8,6 @@
 #        udpports  => [ "53" ],
 #        hosts_ssh => [ "192.0.2.1" ],
 #        knock     => true, knockone => "1111", knocktwo => "2222",
-#        nat       => true,
 #        masq      => true,
 #    }
 #
@@ -39,7 +38,6 @@ define iptables (
     $icmp_limit_enable  = true,
     $icmp_limit         = "50/sec",
     $raw_rules_filter   = [],
-    $nat                = false,
     $raw_rules_nat      = [],
     $redirect_tcp_port  = {},
     $masq               = false,

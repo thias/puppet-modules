@@ -128,7 +128,7 @@
 -A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED 
 <% end -%>
 COMMIT
-<% if nat or !redirect_tcp_port.empty? -%>
+<% if masq or !raw_rules_nat.empty? or !redirect_tcp_port.empty? -%>
 
 # NAT table, used for masquerading and DNAT
 *nat
