@@ -1,0 +1,24 @@
+= Summary
+
+Summary::  OpenVPN module
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  December 2011
+
+= Sample Usage
+
+Basic OpenVPN setup :
+
+    include openvpn
+    openvpn::secret { 'example.key':
+        source => 'puppet:///files/openvpn/example.key',
+    }
+    openvpn::conftemplate { 'example':
+        dev => 'tun0',
+        remote => 'remote-server.example.com',
+        ipaddress_local => '192.168.0.1',
+        ipaddress_remote => '192.168.0.2',
+        routes => [ '192.168.1.0 255.255.255.0' ],
+        secret => 'example.key',
+    }
+
