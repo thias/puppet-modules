@@ -1,5 +1,5 @@
 name 'cgit'
-version '0.1.0'
+version '0.1.1'
 author 'Matthias Saou'
 summary 'Web interface for git repositories'
 description "Set up a cgit instance for giving access to git repositories

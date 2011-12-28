@@ -35,32 +35,32 @@
 #     }
 #
 class cgit (
-    httpd_path = '/cgit',
-    httpd_path_data = '/cgit-data',
+    $httpd_path = '/cgit',
+    $httpd_path_data = '/cgit-data',
     # allow using an entirely custom cgitrc file
-    cgitrc_source = undef,
-    cgitrc_content = undef,
+    $cgitrc_source = undef,
+    $cgitrc_content = undef,
     # cgitrc options when using the provided template
-    cache_size = '1000',
-    clone_prefix = false,
-    css = '/cgit-data/cgit.css',
-    enable_index_links = '1',
-    enable_commit_graph = '1',
-    enable_log_filecount = '1',
-    enable_log_linecount = '1',
-    favicon = false,
-    logo = '/cgit-data/cgit.png',
-    logo_link = false,
-    max_stats = 'quarter',
-    root_title = false,
-    root_desc = false,
-    root_readme = false,
-    snapshots = false,
-    mimetypes = [],
-    source_filter = false,
-    repos = [],
-    scan_path = false,
-    remove_suffix = false
+    $cache_size = '1000',
+    $clone_prefix = false,
+    $css = '/cgit-data/cgit.css',
+    $enable_index_links = '1',
+    $enable_commit_graph = '1',
+    $enable_log_filecount = '1',
+    $enable_log_linecount = '1',
+    $favicon = false,
+    $logo = '/cgit-data/cgit.png',
+    $logo_link = false,
+    $max_stats = 'quarter',
+    $root_title = false,
+    $root_desc = false,
+    $root_readme = false,
+    $snapshots = false,
+    $mimetypes = [],
+    $source_filter = false,
+    $repos = [],
+    $scan_path = false,
+    $remove_suffix = false
 ) {
 
     # Main package
