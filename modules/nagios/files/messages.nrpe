@@ -1,0 +1,2 @@
+# check_disk
+avc:  denied  { getattr } for  pid=30142 comm="check_disk" path="/dev/shm" dev=tmpfs ino=5174 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir
