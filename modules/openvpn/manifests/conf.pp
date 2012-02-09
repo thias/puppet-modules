@@ -20,7 +20,7 @@ define openvpn::conf (
     }
     # start
     exec { "openvpn-start-${title}":
-        command => "/usr/sbin/openvpn --daemon --writepid /var/run/openvpn/${title}.pid --config ${title}.conf --cd ${dir}"
+        command => "/usr/sbin/openvpn --daemon --writepid /var/run/openvpn/${title}.pid --config ${title}.conf --cd ${dir}",
         cwd     => $dir,
         require => File["${dir}/${title}.conf"],
         creates => "/var/run/openvpn/${title}.pid",
