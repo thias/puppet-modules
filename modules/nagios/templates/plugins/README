@@ -1,0 +1,9 @@
+# These plugins have their individual license!
+
+check_megaraid_sas : http://exchange.nagios.org/directory/Plugins/Hardware/Storage-Systems/RAID-Controllers/check_megaraid_sas/details
+check_mptsas : http://exchange.nagios.org/directory/Plugins/Hardware/Storage-Systems/RAID-Controllers/check_lsiutil/details
+membase_stats : https://github.com/appfirst/membase_stats
+check_ram : http://exchange.nagios.org/directory/Plugins/Uncategorized/Operating-Systems/Linux/Check_Ram-on-Linux-32-2Dbit-and-64-2Dbit-systems/details
+check_cpu : http://exchange.nagios.org/directory/Plugins/Uncategorized/Operating-Systems/Linux/check_cpu/details
+check_nginx : http://exchange.nagios.org/directory/Plugins/Web-Servers/nginx/check_nginx/details
+check_membase : https://github.com/appfirst/membase_stats

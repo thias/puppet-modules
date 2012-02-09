@@ -1,0 +1,364 @@
+# nagiosgraph configuration file
+#
+# $Id: nagiosgraph.conf 492 2011-01-15 06:26:55Z mwall $
+# License: OSI Artistic License
+#          http://www.opensource.org/licenses/artistic-license.php
+# Author:  (c) 2005 Soren Dossing
+# Author:  (c) 2008 Alan Brenner, Ithaka Harbors
+# Author:  (c) 2010 Matthew Wall
+
+# Location of output from nagiosgraph data processing
+logfile = /var/log/nagiosgraph/nagiosgraph.log
+
+# Location of output from nagiosgraph CGI scripts
+cgilogfile = /var/log/nagiosgraph/nagiosgraph-cgi.log
+
+# Location of nagios performance data log file.
+perflog = /tmp/perfdata.log
+
+# Directory in which to store RRD files
+rrddir = /var/spool/nagiosgraph/rrd
+
+# File containing regular expressions to identify service and perf data
+mapfile = /etc/nagiosgraph/map
+
+# Nagiosgraph CGI URL.
+nagiosgraphcgiurl = /nagiosgraph/cgi-bin
+
+# Nagios CGI URL.  If the Nagiosgraph CGI scripts are in a directory other
+# than the Nagios CGI directory, then specify the Nagios CGI URL here.
+nagioscgiurl = /nagios/cgi-bin
+
+# JavaScript: URL to the nagiosgraph javascript file.
+javascript = /nagiosgraph/nagiosgraph.js
+
+# Stylesheet: URL to the nagiosgraph stylesheet.
+stylesheet = /nagiosgraph/nagiosgraph.css
+
+# File containing labels for services and data (optional)
+labelfile = /etc/nagiosgraph/labels.conf
+
+# Location of showhost control file (optional)
+#hostdb = /etc/nagiosgraph/hostdb.conf
+
+# Location of showservice control file (optional)
+#servdb = /etc/nagiosgraph/servdb.conf
+
+# Location of showgroup control file (required for showgroup.cgi)
+groupdb = /etc/nagiosgraph/groupdb.conf
+
+# File containing data sets that should be selected in queries (optional)
+datasetdb = /etc/nagiosgraph/datasetdb.conf
+
+# Access control configuration (optional)
+# The authorization method can be one of nagios3 or nagiosgraph.  If no
+# method is defined, access will be granted to all hosts and services.
+
+# For access control via nagios, specify the nagios configuration files.
+# Nagios3 defaults to use authentication.  nagiosgraph looks for the
+# use_authentication variable to determine whether authentication is enabled.
+# If authentication is enabled, nagiosgraph looks for the
+# authorized_for_all_hosts, authorized_for_all_services, and default_user_name
+# variables to determine permissions.
+#authzmethod = nagios3
+#authzfile = /etc/nagios/cgi.cfg
+
+# For access control via nagiosgraph, specify a single access control file.
+# See the sample access control file for syntax and examples.
+#authzmethod = nagiosgraph
+#authzfile = /etc/nagiosgraph/access.conf
+
+
+# Logging can be enabled for a specific CGI script and/or specific hosts or
+# services.  When level is set to 5, the logs will see a lot of extra output,
+# so be sure to reset the level when you have finished debugging.
+
+# Log Levels
+# 0 = None
+# 1 = Critical
+# 2 = Error
+# 3 = Warn
+# 4 = Info
+# 5 = Debug
+debug = 3
+
+### log level for specific scripts
+# log level for insert.pl
+#debug_insert = 5
+# if this is set to a hostname, then only log for this host
+#debug_insert_host = host1
+# if this is set to a service, then only log for this service
+#debug_insert_service = PLW
+# *_host and *_service together for a specific service on a specific host.
+# log level for show.cgi
+#debug_show = 5
+#debug_show_host = host1
+#debug_show_service = ping
+# log level for showhost.cgi
+#debug_showhost = 5
+#debug_showhost_host = host1
+#debug_showhost_service = ping
+# log level for showservice.cgi
+#debug_showservice = 5
+#debug_showservice_host = host1
+#debug_showservice_service = ping
+# log level for showgroup.cgi
+#debug_showgroup = 5
+#debug_showgroup_host = host1
+#debug_showgroup_service = ping
+# log level for showgraph.cgi
+#debug_showgraph = 5
+#debug_showgraph_host = host1
+#debug_showgraph_service = ping
+# log level for testcolor.cgi
+#debug_testcolor = 5
+
+# graph sizes
+geometries = 650x50,800x100,1000x200,2000x100
+
+# default graph size (optional)
+#default_geometry = 600x100
+
+# Color scheme for graphs.  There are 8 pre-defined schemes (1-8) and one
+# custom scheme (9).  The pre-defined schemes use a color based on the
+# characters in the name of each data source.  The custom scheme uses each
+# color, in order.  Use testcolor.cgi to see what the color schemes
+# look like and how they apply to specific service and data set names.
+colorscheme = 9
+
+# Custom color scheme is defined by a comma-separated list of RGB hex colors.
+# rainbow: reddish, orange, yellow, green, light blue, dark blue, purple, grey
+#colors = D05050,D08050,D0D050,50D050,50D0D0,5050D0,D050D0,505050
+# light/dark pairs: blue, green, purple, orange
+colors = 90d080,30a030,90c0e0,304090,ffc0ff,a050a0,ffc060,c07020
+# green from light to dark
+#colors = 80d080,50a050,308030
+
+# Colors for the maximum and minimum values, applied to the data for services
+# in withmaximums and withminimums
+#colormax = 888888
+#colormin = BBBBBB
+
+# Default line style (LINE1, LINE2, LINE3, AREA, TICK); see rrdgraph_graph
+plotas = LINE2
+
+# Line styles for specific data sources.
+#
+# Each style is a list of qualified data source names separated by semicolons.
+# A single qualified data source must end with a semicolon.
+#   [[[host,]service,]database,]datasource;[[[h2,]s2,]db2,]ds2
+# The old-style specification is deprecated:
+#   datasource1[,datasource2[,datasource3[,...]]]
+#
+# For example, this uses LINE3 for all PING sources called 'data' from acme.com
+#   plotasLINE3 = .*.acme.com,PING,.*,data;
+plotasLINE1 = load5,data;load15,data
+plotasLINE2 = 
+plotasLINE3 =
+plotasAREA = idle,data;system,data;user,data;nice,data
+plotasTICK = 
+
+# Data sources that should be stacked.
+#
+# This is a list of qualified data source names separated by semicolons.
+# A single qualified data source must end with a semicolon.
+stack = system,data;user,data;nice,data
+
+# Data sources whose value should be negated.
+#
+# This is a list of qualified data source names separated by semicolons.
+# A single qualified data source must end with a semicolon.
+#negate = byte-received;drop-received;error-received;multi-received;packet-received
+
+# Specify line formats per data source.  This is a semicolon-separated list of
+# line format specifications.  Each format specification contains:
+#   [[[host,]service,]database,]ds-name=linestyle[,color][,STACK]
+# The old-style specification is deprecated:
+#   ds-name,linestyle[,color][,STACK]
+#
+# For example, this plots every data source called 'crit' as a thin red line:
+#lineformat = crit=LINE1,D05050
+# This stacks system, nice, and idle onto whatever sources come before them:
+#lineformat = system=AREA,FFAAAA;nice=AREA,AAAAFF,STACK;idle,AREA,AAFFAA,STACK
+# If the data sources have the same name but different database files, qualify
+# them by leading with the database (and service and host, if necessary).
+#lineformat = nice,data=AREA,AAAAFF,STACK;idle,data=AREA,AAFFAA,STACK
+lineformat = warn=LINE1,D0D050;crit=LINE1,D05050
+
+# Graphs to show in host-service page (day, week, month, quarter, year)
+timeall = day,week,month,year
+# Graphs to show in host page
+timehost = day,week,month
+# Graphs to show in service page
+timeservice = day,week,month
+# Graphs to show in group page
+timegroup = day,week,month
+
+# Time periods that should default to expanded state.  If not specified here,
+# the period will default to a collapsed state.
+expand_timeall = day,week,month,year
+expand_timehost = week
+expand_timeservice = week
+expand_timegroup = day
+
+# Formats for time and date.
+timeformat_now = %H:%M:%S %d %b %Y %Z
+timeformat_day = %H:%M %e %b
+timeformat_week = %e %b
+timeformat_month = Week %U
+timeformat_quarter = Week %U
+timeformat_year = %b %Y
+
+# Set this to automatically refresh the web page.  Value is number of seconds.
+#refresh = 300
+
+# Set this to hide the nagiosgraph title (useful when nagiosgraph is
+# embedded in the nagios frame).
+#hidengtitle = true
+
+# Set this to show in the footer the time spent generating the page.
+#showprocessingtime = true
+
+# Set this to display a title for each graph in html.  When appropriate, the
+# title also includes links to other views of each host and/or service.
+showtitle = true
+
+# Set this to display a description for each graph in html.
+#showdesc = true
+
+# Set this to put a title in each graph.
+#showgraphtitle = true
+
+# Set this to hide the legend in each graph.
+#hidelegend = true
+
+# Set this to display only the graph data - no axes, grid, or legend.
+#graphonly = true
+
+# For services listed here, graphs that contain averages (e.g. weekly, monthly)
+# will include maximum/minimum values as well.  This is useful for services
+# such as ping or http transfer rates so that you see not only the average
+# values, but also the maximum and minimum values over time.  Each is a list
+# of services separated by commas.
+# These are not related to the RRA maximum, minimum, or last (defined below).
+withmaximums = PING,HTTP
+withminimums = PING,HTTP
+
+# Scaling parameters, see the rrdgraph documentation for use
+# Separate multiple services to add the -A option to by commas
+#altautoscale = service1,service2
+# Separate multiple services to add the -J option to by semicolons, and use a
+# command to separate the service name from the desired value
+#altautoscalemin = service1,min1;service2,min2
+# Separate multiple services to add the -M option to by semicolons, and use a
+# command to separate the service name from the desired value
+#altautoscalemax = service1,max1;service2,max2
+# Separate multiple services to add the -N option to by commas
+#nogridfit = service1,service2
+# Separate multiple services to add the -o option to by commas
+#logarithmic = service1,service2
+
+# Specify rrd graph options that apply to all graphs
+#rrdopts=--border 0 --color BACK#ffffff
+
+# Optional - define rrdopts override file, this enables you to specify
+# particular rrdgraph options against each service.
+#rrdoptsfile=/etc/nagiosgraph/rrdopts.conf
+
+# If perfloop is set, insert.pl will loop waiting for input data.  The value
+# is the polling interval, in seconds.  Set this only if you intend to run
+# insert.pl independently of Nagios.
+#perfloop = 30
+
+# The heartbeat, stepsize, and resolution are rrdtool parameters.  They are
+# used when RRD files are created.  Changes to these values have no effect
+# on existing RRD files.  See the rrdtool documentation for details.
+# These values must be coordinated with nagios service check settings and
+# the nagiosgraph data processing interval.
+
+# RRD heartbeat, in seconds.  This defines the maximum length of an interval
+# with no data update before rrd considers the data unknown.  Typically twice
+# the size of servicecheck interval.  600 is the rrdtool default.
+#heartbeat = 600
+# Specify a heartbeat for specific hosts and services.
+#heartbeats = HOST,SERVICE,DATABASE=1200;HOST,SERVICE,.*=1800;.*,.*,.*=600
+
+# RRD step size, in seconds.  This defines how often the data will be updated.
+# Typically the size of the servicecheck interval.  300 is the rrdtool default.
+#stepsize = 300
+# Specify a step size for specific hosts and services.
+#stepsizes = HOST,SERVICE,DATABASE=600;HOST,SERVICE,.*=1200;.*,.*,.*=300
+
+# RRD parameters.  These numbers control the number of stored data values
+# and thus RRD file size.  They are used when creating RRD files.
+# Each RRD file is created with 4 lines of RRA arguments:
+#   RRA:(AVERAGE|MIN|MAX|LAST):xff:step1:row1
+#   RRA:(AVERAGE|MIN|MAX|LAST):xff:step2:row2
+#   RRA:(AVERAGE|MIN|MAX|LAST):xff:step3:row3
+#   RRA:(AVERAGE|MIN|MAX|LAST):xff:step4:row4
+#
+# Using default values, the RRAs are as follows:
+#   RRA:AVERAGE:0.5:1:600
+#   RRA:AVERAGE:0.5:6:700
+#   RRA:AVERAGE:0.5:24:775
+#   RRA:AVERAGE:0.5:288:797
+#
+# The rows are defined by the four resolution values.
+# The default results in RRD files that are 20K to 75K in size:
+#resolution = 600 700 775 797
+# These values keep many more data points, but result in much larger files:
+#resolution = 17280 17520 32850 1095
+# Specify resolution for specific hosts and services.
+#resolutions = HOST,SERVICE,.*=17280 17520 32850 1095;.*,.*,.*=600 700 775 797
+#
+# The steps are defined by the four step values.
+# The default results in consolidated data points for day, week, month, year
+#step = 1 6 24 288
+# Specify step for specific hosts and services.
+#steps = HOST,SERVICE,.*=1 12 48 596;.*,.*,.*=1 6 24 288
+#
+# The xff (xfiles factor) defines what part of a consolidation interval may be
+# made up from UNKNOWN data while the consolidated value is still regarded as
+# known.  It is given as the ratio of allowed UNKNOWN PDPs to the number of
+# PDPs in the interval.  It ranges from 0 to 1, exclusive.
+#xff = 0.5
+# Specify xff for specific hosts and services.
+#xffs = HOST,SERVICE,.*=0.9;.*,.*,.*=0.5
+
+# By default, each RRD records average values.  To record maximum, minimum, or
+# last value instead of the average value, specify the service and database
+# names here, optionally qualified by hostname.
+#   [host,]service,database;[[host,]service2,database][;...]
+# The old-style specification is deprecated:
+#   service1[,service2[,service3[,...]]]
+#maximums = .*.acme.com,service1,.*;
+#maximums = host1,service1,database;service2,database2;.*.acme.com,service3,.*
+maximums = Current Load,.*;Current Users,.*;Total Processes,.*;PLW,.*
+minimums =
+lasts =
+
+# This lists data that need to go into separate rrd files.  This is used
+# when creating new rrd files when a change to the map is not possible.  Use
+# this to segregate a value from other returned values for a specific host.
+# Each entry consists of a comma separated set of host,service,value.  Separate
+# each set with a semicolon.
+#hostservvar = server1,service1,val1;server2,service2,val2
+#hostservvar = host2,PLW,smtp_error
+
+# Organization of RRD files.  There are two ways to organize the RRD files:
+# flat : all in a single directory (the old way):
+#   rrddir/HOST_SERVICE_DATABASE.rrd
+# subdir : organized by host (the new way):
+#   rrddir/HOST/SERVICE___DATABASE.rrd
+dbseparator = subdir
+
+# Optionally force the language.  If no language is specified, the language
+# is determined from the browser environment or explicit cgi argument.  The
+# possible values are standard language/country codes such as es, fr, de,
+# en_US, en_UK, ...  If there is no corresponding language file, the language
+# reverts to english.
+#language = es
+
+# JavaScript must be enabled for full functionality.  But if you need to
+# disable it and you do not want the warnings, this lets you hide them.
+#hidejswarnings = 1

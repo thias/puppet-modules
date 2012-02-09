@@ -848,6 +848,12 @@ process_performance_data=<%= process_performance_data %>
 
 #host_perfdata_command=process-host-perfdata
 #service_perfdata_command=process-service-perfdata
+<% if host_perfdata_command -%>
+host_perfdata_command=<%= host_perfdata_command %>
+<% end -%>
+<% if service_perfdata_command -%>
+service_perfdata_command=<%= service_perfdata_command %>
+<% end -%>
 
 
 
@@ -913,7 +919,7 @@ service_perfdata_file_processing_interval=<%= service_perfdata_file_processing_i
 
 #host_perfdata_file_processing_command=process-host-perfdata-file
 #service_perfdata_file_processing_command=process-service-perfdata-file
-<% if service_perfdata_file -%>
+<% if service_perfdata_file_processing_command -%>
 service_perfdata_file_processing_command=<%= service_perfdata_file_processing_command %>
 <% end -%>
 

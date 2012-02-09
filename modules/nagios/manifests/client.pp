@@ -12,6 +12,9 @@ class nagios::client (
     $nrpe_command_timeout = '60',
     $nrpe_connection_timeout = '300',
     # other
+    $nagios_service_use = 'generic-service',
+    $plugin_dir = '/usr/libexec/nagios/plugins',
+    $perl = true,
     $selinux = true
 ) {
 
@@ -116,9 +119,14 @@ class nagios::client (
     # Set the defaults for all service checks ("tag" doesn't work here)
     Nagios_service {
         host_name => $nagios::var::host_name,
-        use       => 'generic-service',
+        use       => $nagios_service_use,
     }
     include nagios::checks
+
+    # The perl bindings are required by multiple packages
+    if $perl {
+        nagios::package { 'nagios-plugins-perl': }
+    }
 
     # With selinux, many nrpe plugins require additional rules to work
     if $selinux and $::selinux_enforced {

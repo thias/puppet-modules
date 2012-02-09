@@ -1,0 +1,73 @@
+#!/usr/bin/perl -w
+# Nagios plugin that checks LSI controllers RAID status via lsiutil program
+# lsiutil may be found at ftp://ftp.lsil.com/HostAdapterDrivers/linux/lsiutil/
+
+# Copyright (C) 2011 Emmanuel Lacour <elacour@home-dn.net>
+#
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2, or (at your option) any
+# later version.
+#
+# This file is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this file; see the file COPYING.  If not, write to the Free
+# Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+use strict;
+use lib qw(/usr/local/lib/nagios/plugins /usr/lib/nagios/plugins);
+use utils qw(%ERRORS);
+
+my $lsiutil = '/usr/sbin/lsiutil';
+my $status = $ERRORS{'OK'};
+my $output;
+my @controllers;
+
+unless ( -x $lsiutil ) {
+    print "$lsiutil not found or not executable\n";
+    exit ($ERRORS{'UNKNOWN'});
+}
+
+unless ( $> == 0 ) {
+    print "This program must be run as root. You may use wrappers like sudo to do this.\n";
+    exit ($ERRORS{'UNKNOWN'});
+}
+
+$output = `$lsiutil -p 0 -a 0`;
+for (split /^/, $output) {
+    if ( m|^\s*(\d+)\..*/proc/mpt/ioc| ) {
+        push @controllers, $1;
+    }
+}
+
+unless ( scalar @controllers ) {
+    print "No controller found\n";
+    exit ($ERRORS{'UNKNOWN'});
+}
+
+foreach my $controller ( @controllers ) {
+    my @volumes;
+    $output = `$lsiutil -p $controller -a 21,3,0,0`;
+    for (split /^/, $output) {
+        chomp();
+        if ( m/^Volume.*State/ ) {
+            push @volumes, $_;
+        }
+    }
+    unless ( scalar @volumes ) {
+        push @volumes, "No volume found";
+    } else {
+        foreach my $volume_status ( @volumes ) {
+            $status = $ERRORS{'CRITICAL'} unless ( $volume_status =~ /^Volume \d+ State:  optimal, enabled$/ );
+        }
+    }
+    print "Ctrl $controller: ".join (' / ', @volumes)."\n";
+}
+
+exit ($status);
+

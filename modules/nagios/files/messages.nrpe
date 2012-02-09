@@ -1,2 +1,13 @@
 # check_disk
 avc:  denied  { getattr } for  pid=30142 comm="check_disk" path="/dev/shm" dev=tmpfs ino=5174 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir
+# check_megaraid_sas
+avc:  denied  { getattr ioctl } for  pid=5800 comm="check_megaraid_" path="/usr/share/perl5/strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
+avc:  denied  { read open } for  pid=6349 comm="check_megaraid_" name="strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
+avc:  denied  { execute read open execute_no_trans } for  pid=7446 comm="check_megaraid_" name="sudo" dev=sda1 ino=140315 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:sudo_exec_t:s0 tclass=file
+avc:  denied  { sys_resource audit_write sys_admin } for  pid=9119 comm="sudo" capability=24  scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=unconfined_u:system_r:nrpe_t:s0 tclass=capability
+avc:  denied  { create write nlmsg_relay read } for  pid=9710 comm="sudo" scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=unconfined_u:system_r:nrpe_t:s0 tclass=netlink_audit_socket
+avc:  denied  { read getattr open write } for  pid=10254 comm="MegaCli" name="megaraid_sas_ioctl_node" dev=devtmpfs ino=9682091 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=unconfined_u:object_r:device_t:s0 tclass=chr_file
+avc:  denied  { execute } for  pid=12537 comm="MegaCli" path="/opt/lsi/3rdpartylibs/x86_64/libsysfs.so.2.0.2" dev=sda1 ino=140630 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
+avc:  denied  { write add_name } for  pid=5537 comm="MegaCli" name="megaraid_sas_ioctl_node" dev=devtmpfs ino=4 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=dir
+avc:  denied  { mknod } for  pid=6439 comm="MegaCli" capability=27  scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:nrpe_t:s0 tclass=capability
+avc:  denied  { create } for  pid=8122 comm="MegaCli" name="megaraid_sas_ioctl_node" scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=chr_file

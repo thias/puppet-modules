@@ -3,7 +3,7 @@
 Summary::  Nagios server and client module
 Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
-Updated::  December 2011
+Updated::  February 2012
 
 = Requirements
 
@@ -47,4 +47,28 @@ Nagios client specific overrides :
 
 Debug any startup or configuration problems on the server with :
     nagios -v /etc/nagios/nagios.cfg
+
+To enable nagiosgraph on the server :
+
+    class { 'nagios::nagiosgraph':
+        # This is the default
+        perflog => '/var/log/nagios/service_perfdata.log',
+        # To enable the mouseover graphs
+        nagios_service_action_url => '/nagiosgraph/cgi-bin/show.cgi?host=$HOSTNAME$&service=$SERVICEDESC$\' onMouseOver=\'showGraphPopup(this)\' onMouseOut=\'hideGraphPopup()\' rel=\'/nagiosgraph/cgi-bin/showgraph.cgi?host=$HOSTNAME$&service=$SERVICEDESC$',
+        ssi => true,
+    }
+
+    class { 'nagios::server':
+        process_performance_data => '1',
+        service_perfdata_file    => '/var/log/nagios/service_perfdata.log',
+        service_perfdata_file_template => '$LASTSERVICECHECK$||$HOSTNAME$||$SERVICEDESC$||$SERVICEOUTPUT$||$SERVICEPERFDATA$',
+        service_perfdata_file_processing_interval => '30',
+        service_perfdata_file_processing_command => 'process-service-perfdata-nagiosgraph',
+    }
+
+To enable nagiosgraph for the client's services in the server web interface :
+
+    class { 'nagios::client':
+        nagios_service_use => 'generic-service,nagiosgraph-service',
+    }
 

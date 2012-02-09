@@ -3,6 +3,7 @@
 #
 class nagios::checks {
 
+    # Default checks, enabled on all hosts
     if $::nagios_check_ping_disable != 'true' {
         nagios::check::ping { $nagios::var::host_name: }
     }
@@ -17,6 +18,49 @@ class nagios::checks {
     }
     if $::nagios_check_ntp_time_disable != 'true' {
         nagios::check::ntp_time { $nagios::var::host_name: }
+    }
+    if $::nagios_check_ram_disable != 'true' {
+        nagios::check::ram { $nagios::var::host_name: }
+    }
+    if $::nagios_check_cpu_disable != 'true' {
+        nagios::check::cpu { $nagios::var::host_name: }
+    }
+    # Conditional checks, enabled based on custom facts
+    if $::nagios_check_megaraid_sas_disable != 'true' and
+       $::nagios_pci_megaraid_sas == 'true' {
+        nagios::check::megaraid_sas { $nagios::var::host_name: }
+    } else {
+        nagios::check::megaraid_sas { $nagios::var::host_name: ensure => absent }
+    }
+    if $::nagios_check_mptsas_disable != 'true' and
+       $::nagios_pci_mptsas == 'true' {
+        nagios::check::mptsas { $nagios::var::host_name: }
+    } else {
+        nagios::check::mptsas { $nagios::var::host_name: ensure => absent }
+    }
+    if $::nagios_check_httpd_disable != 'true' and
+       $::nagios_httpd == 'true' {
+        nagios::check::httpd { $nagios::var::host_name: }
+    } else {
+        nagios::check::httpd { $nagios::var::host_name: ensure => absent }
+    }
+    if $::nagios_check_nginx_disable != 'true' and
+       $::nagios_httpd_nginx == 'true' {
+        nagios::check::nginx { $nagios::var::host_name: }
+    } else {
+        nagios::check::nginx { $nagios::var::host_name: ensure => absent }
+    }
+    if $::nagios_check_membase_disable != 'true' and
+       $::nagios_membase == 'true' {
+        nagios::check::membase { $nagios::var::host_name: }
+    } else {
+        nagios::check::membase { $nagios::var::host_name: ensure => absent }
+    }
+    # Checks defaulting to be disabled, requiring explicit enable
+    if $::nagios_check_jobs_status_enable == 'true' {
+        nagios::check::jobs_status { $nagios::var::host_name: }
+    } else {
+        nagios::check::jobs_status { $nagios::var::host_name: ensure => absent }
     }
 
 /*
@@ -348,35 +392,6 @@ class nagios::checks {
             }
        }
     }
-    if $::raid_megaraid == "true" {
-        if $nagios_disable_raid_megaraid != "true" {
-            nagios::check::megaraid {"raid_megaraid": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::megaraid {"raid_megaraid": ensure => absent }
-        }
-    }
-    if $::raid_perc == "true" and $nagios_disable_raid_perc != "true" {
-        nagios::check::perc {"raid_perc":
-            notification_period => $nagios_notification_period,
-            extra_params => $nagios_check_perc_extra_params,
-        }
-    } else {
-        nagios::check::perc {"raid_perc": ensure => absent }
-    }
-    if $::raid_cerc == "true" {
-        if $nagios_disable_raid_cerc != "true" {
-            nagios::check::cerc {"raid_cerc": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::cerc {"raid_cerc": ensure => absent }
-        }
-    }
-    if $::raid_lsi == "true" {
-        if $nagios_disable_raid_lsi != "true" {
-            nagios::check::lsi {"raid_lsi": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::lsi {"raid_lsi": ensure => absent }
-        }
-    }
     if $::raid_software == "true" {
         if $nagios_disable_raid_software != "true" {
             nagios::check::mdraid {"raid_software": notification_period => $nagios_notification_period }
@@ -492,33 +507,6 @@ class nagios::checks {
             nagios::check::openvpn {"openvpn": notification_period => $nagios_notification_period }
         } else {
             nagios::check::openvpn {"openvpn": ensure => absent }
-        }
-    }
-
-    if $::apache_exists == "true" {
-        if ! $nagios_apache_arguments { $nagios_apache_arguments = "-u /private/status" }
-        if $nagios_disable_apache != "true" {
-            nagios::check::http {"apache": arguments => $nagios_apache_arguments, notification_period => $nagios_notification_period  }
-        } else {
-            nagios::check::http {"apache": ensure => absent }
-        }
-    }
-
-    if $::lighttpd_exists == "true" {
-        if ! $nagios_lighttpd_arguments { $nagios_lighttpd_arguments = "-u /private/status" }
-        if $nagios_disable_lighttpd != "true" {
-            nagios::check::http {"lighttpd": arguments => $nagios_lighttpd_arguments, notification_period => $nagios_notification_period  }
-        } else {
-            nagios::check::http {"lighttpd": ensure => absent }
-        }
-    }
-
-    if $::nginx_exists == "true" {
-        if ! $nagios_nginx_arguments { $nagios_nginx_arguments = "-u /private/status" }
-        if $nagios_disable_nginx != "true" {
-            nagios::check::http {"nginx": arguments => $nagios_nginx_arguments, notification_period => $nagios_notification_period  }
-        } else {
-            nagios::check::http {"nginx": ensure => absent }
         }
     }
 

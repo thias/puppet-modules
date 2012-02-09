@@ -47,11 +47,13 @@ class nagios::server (
     ],
     $cfg_dir = [],
     $process_performance_data = '0',
+    $host_perfdata_command = false,
+    $service_perfdata_command = false,
     $service_perfdata_file = false,
     $service_perfdata_file_template = '[SERVICEPERFDATA]\t$TIMET$\t$HOSTNAME$\t$SERVICEDESC$\t$SERVICEEXECUTIONTIME$\t$SERVICELATENCY$\t$SERVICEOUTPUT$\t$SERVICEPERFDATA$',
     $service_perfdata_file_mode = 'a',
     $service_perfdata_file_processing_interval = '0',
-    $service_perfdata_file_processing_command = 'process-service-perfdata-file',
+    $service_perfdata_file_processing_command = false,
     $date_format = 'iso8601',
     $admin_email = 'root@localhost',
     $admin_pager = 'pagenagios@localhost',
@@ -64,7 +66,9 @@ class nagios::server (
     # Others
     $notify_host_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
     $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
-    $timeperiod_workhours = '09:00-17:00'
+    $timeperiod_workhours = '09:00-17:00',
+    $plugin_dir = '/usr/libexec/nagios/plugins',
+    $plugin_nginx = false
 ) {
 
     # Full nrpe command to run, with default options
@@ -87,6 +91,21 @@ class nagios::server (
         'nagios-plugins-udp',
     ]:
         ensure => installed,
+    }
+
+    # Custom plugin scripts required on the server
+    if $plugin_nginx {
+        file { "${plugin_dir}/check_nginx":
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0755',
+            content => template('nagios/plugins/check_nginx'),
+            ensure  => $ensure,
+        }
+    } else {
+        file { "${plugin_dir}/check_nginx":
+            ensure => absent,
+        }
     }
 
     # Other packages
@@ -171,13 +190,13 @@ class nagios::server (
     # Realize all nagios related configuration for this server
     # Automatically reload nagios for relevant configuration changes
     Nagios_host <<| tag == "nagios-${nagios_server}" |>> {
-        notify  => Service['nagios'],
+        notify => Service['nagios'],
     }
     Nagios_hostdependency <<| tag == "nagios-${nagios_server}" |>> {
-        notify  => Service['nagios'],
+        notify => Service['nagios'],
     }
     Nagios_service <<| tag == "nagios-${nagios_server}" |>> {
-        notify  => Service['nagios'],
+        notify => Service['nagios'],
     }
 
     # Works great, but only if the "target" is the default (known limitation)
@@ -256,6 +275,9 @@ class nagios::server (
     nagios_command { 'check_proxy':
         command_line => '$USER1$/check_tcp -H $HOSTADDRESS$ -p $ARG1$',
     }
+    nagios_command { 'check_nginx':
+        command_line => '$USER1$/check_nginx $ARG1$',
+    }
     # Custom NRPE-based commands
     nagios_command { 'check_nrpe_users':
         command_line => "${nrpe} -c check_users",
@@ -280,6 +302,26 @@ class nagios::server (
     }
     nagios_command { 'check_nrpe_ntp_time':
         command_line => "${nrpe} -c check_ntp_time",
+    }
+    # Custom NRPE-based commands using custom plugins
+    nagios_command { 'check_nrpe_ram':
+        command_line => "${nrpe} -c check_ram",
+    }
+    nagios_command { 'check_nrpe_cpu':
+        command_line => "${nrpe} -c check_cpu",
+    }
+    nagios_command { 'check_nrpe_membase':
+        command_line => "${nrpe} -c check_membase",
+    }
+    # Custom NRPE-based commands using custom plugins, conditionally enabled
+    nagios_command { 'check_nrpe_megaraid_sas':
+        command_line => "${nrpe} -c check_megaraid_sas",
+    }
+    nagios_command { 'check_nrpe_mptsas':
+        command_line => "${nrpe} -c check_mptsas",
+    }
+    nagios_command { 'check_nrpe_jobs_status':
+        command_line => "${nrpe} -c check_jobs_status",
     }
     # TODO: sort these
     nagios_command { 'check_nrpe_conntrack':
@@ -394,14 +436,6 @@ class nagios::server (
 #        owner   => 'root',
 #        group   => 'root',
 #        source  => 'puppet:///modules/nagios/usr/share/nagios/html/images/logos',
-#    }
-
-#    if $nagiosgraph { 
-#        ## Nagios Graph command
-#        nagios_command { 'process-service-perfdata':
-#           command_line => '/usr/libexec/nagiosgraph/insert.pl',
-#        }
-#        include nagios::nagiosgraph
 #    }
 
 }
