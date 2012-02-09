@@ -39,7 +39,7 @@ define nagios::check::megaraid_sas (
     }
     # Optional package containing MegaCli
     if $pkg {
-        $pkgname = $operatingsystem ? {
+        $pkgname = $::operatingsystem ? {
             'Gentoo' => 'sys-block/megacli',
              default => 'megacli',
         }

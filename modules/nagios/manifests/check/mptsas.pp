@@ -39,7 +39,7 @@ define nagios::check::mptsas (
     }
     # Optional package containing MegaCli
     if $pkg {
-        $pkgname = $operatingsystem ? {
+        $pkgname = $::operatingsystem ? {
             'Gentoo' => 'sys-block/lsiutil',
              default => 'lsiutil',
         }
