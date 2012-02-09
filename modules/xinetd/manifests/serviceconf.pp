@@ -4,29 +4,29 @@
 #
 # Sample Usage :
 # * Create and enable a new service for vmstat output :
-#    xinetd::serviceconf { "vmstat":
-#        service_type => "UNLISTED",
-#        port         => "24101",
-#        user         => "nobody",
-#        server       => "/usr/bin/vmstat",
+#    xinetd::serviceconf { 'vmstat':
+#        service_type => 'UNLISTED',
+#        port         => '24101',
+#        user         => 'nobody',
+#        server       => '/usr/bin/vmstat',
 #    }
 # * Remove the above service :
-#    xinetd::serviceconf { "vmstat":
-#        server => "/usr/bin/vmstat",
+#    xinetd::serviceconf { 'vmstat':
+#        server => '/usr/bin/vmstat',
 #        ensure => absent,
 #    }
 #
 define xinetd::serviceconf (
-    $ensure         = "present",
+    $ensure         = 'present',
     # $id and $type are reserved puppet variables it seems...
     $service_id     = false,
     $service_type   = false,
     $flags          = false,
-    $disable        = "no",
-    $socket_type    = "stream",
-    $protocol       = "tcp",
-    $wait           = "no",
-    $user           = "root",
+    $disable        = 'no',
+    $socket_type    = 'stream',
+    $protocol       = 'tcp',
+    $wait           = 'no',
+    $user           = 'root',
     $group          = false,
     $instances      = false,
     $nice           = false,
@@ -65,14 +65,14 @@ define xinetd::serviceconf (
 
     $service_name = $title
 
-    if $ensure == "absent" {
+    if $ensure == 'absent' {
 
         file { "/etc/xinetd.d/${service_name}":
             ensure => absent,
         }
 
         # We don't want to make xinetd mandatory for absent
-        exec { "/sbin/service xinetd reload":
+        exec { '/sbin/service xinetd reload':
             subscribe   => File["/etc/xinetd.d/${service_name}"],
             refreshonly => true,
         }
@@ -82,8 +82,8 @@ define xinetd::serviceconf (
         include xinetd
 
         file { "/etc/xinetd.d/${service_name}":
-            content => template("xinetd/xinetd.d-service.erb"),
-            notify  => Service["xinetd"],
+            content => template('xinetd/xinetd.d-service.erb'),
+            notify  => Service['xinetd'],
         }
 
     }

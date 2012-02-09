@@ -2,9 +2,9 @@
 #
 # Sample Usage :
 # * Enable rsyncd :
-#    xinetd::service { "rsync": }
+#    xinetd::service { 'rsync': }
 # * Disable rsyncd :
-#    xinetd::service { "rsync": enable => false }
+#    xinetd::service { 'rsync': enable => false }
 #
 define xinetd::service ( $enable = true ) {
 

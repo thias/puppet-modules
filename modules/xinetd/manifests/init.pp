@@ -8,23 +8,21 @@
 #
 class xinetd {
 
-    package { "xinetd": ensure => installed }
+    package { 'xinetd': ensure => installed }
 
     # On RHEL5 "xinetd is stopped" has an exit status of 0, on RHEL6 it's fixed
-    if ( $operatingsystem == "RedHat" ) and ( $operatingsystemrelease < 6 ) {
+    if ( $::operatingsystem == 'RedHat' ) and ( $::operatingsystemrelease < 6 ) {
         $hasstatus = false
     } else {
         $hasstatus = true
     }
 
-    service { "xinetd":
-        require   => Package["xinetd"],
+    service { 'xinetd':
+        require   => Package['xinetd'],
         enable    => true,
         ensure    => running,
-        restart   => "/etc/init.d/xinetd reload",
+        restart   => '/etc/init.d/xinetd reload',
         hasstatus => $hasstatus,
-        # on RHEL5 "xinetd is stopped" has an exit status of 0...
-        #hasstatus => true,
     }
 
 }
