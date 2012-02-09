@@ -1,0 +1,37 @@
+= Summary
+
+Summary::  Puppet module
+Author::   Matthias Saou <matthias@saou.eu>
+License::  Apache License 2.0
+Updated::  February 2012
+
+= Sample Usage
+
+Basic puppet client node :
+
+    include puppet::client
+
+More advanced puppet client node configuration to be set in site.pp :
+
+    class { 'puppet::client':
+        master => $hostname ? {
+            'puppet' => true,
+             default => false,
+        },
+        sysconfig => $operatingsystem ? {
+            'Gentoo' => false,
+             default => true,
+        },
+        forcenoop     => true,
+        service       => false,
+        cron_enable   => true,
+        cron_silent   => true,
+        puppet_server => 'puppet.example.com',
+    }
+
+The noop related options are especially useful for small deployments where
+there is no testing environment but there is a Dashboard or similar, since
+no changes will be automatically made, but all pending changes will appear
+and be easy to review. The included "repuppet" scripts can then be run on
+nodes where changes are to be applied.
+
