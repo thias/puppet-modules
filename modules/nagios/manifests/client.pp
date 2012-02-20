@@ -106,7 +106,8 @@ class nagios::client (
         alias               => $nagios::var::host_alias,
         address             => $nagios::var::host_address,
         use                 => $nagios::var::host_use,
-        #hostgroups =>
+        hostgroups          => $nagios::var::hostgroups,
+        contact_groups      => $nagios::var::contactgroups,
         #icon_image =>
         #statusmap_image =>
         check_period        => $nagios::var::check_period,

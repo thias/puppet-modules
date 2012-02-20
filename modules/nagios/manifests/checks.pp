@@ -56,6 +56,12 @@ class nagios::checks {
     } else {
         nagios::check::membase { $nagios::var::host_name: ensure => absent }
     }
+    if $::nagios_check_moxi_disable != 'true' and
+       $::nagios_moxi == 'true' {
+        nagios::check::moxi { $nagios::var::host_name: }
+    } else {
+        nagios::check::moxi { $nagios::var::host_name: ensure => absent }
+    }
     # Checks defaulting to be disabled, requiring explicit enable
     if $::nagios_check_jobs_status_enable == 'true' {
         nagios::check::jobs_status { $nagios::var::host_name: }

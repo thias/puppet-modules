@@ -7,6 +7,9 @@ define nagios::check::cpu ( $args = '' ) {
     if $::nagios_check_cpu_notification_period != '' {
         Nagios_service { notification_period => $::nagios_check_cpu_notification_period }
     }
+    if $::nagios_check_cpu_max_check_attempts != '' {
+        Nagios_service { max_check_attempts => $::nagios_check_cpu_max_check_attempts }
+    }
 
     # Service specific overrides
     if $::nagios_check_cpu_warning != '' {

@@ -42,6 +42,7 @@ class nagios::server (
         '/etc/nagios/nagios_contactgroup.cfg',
         '/etc/nagios/nagios_host.cfg',
 #        '/etc/nagios/nagios_hostdependency.cfg',
+        '/etc/nagios/nagios_hostgroup.cfg',
         '/etc/nagios/nagios_service.cfg',
         '/etc/nagios/nagios_timeperiod.cfg',
     ],
@@ -63,6 +64,8 @@ class nagios::server (
     },
     # Options for all nrpe-based checks
     $nrpe_options = '-t 15',
+    # Contacts and Contact Groups
+    $admins_members = 'nagiosadmin',
     # Others
     $notify_host_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
     $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
@@ -135,12 +138,14 @@ class nagios::server (
         notify  => Service['httpd'],
         require => Package['nagios'],
     }
-    file { '/etc/nagios/.htpasswd':
-        owner   => 'root',
-        group   => 'apache',
-        mode    => '0640',
-        source  => $apache_httpd_htpasswd_source,
-        require => Package['nagios'],
+    if $apache_httpd_htpasswd_source != false {
+        file { '/etc/nagios/.htpasswd':
+            owner   => 'root',
+            group   => 'apache',
+            mode    => '0640',
+            source  => $apache_httpd_htpasswd_source,
+            require => Package['nagios'],
+        }
     }
 
     if $apache_httpd {
@@ -190,13 +195,32 @@ class nagios::server (
     # Realize all nagios related configuration for this server
     # Automatically reload nagios for relevant configuration changes
     Nagios_host <<| tag == "nagios-${nagios_server}" |>> {
-        notify => Service['nagios'],
+        notify  => Service['nagios'],
+        require => Package['nagios'],
     }
     Nagios_hostdependency <<| tag == "nagios-${nagios_server}" |>> {
-        notify => Service['nagios'],
+        notify  => Service['nagios'],
+        require => Package['nagios'],
     }
     Nagios_service <<| tag == "nagios-${nagios_server}" |>> {
-        notify => Service['nagios'],
+        notify  => Service['nagios'],
+        require => Package['nagios'],
+    }
+    Nagios_contact {
+        notify  => Service['nagios'],
+        require => Package['nagios'],
+    }
+    Nagios_contactgroup {
+        notify  => Service['nagios'],
+        require => Package['nagios'],
+    }
+    Nagios_timeperiod {
+        notify  => Service['nagios'],
+        require => Package['nagios'],
+    }
+    Nagios_hostgroup {
+        notify  => Service['nagios'],
+        require => Package['nagios'],
     }
 
     # Works great, but only if the "target" is the default (known limitation)
@@ -205,6 +229,10 @@ class nagios::server (
         'nagios_host',
         'nagios_hostdependency',
         'nagios_service',
+        'nagios_contact',
+        'nagios_contactgroup',
+        'nagios_timeperiod',
+        'nagios_hostgroup',
     ]:
         purge => true,
     }
@@ -313,6 +341,9 @@ class nagios::server (
     nagios_command { 'check_nrpe_membase':
         command_line => "${nrpe} -c check_membase",
     }
+    nagios_command { 'check_nrpe_moxi':
+        command_line => "${nrpe} -c check_moxi",
+    }
     # Custom NRPE-based commands using custom plugins, conditionally enabled
     nagios_command { 'check_nrpe_megaraid_sas':
         command_line => "${nrpe} -c check_megaraid_sas",
@@ -403,7 +434,7 @@ class nagios::server (
     }
     nagios_contactgroup { 'admins':
         alias   => 'Nagios Administrators',
-        members => 'nagiosadmin',
+        members => $admins_members,
     }
 
     # Nagios timeperiods

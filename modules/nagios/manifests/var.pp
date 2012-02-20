@@ -58,5 +58,15 @@ class nagios::var {
         $notification_period = '24x7'
     }
 
+    # hostgroups (defaults to undef)
+    if $::nagios_hostgroups != '' {
+        $hostgroups = $::nagios_hostgroups
+    }
+
+    # contactgroups (defaults to undef)
+    if $::nagios_contactgroups != '' {
+        $contactgroups = $::nagios_contactgroups
+    }
+
 }
 
