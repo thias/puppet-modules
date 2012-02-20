@@ -71,7 +71,8 @@ class nagios::server (
     $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
     $timeperiod_workhours = '09:00-17:00',
     $plugin_dir = '/usr/libexec/nagios/plugins',
-    $plugin_nginx = false
+    $plugin_nginx = false,
+    $selinux = true
 ) {
 
     # Full nrpe command to run, with default options
@@ -456,6 +457,13 @@ class nagios::server (
         wednesday   => $timeperiod_workhours,
         thursday    => $timeperiod_workhours,
         friday      => $timeperiod_workhours,
+    }
+
+    # With selinux, adjustements are needed for nagiosgraph
+    if $selinux and $::selinux_enforced {
+        selinux::audit2allow { 'nagios':
+            source => 'puppet:///modules/nagios/messages.nagios',
+        }
     }
 
     # TODO : Clean
