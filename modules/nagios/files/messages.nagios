@@ -1,0 +1,4 @@
+# check_ping
+avc:  denied  { execute read open execute_no_trans } for  pid=15730 comm="check_ping" name="ping" dev=vda1 ino=267845 scontext=unconfined_u:system_r:nagios_t:s0 tcontext=system_u:object_r:ping_exec_t:s0 tclass=file
+avc:  denied  { create read write setopt getopt } for  pid=16771 comm="ping" scontext=unconfined_u:system_r:nagios_t:s0 tcontext=unconfined_u:system_r:nagios_t:s0 tclass=rawip_socket
+avc:  denied  { net_raw } for  pid=17066 comm="ping" capability=13  scontext=unconfined_u:system_r:nagios_t:s0 tcontext=unconfined_u:system_r:nagios_t:s0 tclass=capability
