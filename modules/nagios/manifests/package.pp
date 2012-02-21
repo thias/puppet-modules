@@ -9,7 +9,7 @@ define nagios::package () {
             {
                 $pkgname = $::operatingsystem ? {
                     'Gentoo' => 'net-analyzer/nagios-plugins',
-                    'RedHat' => $title,
+                     default => $title,
                 }
                 realize Package[$pkgname]
             }

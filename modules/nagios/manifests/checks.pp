@@ -162,7 +162,7 @@ class nagios::checks {
     } else {
         nagios::check::ntp_time {'ntp_time': ensure => absent }
     }
-    if $::operatingsystem == 'RedHat' and $::operatingsystemrelease < 6 {
+    if $::operatingsystem =~ /^(RedHat|CentOS)$/ and $::operatingsystemrelease < 6 {
         if $nagios_disable_klogd != "true" {
             nagios::check::klogd {'klogd': notification_period => 'workhours' }
         } else {

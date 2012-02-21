@@ -27,12 +27,15 @@ class nagios::client (
 #    $nagios_notification_period = '24x7'
 
     # Base packages
-    if ( $operatingsystem == 'RedHat' ) {
-        package { [ 'nrpe', 'nagios-plugins' ]: ensure => installed }
-    } elsif ( $operatingsystem == 'Gentoo' ) {
-        package { 'net-analyzer/nagios-nrpe':
-            alias  => 'nrpe',
-            ensure => installed,
+    case $operatingsystem {
+        'RedHat', 'CentOS': {
+            package { [ 'nrpe', 'nagios-plugins' ]: ensure => installed }
+        }
+        'Gentoo': {
+            package { 'net-analyzer/nagios-nrpe':
+                alias  => 'nrpe',
+                ensure => installed,
+            }
         }
     }
 
@@ -71,33 +74,36 @@ class nagios::client (
 
     # Optional plugin packages, to be realized where needed
     # The main magic is in nagios::package
-    if $operatingsystem == 'RedHat' {
-        @package { [
-            'nagios-plugins-disk',
-            'nagios-plugins-file_age',
-            'nagios-plugins-ide_smart',
-            'nagios-plugins-ifstatus',
-            'nagios-plugins-linux_raid',
-            'nagios-plugins-load',
-            'nagios-plugins-log',
-            'nagios-plugins-mailq',
-            'nagios-plugins-mysql',
-            'nagios-plugins-mysql_health',
-            'nagios-plugins-ntp',
-            'nagios-plugins-oracle_health',
-            'nagios-plugins-perl',
-            'nagios-plugins-pgsql',
-            'nagios-plugins-procs',
-            'nagios-plugins-sensors',
-            'nagios-plugins-swap',
-            'nagios-plugins-users',
-        ]:
-            ensure => installed,
+    case $operatingsystem {
+        'RedHat', 'CentOS': {
+            @package { [
+                'nagios-plugins-disk',
+                'nagios-plugins-file_age',
+                'nagios-plugins-ide_smart',
+                'nagios-plugins-ifstatus',
+                'nagios-plugins-linux_raid',
+                'nagios-plugins-load',
+                'nagios-plugins-log',
+                'nagios-plugins-mailq',
+                'nagios-plugins-mysql',
+                'nagios-plugins-mysql_health',
+                'nagios-plugins-ntp',
+                'nagios-plugins-oracle_health',
+                'nagios-plugins-perl',
+                'nagios-plugins-pgsql',
+                'nagios-plugins-procs',
+                'nagios-plugins-sensors',
+                'nagios-plugins-swap',
+                'nagios-plugins-users',
+            ]:
+                ensure => installed,
+            }
         }
-    } elsif $operatingsystem == 'Gentoo' {
-        # No package splitting in Gentoo
-        @package { 'net-analyzer/nagios-plugins':
-            ensure => installed,
+        'Gentoo': {
+            # No package splitting in Gentoo
+            @package { 'net-analyzer/nagios-plugins':
+                ensure => installed,
+            }
         }
     }
 
