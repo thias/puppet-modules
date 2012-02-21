@@ -227,15 +227,31 @@ class nagios::server (
     # Works great, but only if the "target" is the default (known limitation)
     resources { [
         'nagios_command',
-        'nagios_host',
-        'nagios_hostdependency',
-        'nagios_service',
         'nagios_contact',
         'nagios_contactgroup',
-        'nagios_timeperiod',
+        'nagios_host',
+        'nagios_hostdependency',
         'nagios_hostgroup',
+        'nagios_service',
+        'nagios_timeperiod',
     ]:
         purge => true,
+    }
+
+    # Work around a puppet bug where created files are 600 root:root
+    file { [
+        '/etc/nagios/nagios_command.cfg',
+        '/etc/nagios/nagios_contact.cfg',
+        '/etc/nagios/nagios_contactgroup.cfg',
+        '/etc/nagios/nagios_host.cfg',
+        '/etc/nagios/nagios_hostdependency.cfg',
+        '/etc/nagios/nagios_hostgroup.cfg',
+        '/etc/nagios/nagios_service.cfg',
+        '/etc/nagios/nagios_timeperiod.cfg',
+    ]:
+        owner => 'root',
+        group => 'nagios',
+        mode  => '0640',
     }
 
     # Nagios commands
