@@ -475,6 +475,11 @@ class nagios::server (
         friday      => $timeperiod_workhours,
     }
 
+    # Nagios hostgroup, we need at least one for puppet to create the file
+    nagios_hostgroup { 'nagios':
+        alias => 'Nagios Servers',
+    }
+
     # With selinux, adjustements are needed for nagiosgraph
     if $selinux and $::selinux_enforced {
         selinux::audit2allow { 'nagios':
