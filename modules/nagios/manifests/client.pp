@@ -21,11 +21,6 @@ class nagios::client (
     # Get all of the variables
     include nagios::var
 
-#    $nagiosgraph    = false,
-#    # set as variable so we can have various nagios servers in the future and allow them depending on the platform
-#    $nagios_server  = [ '192.168.49.13', '91.121.108.16' ],
-#    $nagios_notification_period = '24x7'
-
     # Base packages
     case $operatingsystem {
         'RedHat', 'CentOS': {
@@ -142,29 +137,5 @@ class nagios::client (
         }
     }
 
-/*
-    #include nagios::defaultchecks
-    class { 'nagios::defaultchecks': nagios_notification_period => $nagios_notification_period;}
-
-    # Other packages, required by some plugins
-    @package { [
-        'afaapps',
-        'lsiutil',
-        'megacli',
-        'megarc',
-        'perl-libwww-perl',
-    ]:
-        ensure => installed,
-    }
-
-    # Script used for many different checks. Just realize it to include it
-    @file { "${nagios::client::plugin_dir}/check_logfile":
-        source  => 'puppet:///modules/nagios/plugins/check_logfile',
-        mode    => '0755',
-        require => Package['nagios-plugins'],
-    }
-
-    include sudoers
-*/
 }
 

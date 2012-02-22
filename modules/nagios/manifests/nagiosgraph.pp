@@ -1,11 +1,11 @@
 class nagios::nagiosgraph (
     # The 'nagios_command' and 'nagios_service' we add
-    $nagios_command_name = 'process-service-perfdata-nagiosgraph',
-    $nagios_command_line = '/usr/libexec/nagiosgraph/insert.pl',
-    $nagios_service_name = 'nagiosgraph-service',
+    $nagios_command_name       = 'process-service-perfdata-nagiosgraph',
+    $nagios_command_line       = '/usr/libexec/nagiosgraph/insert.pl',
+    $nagios_service_name       = 'nagiosgraph-service',
     $nagios_service_action_url = '/nagiosgraph/cgi-bin/show.cgi?host=$HOSTNAME$&service=$SERVICEDESC$',
     # The apache configuration snippet
-    $apache_httpd_conf_source = 'puppet:///modules/nagios/apache-httpd/httpd-nagiosgraph.conf',
+    $apache_httpd_conf_source  = 'puppet:///modules/nagios/apache-httpd/httpd-nagiosgraph.conf',
     # Used in the nagiosgraph.conf template
     $perflog     = '/var/log/nagios/service_perfdata.log',
     $plotasarea  = 'idle,data;system,data;user,data;nice,data',
@@ -28,8 +28,8 @@ class nagios::nagiosgraph (
     # Service template, "use" it from graphed services to create web links
     nagios_service { $nagios_service_name:
         action_url => $nagios_service_action_url,
-        register  => '0',
-        notify    => Service['nagios'],
+        register   => '0',
+        notify     => Service['nagios'],
     }
 
     file { '/etc/nagiosgraph/nagiosgraph.conf':

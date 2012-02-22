@@ -7,7 +7,12 @@ Updated::  February 2012
 
 = Requirements
 
-This module requires the apache-httpd and php modules for the server part.
+This module requires the apache-httpd and php modules for the server part,
+though they can be disabled.
+
+The plugin packages used for RHEL with selinux enabled should have the
+libexecdir directory properly set to /usr/libexec in order to avoid selinux
+denials. Such packages can be found on http://dl.marmotte.net/rpms/
 
 = Sample Usage
 

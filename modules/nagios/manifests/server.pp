@@ -1,8 +1,8 @@
 class nagios::server (
     # For the tag of the stored configuration to realize
-    $nagios_server = 'default',
-    $apache_httpd = true,
-    $apache_httpd_ssl = true,
+    $nagios_server        = 'default',
+    $apache_httpd         = true,
+    $apache_httpd_ssl     = true,
     $apache_httpd_modules = [
         'auth_basic',
         'authn_file',
@@ -16,19 +16,20 @@ class nagios::server (
         'rewrite',
         'cgi',
     ],
-    $apache_httpd_conf_source = 'puppet:///modules/nagios/apache-httpd/httpd-nagios.conf',
+    $apache_httpd_conf_source     = 'puppet:///modules/nagios/apache-httpd/httpd-nagios.conf',
+    $apache_httpd_conf_content    = undef,
     $apache_httpd_htpasswd_source = 'puppet:///modules/nagios/apache-httpd/htpasswd',
-    $php = true,
+    $php     = true,
     $php_apc = true,
     # cgi.cfg
-    $cgi_authorized_for_system_information = 'nagiosadmin',
+    $cgi_authorized_for_system_information        = 'nagiosadmin',
     $cgi_authorized_for_configuration_information = 'nagiosadmin',
-    $cgi_authorized_for_system_commands = 'nagiosadmin',
-    $cgi_authorized_for_all_services = 'nagiosadmin',
-    $cgi_authorized_for_all_hosts = 'nagiosadmin',
-    $cgi_authorized_for_all_service_commands = 'nagiosadmin',
-    $cgi_authorized_for_all_host_commands = 'nagiosadmin',
-    $cgi_default_statusmap_layout = '5',
+    $cgi_authorized_for_system_commands           = 'nagiosadmin',
+    $cgi_authorized_for_all_services              = 'nagiosadmin',
+    $cgi_authorized_for_all_hosts                 = 'nagiosadmin',
+    $cgi_authorized_for_all_service_commands      = 'nagiosadmin',
+    $cgi_authorized_for_all_host_commands         = 'nagiosadmin',
+    $cgi_default_statusmap_layout                 = '5',
     # nagios.cfg
     $cfg_file = [
         # Original files - only reuse the templates as-is
@@ -46,15 +47,15 @@ class nagios::server (
         '/etc/nagios/nagios_service.cfg',
         '/etc/nagios/nagios_timeperiod.cfg',
     ],
-    $cfg_dir = [],
-    $process_performance_data = '0',
-    $host_perfdata_command = false,
-    $service_perfdata_command = false,
-    $service_perfdata_file = false,
+    $cfg_dir                        = [],
+    $process_performance_data       = '0',
+    $host_perfdata_command          = false,
+    $service_perfdata_command       = false,
+    $service_perfdata_file          = false,
     $service_perfdata_file_template = '[SERVICEPERFDATA]\t$TIMET$\t$HOSTNAME$\t$SERVICEDESC$\t$SERVICEEXECUTIONTIME$\t$SERVICELATENCY$\t$SERVICEOUTPUT$\t$SERVICEPERFDATA$',
-    $service_perfdata_file_mode = 'a',
+    $service_perfdata_file_mode     = 'a',
     $service_perfdata_file_processing_interval = '0',
-    $service_perfdata_file_processing_command = false,
+    $service_perfdata_file_processing_command  = false,
     $date_format = 'iso8601',
     $admin_email = 'root@localhost',
     $admin_pager = 'pagenagios@localhost',
@@ -63,16 +64,16 @@ class nagios::server (
         '1' => '/usr/libexec/nagios/plugins',
     },
     # Options for all nrpe-based checks
-    $nrpe_options = '-t 15',
+    $nrpe_options   = '-t 15',
     # Contacts and Contact Groups
     $admins_members = 'nagiosadmin',
     # Others
-    $notify_host_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
+    $notify_host_by_email_command_line    = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
     $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
     $timeperiod_workhours = '09:00-17:00',
-    $plugin_dir = '/usr/libexec/nagios/plugins',
-    $plugin_nginx = false,
-    $selinux = true
+    $plugin_dir           = '/usr/libexec/nagios/plugins',
+    $plugin_nginx         = false,
+    $selinux              = true
 ) {
 
     # Full nrpe command to run, with default options
@@ -114,7 +115,7 @@ class nagios::server (
 
     # Other packages
     package { [
-        'mailx',            # For the default email notifications to work
+        'mailx', # For the default email notifications to work
     ]:
         ensure => installed,
     }
@@ -136,6 +137,7 @@ class nagios::server (
         group   => 'root',
         mode    => '0644',
         source  => $apache_httpd_conf_source,
+        content => $apache_httpd_conf_content,
         notify  => Service['httpd'],
         require => Package['nagios'],
     }
@@ -193,8 +195,9 @@ class nagios::server (
         require => Package['nagios'],
     }
 
-    # Realize all nagios related configuration for this server
+    # Realize all nagios related exported resources for this server
     # Automatically reload nagios for relevant configuration changes
+    # Require the package for the parent directory to exist initially
     Nagios_host <<| tag == "nagios-${nagios_server}" |>> {
         notify  => Service['nagios'],
         require => Package['nagios'],
@@ -207,6 +210,10 @@ class nagios::server (
         notify  => Service['nagios'],
         require => Package['nagios'],
     }
+    # Auto reload and parent dir, but for non-exported resources
+    # FIXME: This does not work from outside here, wrong scope.
+    # We'll need to wrap around these types with our own
+    # definitions like for "host"
     Nagios_contact {
         notify  => Service['nagios'],
         require => Package['nagios'],

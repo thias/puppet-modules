@@ -78,23 +78,6 @@ class nagios::checks {
     } else {
         nagios::check::puppet {"puppet": ensure => absent }
     }
-    if $nagios_disable_disk != "true" {
-        nagios::check::disk {"disk":
-            notification_period => $nagios_notification_period,
-            check_period => $nagios_check_period,
-            extra_params => $nagios_check_disk_extra_params
-        }
-    } else {
-        nagios::check::disk {"disk": ensure => absent }
-    }
-    if $nagios_disable_swap != "true" {
-        nagios::check::swap {"swap":
-            notification_period => $nagios_notification_period,
-            check_period => $nagios_check_period,
-        }
-    } else {
-        nagios::check::swap {"swap": ensure => absent }
-    }
     if $nagios_disable_ssh != "true" {
         nagios::check::ssh {"ssh":
             notification_period => $nagios_notification_period,
@@ -102,16 +85,6 @@ class nagios::checks {
         }
     } else {
         nagios::check::ssh {"ssh": ensure => absent }
-    }
-    if $nagios_disable_load != "true" {
-        nagios::check::load {"load":
-            notification_period => $nagios_notification_period,
-            check_period => $nagios_check_period,
-            warning_value => $nagios_check_load_warning,
-            critical_value => $nagios_check_load_critical,
-        }
-    } else {
-        nagios::check::load {"load": ensure => absent }
     }
     if $nagios_disable_zombies != "true" {
         nagios::check::zombie_procs {"zombies":
@@ -152,15 +125,6 @@ class nagios::checks {
         }
     } else {
         nagios::check::snmpd {"snmpd": ensure => absent }
-    }
-    if $nagios_disable_ntp_time != true {
-        nagios::check::ntp_time {'ntp_time':
-            notification_period => $nagios_notification_period,
-            check_period        => $nagios_check_period,
-            extra_params        => $nagios_check_ntp_time_extra_params,
-        }
-    } else {
-        nagios::check::ntp_time {'ntp_time': ensure => absent }
     }
     if $::operatingsystem =~ /^(RedHat|CentOS)$/ and $::operatingsystemrelease < 6 {
         if $nagios_disable_klogd != "true" {
@@ -456,46 +420,6 @@ class nagios::checks {
         }
     }
 
-    if $::squale_exists == "true" {
-        if $nagios_disable_squale != "true" {
-            nagios::check::squale {"squale": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::squale {"squale": ensure => absent }
-        }
-    }
-
-    if $::searchd_exists == "true" {
-        if $nagios_disable_search != "true" {
-            nagios::check::search {"search": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::search {"search": ensure => absent }
-        }
-    }
-
-    if $::lsyncd_exists == 'true' {
-        if $nagios_disable_lsyncd != 'true' {
-            nagios::check::lsyncd {'lsyncd': notification_period => 'workhours' }
-        } else {
-            nagios::check::lsyncd {'lsyncd': ensure => absent }
-        }
-    }
-    
-    if $::dovecot_exists == "true" {
-        if $nagios_disable_imap != "true" {
-            nagios::check::imap {"imap": notification_period => 'workhours' }
-        } else {
-            nagios::check::imap {"imap": ensure => absent }
-        }
-    }
-
-    if $::gdns_exists == "true" {
-        if $nagios_disable_gdns != "true" {
-            nagios::check::gdns {"gdns": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::gdns {"gdns": ensure => absent }
-        }
-    }
-
     if $::interfaces =~ /bond/ {
         if $nagios_disable_bonding != "true" {
             nagios::check::bonding {"bonding":
@@ -508,21 +432,6 @@ class nagios::checks {
         }
     }
 
-    if $::openvpn_exists == "true" {
-        if $nagios_disable_openvpn != "true" {
-            nagios::check::openvpn {"openvpn": notification_period => $nagios_notification_period }
-        } else {
-            nagios::check::openvpn {"openvpn": ensure => absent }
-        }
-    }
-
-    if $::monkeybackup_exists == "true" {
-       if $nagios_disable_monkeybackup != "true" {
-            nagios::check::monkeybackup {"monkey-backup": notification_period => 'workhours' }
-        } else {
-            nagios::check::monkeybackup {"monkey-backup": ensure => absent }
-        }
-    }
 */
 
 }
