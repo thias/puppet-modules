@@ -16,8 +16,8 @@ class nagios::server (
         'rewrite',
         'cgi',
     ],
-    $apache_httpd_conf_source     = 'puppet:///modules/nagios/apache-httpd/httpd-nagios.conf',
-    $apache_httpd_conf_content    = undef,
+    # The apache config snippet, more useful as a template when using a custom
+    $apache_httpd_conf_content    = template('nagios/apache-httpd/httpd-nagios.conf.erb'),
     $apache_httpd_htpasswd_source = 'puppet:///modules/nagios/apache-httpd/htpasswd',
     $php     = true,
     $php_apc = true,
@@ -136,7 +136,6 @@ class nagios::server (
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        source  => $apache_httpd_conf_source,
         content => $apache_httpd_conf_content,
         notify  => Service['httpd'],
         require => Package['nagios'],

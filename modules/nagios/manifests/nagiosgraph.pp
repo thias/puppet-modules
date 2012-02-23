@@ -4,8 +4,10 @@ class nagios::nagiosgraph (
     $nagios_command_line       = '/usr/libexec/nagiosgraph/insert.pl',
     $nagios_service_name       = 'nagiosgraph-service',
     $nagios_service_action_url = '/nagiosgraph/cgi-bin/show.cgi?host=$HOSTNAME$&service=$SERVICEDESC$',
-    # The apache configuration snippet
-    $apache_httpd_conf_source  = 'puppet:///modules/nagios/apache-httpd/httpd-nagiosgraph.conf',
+    # The apache config snippet, more useful as a template when using a custom
+    $apache_httpd              = true,
+    $apache_httpd_conf_content = template('nagios/apache-httpd/httpd-nagiosgraph.conf.erb'),
+    $apache_httpd_conf_file    = '/etc/httpd/conf.d/nagiosgraph.conf',
     # Used in the nagiosgraph.conf template
     $perflog     = '/var/log/nagios/service_perfdata.log',
     $plotasarea  = 'idle,data;system,data;user,data;nice,data',
@@ -40,13 +42,15 @@ class nagios::nagiosgraph (
         require => Package['nagiosgraph'],
     }
 
-    file { '/etc/httpd/conf.d/nagiosgraph.conf':
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        source  => $apache_httpd_conf_source,
-        notify  => Service['httpd'],
-        require => Package['nagiosgraph'],
+    if $apache_httpd {
+        file { $apache_httpd_conf_file:
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            source  => $apache_httpd_conf_source,
+            notify  => Service['httpd'],
+            require => Package['nagiosgraph'],
+        }
     }
 
     # With selinux, adjustements are needed for nagiosgraph
