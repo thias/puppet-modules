@@ -47,7 +47,7 @@ class nagios::nagiosgraph (
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
-            source  => $apache_httpd_conf_source,
+            content => $apache_httpd_conf_content,
             notify  => Service['httpd'],
             require => Package['nagiosgraph'],
         }
