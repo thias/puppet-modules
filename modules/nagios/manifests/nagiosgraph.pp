@@ -71,8 +71,9 @@ class nagios::nagiosgraph (
     # Overwrite the original action image, as suggested in the INSTALL
     if $gif {
         file { '/usr/share/nagios/html/images/action.gif':
-            ensure => link,
-            target => '/usr/share/nagiosgraph/examples/graph.gif',
+            ensure  => link,
+            target  => '/usr/share/nagiosgraph/examples/graph.gif',
+            require => Package['nagios'],
         }
     }
 
