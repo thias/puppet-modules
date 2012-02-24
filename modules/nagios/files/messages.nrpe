@@ -1,5 +1,6 @@
 # check_disk
 avc:  denied  { getattr } for  pid=30142 comm="check_disk" path="/dev/shm" dev=tmpfs ino=5174 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:tmpfs_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=11968 comm="check_disk" path="/boot" dev=sda1 ino=2 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:boot_t:s0 tclass=dir
 # check_megaraid_sas
 avc:  denied  { getattr ioctl } for  pid=5800 comm="check_megaraid_" path="/usr/share/perl5/strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
 avc:  denied  { read open } for  pid=6349 comm="check_megaraid_" name="strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
