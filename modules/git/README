@@ -17,5 +17,5 @@ Git server :
         user => 'git',
     }
 
-For an ssh based server, see git::gitosis.
+For an ssh based server, see git::gitosis and git::gitolite.
 
