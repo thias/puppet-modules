@@ -1,0 +1,2 @@
+avc:  denied  { search getattr read open } for  pid=23409 comm="gitweb.cgi" name="git" dev=vda1 ino=392451 scontext=unconfined_u:system_r:httpd_git_script_t:s0 tcontext=system_u:object_r:gitosis_var_lib_t:s0 tclass=dir
+avc:  denied  { getattr read open ioctl } for  pid=25243 comm="git" name="HEAD" dev=vda1 ino=526880 scontext=unconfined_u:system_r:httpd_git_script_t:s0 tcontext=unconfined_u:object_r:gitosis_var_lib_t:s0 tclass=file
