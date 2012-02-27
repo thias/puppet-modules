@@ -1,7 +1,7 @@
 #!/bin/bash
 # Simple wrapper around puppet agent with the wanted options.
 #
-# NOTE: Never noop by default! (when called from cron, --noop can be added)
+# NOTE: no-noop by default! (when called from cron, --noop can be added)
 
 # For interactive runs, also display to the console
 [ -z "$TERM" ] && CONSOLE="" || CONSOLE="--logdest=console"
@@ -9,7 +9,8 @@
 exec puppet agent \
   --onetime \
   --no-daemonize \
+  --no-usecacheonfailure \
   --logdest=<%= puppet_log %> ${CONSOLE} \
   --server=<%= puppet_server %> \
-  --port=<%= puppet_port %> <%= puppet_extra_opts %> $@
+  --port=<%= puppet_port %> <%= puppet_extra_opts %> --no-noop $@
 
