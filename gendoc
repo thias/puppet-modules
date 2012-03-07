@@ -1,7 +1,10 @@
 #!/bin/sh
-
+#
 # This is all quite ugly because puppetdoc is meant to be run on a real
 # puppet master, not just against standalone modules.
+#
+# NOTE: puppetdoc needs ruby-rdoc to be able to run...
+#
 
 # /data/software/puppet-modules
 REMOVE=`pwd`
