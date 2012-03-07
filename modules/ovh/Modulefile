@@ -1,4 +1,4 @@
-name 'ovh'
+name 'thias-ovh'
 version '0.2.0'
 source 'git://github.com/thias/puppet-modules/modules/ovh'
 author 'Matthias Saou'
