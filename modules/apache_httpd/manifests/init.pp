@@ -1,4 +1,4 @@
-# Class: apache_httpd
+# Define: apache_httpd
 #
 # Apache httpd web server main definition.
 #
