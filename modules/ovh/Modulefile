@@ -1,7 +1,9 @@
 name 'ovh'
-version '0.1.1'
+version '0.2.0'
+source 'git://github.com/thias/puppet-modules/modules/ovh'
 author 'Matthias Saou'
-summary 'OVH'
-description "OVH specific server changes."
-license 'Apache'
-project_page 'http://glee.thias.es/'
+license 'Apache 2.0'
+summary 'OVH specific server changes'
+description "Install and enable OVH specific OCO service monitoring, as well
+    as the IP address restricted root SSH key for OVH's tech support."
+project_page 'http://glee.thias.es/puppet'
