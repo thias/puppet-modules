@@ -1,0 +1,6 @@
+2012-03-07 - 0.3.0
+* Rename from apache-httpd to apache_httpd to conform with puppetlabs docs.
+* Update tests to cover more cases.
+* Include LICENSE since the module will be distributed individually.
+* Update included documentation details.
+
