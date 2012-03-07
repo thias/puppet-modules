@@ -1,4 +1,4 @@
 2012-03-07 - 0.2.0
-- Update tests to cover more cases.
-- Include LICENSE since the module will be distributed individually.
+* Update tests to cover more cases.
+* Include LICENSE since the module will be distributed individually.
 
