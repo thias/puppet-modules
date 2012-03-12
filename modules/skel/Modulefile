@@ -1,2 +1,9 @@
 name 'skel'
-version '0.1.0'
+version '0.1.1'
+source 'git://github.com/thias/puppet-modules/modules/skel'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'Skeleton module'
+description "Install and enable ...
+    bla bla bla."
+project_page 'http://glee.thias.es/puppet'

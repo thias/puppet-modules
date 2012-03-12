@@ -1,13 +1,8 @@
-= Summary
+skel
 
-Summary::  Skeleton module
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  August 2011
+This is not a real module. It's just the skeleton to be copied when creating
+a new module. Everything is just bla bla and examples.
 
-= Sample Usage
-
-Basic foo :
-
-    include skel
+* `skel::server` : Manage server
+* `skel::client` : Manager client
 
