@@ -1,0 +1,7 @@
+2012-03-12 - 0.1.1
+* Clean up the nginx module to match current puppetlabs guidelines.
+* Rename the conf definition to file, to be consistent with apache_httpd::file.
+* Add the params class to split out distro-specific parameters.
+* Add simple smoke testing tests.
+* Remove leftover listen_http and listen_https options.
+
