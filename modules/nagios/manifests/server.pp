@@ -17,8 +17,8 @@ class nagios::server (
         'cgi',
     ],
     # The apache config snippet, more useful as a template when using a custom
-    $apache_httpd_conf_content    = template('nagios/apache-httpd/httpd-nagios.conf.erb'),
-    $apache_httpd_htpasswd_source = 'puppet:///modules/nagios/apache-httpd/htpasswd',
+    $apache_httpd_conf_content    = template('nagios/apache_httpd/httpd-nagios.conf.erb'),
+    $apache_httpd_htpasswd_source = 'puppet:///modules/nagios/apache_httpd/htpasswd',
     $php     = true,
     $php_apc = true,
     # cgi.cfg
@@ -151,7 +151,7 @@ class nagios::server (
     }
 
     if $apache_httpd {
-        apache-httpd { 'prefork':
+        apache_httpd { 'prefork':
             ssl       => $apache_httpd_ssl,
             modules   => $apache_httpd_modules,
             keepalive => 'On',
