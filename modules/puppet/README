@@ -3,21 +3,17 @@
 Summary::  Puppet module
 Author::   Matthias Saou <matthias@saou.eu>
 License::  Apache License 2.0
-Updated::  February 2012
+Updated::  March 2012
 
 = Sample Usage
 
-Basic puppet client node :
+Basic puppet agent on a client node :
 
-    include puppet::client
+    include puppet::agent
 
 More advanced puppet client node configuration to be set in site.pp :
 
-    class { 'puppet::client':
-        master => $hostname ? {
-            'puppet' => true,
-             default => false,
-        },
+    class { 'puppet::agent':
         sysconfig => $operatingsystem ? {
             'Gentoo' => false,
              default => true,
@@ -34,4 +30,18 @@ there is no testing environment but there is a Dashboard or similar, since
 no changes will be automatically made, but all pending changes will appear
 and be easy to review. The included "repuppet" scripts can then be run on
 nodes where changes are to be applied.
+
+Example puppet master :
+
+    class { 'puppet::master':
+        runtype      => 'passenger',
+        reports      => 'http',
+        storeconfigs => true,
+    }
+
+When enabling the puppet::master class, the puppet::agent's main configuration
+is then changed to be puppetagent.conf, and both it and a puppetmaster.conf
+are automatically concatenated together as puppet.conf when either changes.
+
+This is because it isn't trivial to use a different configuration for each.
 

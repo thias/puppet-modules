@@ -1,0 +1,137 @@
+avc:  denied  { search } for  pid=1368 comm="puppetmasterd" name="/" dev=sysfs ino=1 context=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=dir
+avc:  denied  { search } for  pid=1910 comm="puppetmasterd" name="/" dev=sysfs ino=1 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=1368 comm="puppetmasterd" path="/usr/bin/chage" dev=vda1 ino=4005 context=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:passwd_exec_t:s0 tclass=file
+avc:  denied  { execute } for  pid=1368 comm="puppetmasterd" name="chage" dev=vda1 ino=4005 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:passwd_exec_t:s0 tclass=file
+avc:  denied  { name_bind } for  pid=1495 comm="puppetmasterd" src=13808 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=udp_socket
+avc:  denied  { node_bind } for  pid=1495 comm="puppetmasterd" src=20571 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:node_t:s0 tclass=udp_socket
+avc:  denied  { getattr } for  pid=1586 comm="puppetmasterd" path="/usr/bin/chage" dev=vda1 ino=4005 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:passwd_exec_t:s0 tclass=file
+avc:  denied  { read } for  pid=1650 comm="puppetmasterd" name="config" dev=vda1 ino=11895 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:selinux_config_t:s0 tclass=file
+avc:  denied  { relabelfrom } for  pid=1650 comm="puppetmasterd" name="serial" dev=vda1 ino=14200 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { relabelto } for  pid=1822 comm="puppetmasterd" name="serial" dev=vda1 ino=16975 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { open } for  pid=1822 comm="puppetmasterd" name="config" dev=vda1 ino=11895 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:selinux_config_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=1870 comm="puppetmasterd" path="/etc/selinux/config" dev=vda1 ino=11895 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:selinux_config_t:s0 tclass=file
+avc:  denied  { search } for  pid=6183 comm="puppetmasterd" name="mysql" dev=vda1 ino=260574 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:mysqld_db_t:s0 tclass=dir
+avc:  denied  { name_connect } for  pid=6183 comm="puppetmasterd" dest=3000 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:ntop_port_t:s0 tclass=tcp_socket
+avc:  denied  { write } for  pid=6183 comm="puppetmasterd" name="mysql.sock" dev=vda1 ino=260680 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:mysqld_var_run_t:s0 tclass=sock_file
+avc:  denied  { connectto } for  pid=6183 comm="puppetmasterd" path="/var/lib/mysql/mysql.sock" scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:system_r:mysqld_t:s0 tclass=unix_stream_socket
+avc:  denied  { search } for  pid=22026 comm="httpd.worker" name="puppet" dev=vda1 ino=16803 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=22059 comm="httpd.worker" path="/var/lib/puppet/ssl/certs/puppet.bcn.exoclick.lan.pem" dev=vda1 ino=13913 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { name_bind } for  pid=22108 comm="httpd.worker" src=8140 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_port_t:s0 tclass=tcp_socket
+avc:  denied  { read write } for  pid=22483 comm="PassengerHelper" path="/dev/pts/0" dev=devpts ino=3 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:user_devpts_t:s0 tclass=chr_file
+avc:  denied  { read } for  pid=22479 comm="httpd.worker" name="puppet.bcn.exoclick.lan.pem" dev=vda1 ino=13913 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { sigkill } for  pid=22480 comm="PassengerWatchd" scontext=unconfined_u:system_r:httpd_t:s0 tcontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tclass=process
+avc:  denied  { open } for  pid=22521 comm="httpd.worker" name="puppet.bcn.exoclick.lan.pem" dev=vda1 ino=13913 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=22791 comm="ruby" path="/var/lib/puppet/bucket" dev=vda1 ino=13886 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { search } for  pid=23577 comm="ruby" name="puppet" dev=vda1 ino=16805 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_run_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=23577 comm="ruby" path="/var/run/puppet" dev=vda1 ino=16805 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_run_t:s0 tclass=dir
+avc:  denied  { name_bind } for  pid=23592 comm="ruby" src=4917 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=udp_socket
+avc:  denied  { getattr } for  pid=23658 comm="ps" path="/proc/23650" dev=proc ino=1157979 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:initrc_t:s0 tclass=dir
+avc:  denied  { append } for  pid=23691 comm="PassengerHelper" path="/dev/pts/1" dev=devpts ino=4 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:user_devpts_t:s0 tclass=chr_file
+avc:  denied  { write } for  pid=23928 comm="ruby" name="exo-bender.isprime.com.yaml" dev=vda1 ino=17809 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { name_connect } for  pid=23928 comm="ruby" dest=3000 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:ntop_port_t:s0 tclass=tcp_socket
+avc:  denied  { relabelfrom } for  pid=1354 comm="puppetmasterd" name="site.pp" dev=vda1 ino=18141 scontext=system_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:puppet_etc_t:s0 tclass=file
+avc:  denied  { read } for  pid=1764 comm="ifconfig" name="unix" dev=proc ino=4026531990 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:proc_net_t:s0 tclass=file
+avc:  denied  { write } for  pid=1763 comm="ruby" name="exo-bender.isprime.com.yaml" dev=vda1 ino=17809 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { read } for  pid=1769 comm="ps" name="stat" dev=proc ino=4026532016 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file
+avc:  denied  { open } for  pid=1854 comm="ps" name="stat" dev=proc ino=4026532016 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file
+avc:  denied  { open } for  pid=1854 comm="ps" name="cpuinfo" dev=proc ino=4026532011 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file
+avc:  denied  { open } for  pid=1854 comm="ps" name="meminfo" dev=proc ino=4026532015 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file
+avc:  denied  { lock } for  pid=1763 comm="ruby" path="/var/lib/puppet/yaml/node/exo-whk1-web2-1.isprime.com.yaml" dev=vda1 ino=18098 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=1907 comm="ps" path="/proc/3" dev=proc ino=7605 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=1942 comm="ps" path="/proc/1" dev=proc ino=18192 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=dir
+avc:  denied  { search } for  pid=1942 comm="ps" name="2" dev=proc ino=18193 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dir
+avc:  denied  { read } for  pid=1989 comm="ps" name="stat" dev=proc ino=18237 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=file
+avc:  denied  { open } for  pid=2003 comm="ps" name="stat" dev=proc ino=18235 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=file
+avc:  denied  { read } for  pid=23124 comm="ruby" name="signed" dev=vda1 ino=13898 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { open } for  pid=23124 comm="ruby" name="signed" dev=vda1 ino=13898 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { write } for  pid=23124 comm="ruby" name="requests" dev=vda1 ino=13896 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { add_name } for  pid=24448 comm="ruby" name="exo-whk1-xen1-1.isprime.com.pem" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+avc:  denied  { create } for  pid=23124 comm="ruby" name="exo-whk1-xen1-1.isprime.com.pem" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { setattr } for  pid=10393 comm="ruby" name="puppetmaster.log" dev=vda1 ino=18216 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=file
+avc:  denied  { write } for  pid=27496 comm="ruby" name="puppet" dev=vda1 ino=16804 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=dir
+avc:  denied  { add_name } for  pid=27997 comm="ruby" name="masterhttp.log" scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=dir
+avc:  denied  { create } for  pid=28193 comm="ruby" name="masterhttp.log" scontext=unconfined_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:puppet_log_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=28613 comm="ps" path="/proc/1437" dev=proc ino=2219518 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_qmgr_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=28632 comm="ps" path="/proc/1428" dev=proc ino=2219486 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_master_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28743 comm="ps" name="1428" dev=proc ino=2219486 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_master_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28743 comm="ps" name="1437" dev=proc ino=2219518 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_qmgr_t:s0 tclass=dir
+avc:  denied  { read } for  pid=28761 comm="ps" name="stat" dev=proc ino=2224386 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_master_t:s0 tclass=file
+avc:  denied  { read } for  pid=28767 comm="ps" name="stat" dev=proc ino=2224389 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_qmgr_t:s0 tclass=file
+avc:  denied  { search } for  pid=28788 comm="ps" name="1" dev=proc ino=2219361 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/457" dev=proc ino=2219374 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:udev_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/1131" dev=proc ino=2219376 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:syslogd_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/1164" dev=proc ino=2219383 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/1172" dev=proc ino=2219384 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:ntpd_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/1208" dev=proc ino=2219385 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_safe_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=28788 comm="ps" path="/proc/1345" dev=proc ino=2219485 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_t:s0 tclass=dir
+avc:  denied  { open } for  pid=28788 comm="ps" name="stat" dev=proc ino=2224386 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_master_t:s0 tclass=file
+avc:  denied  { open } for  pid=28788 comm="ps" name="stat" dev=proc ino=2224389 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_qmgr_t:s0 tclass=file
+avc:  denied  { read } for  pid=28902 comm="ps" name="stat" dev=proc ino=2224360 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=file
+avc:  denied  { search } for  pid=28902 comm="ps" name="457" dev=proc ino=2219374 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:udev_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1131" dev=proc ino=2219376 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:syslogd_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1164" dev=proc ino=2219383 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1172" dev=proc ino=2219384 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:ntpd_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1208" dev=proc ino=2219385 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_safe_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1345" dev=proc ino=2219485 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_t:s0 tclass=dir
+avc:  denied  { search } for  pid=28902 comm="ps" name="1476" dev=proc ino=2219539 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=dir
+avc:  denied  { open } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224360 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224365 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:udev_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224371 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:syslogd_t:s0 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224374 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224377 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:ntpd_t:s0 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224380 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_safe_t:s0 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224383 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_t:s0 tclass=file
+avc:  denied  { read } for  pid=29033 comm="ps" name="stat" dev=proc ino=2224395 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=file
+avc:  denied  { open } for  pid=29036 comm="ps" name="stat" dev=proc ino=2224360 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224365 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:udev_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224371 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:syslogd_t:s0 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224374 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sshd_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224377 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:ntpd_t:s0 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224380 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_safe_t:s0 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224383 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:mysqld_t:s0 tclass=file
+avc:  denied  { open } for  pid=29106 comm="ps" name="stat" dev=proc ino=2224395 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=29106 comm="ps" path="/proc/1662" dev=proc ino=2219641 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:crond_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { search } for  pid=29131 comm="ps" name="1662" dev=proc ino=2219641 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:crond_t:s0-s0:c0.c1023 tclass=dir
+ avc:  denied  { getattr } for  pid=29131 comm="ps" path="/proc/1696" dev=proc ino=2219578 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:getty_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=29131 comm="ps" path="/proc/16468" dev=proc ino=2219393 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { read } for  pid=29205 comm="ps" name="stat" dev=proc ino=2224401 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:crond_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { search } for  pid=29205 comm="ps" name="1696" dev=proc ino=2219578 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:getty_t:s0 tclass=dir
+avc:  denied  { search } for  pid=29205 comm="ps" name="16468" dev=proc ino=2219393 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { open } for  pid=29252 comm="ps" name="stat" dev=proc ino=2224401 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:crond_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { read } for  pid=29252 comm="ps" name="stat" dev=proc ino=2224416 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:getty_t:s0 tclass=file
+avc:  denied  { read } for  pid=29252 comm="ps" name="stat" dev=proc ino=2224461 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { open } for  pid=29302 comm="ps" name="stat" dev=proc ino=2224416 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:getty_t:s0 tclass=file
+avc:  denied  { open } for  pid=29302 comm="ps" name="stat" dev=proc ino=2224461 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { getattr } for  pid=29312 comm="ps" path="/proc/28368" dev=proc ino=2312338 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:httpd_t:s0 tclass=dir
+avc:  denied  { search } for  pid=29341 comm="ps" name="28366" dev=proc ino=2312314 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:httpd_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=29344 comm="ps" path="/proc/29266" dev=proc ino=2334359 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_pickup_t:s0 tclass=dir
+avc:  denied  { read } for  pid=29365 comm="ps" name="stat" dev=proc ino=2340004 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:httpd_t:s0 tclass=file
+avc:  denied  { read } for  pid=29366 comm="ps" name="stat" dev=proc ino=2340004 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:httpd_t:s0 tclass=file
+avc:  denied  { open } for  pid=29386 comm="ps" name="stat" dev=proc ino=2340011 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:httpd_t:s0 tclass=file
+avc:  denied  { search } for  pid=29386 comm="ps" name="29266" dev=proc ino=2334359 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_pickup_t:s0 tclass=dir
+avc:  denied  { read } for  pid=29434 comm="ps" name="stat" dev=proc ino=2344189 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_pickup_t:s0 tclass=file
+avc:  denied  { open } for  pid=29434 comm="ps" name="stat" dev=proc ino=2344189 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:postfix_pickup_t:s0 tclass=file
+avc:  denied  { open } for  pid=31825 comm="ifconfig" name="dev" dev=proc ino=4026531963 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:proc_net_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=32253 comm="ps" path="/proc/32252" dev=proc ino=2370185 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:semanage_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { getattr } for  pid=544 comm="ifconfig" path="/proc/544/net/dev" dev=proc ino=4026531963 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:proc_net_t:s0 tclass=file
+avc:  denied  { search } for  pid=548 comm="rpm" name="rpm" dev=vda1 ino=17 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:rpm_var_lib_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=548 comm="rpm" path="/var/lib/rpm" dev=vda1 ino=17 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:rpm_var_lib_t:s0 tclass=dir
+avc:  denied  { search } for  pid=723 comm="ps" name="718" dev=proc ino=2379917 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:unconfined_r:semanage_t:s0-s0:c0.c1023 tclass=dir
+avc:  denied  { search } for  pid=11119 comm="PassengerHelper" name="passenger" dev=vda1 ino=262676 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=12186 comm="PassengerHelper" path="/var/run/passenger/passenger.1.0.12182" dev=vda1 ino=638853 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=dir
+avc:  denied  { write } for  pid=12426 comm="PassengerHelper" name="generation-0" dev=vda1 ino=638638 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=dir
+avc:  denied  { add_name } for  pid=12649 comm="PassengerHelper" name="passenger-status-password.txt" scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=dir
+avc:  denied  { create } for  pid=12871 comm="PassengerHelper" name="passenger-status-password.txt" scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=file
+avc:  denied  { write open } for  pid=13094 comm="PassengerHelper" name="passenger-status-password.txt" dev=vda1 ino=638859 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=file
+avc:  denied  { setattr } for  pid=13316 comm="PassengerHelper" name="passenger-status-password.txt" dev=vda1 ino=638643 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=file
+avc:  denied  { remove_name } for  pid=13316 comm="PassengerHelper" name="passenger-status-password.txt" dev=vda1 ino=638643 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=dir
+avc:  denied  { create } for  pid=13706 comm="PassengerHelper" name="socket" scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=sock_file
+avc:  denied  { setattr } for  pid=13928 comm="PassengerHelper" name="socket" dev=vda1 ino=638644 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=sock_file
+avc:  denied  { unlink } for  pid=13928 comm="PassengerHelper" name="socket.13928.26614336" dev=vda1 ino=638646 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=sock_file
+avc:  denied  { write } for  pid=14588 comm="PassengerHelper" name="socket.14383.16538176" dev=vda1 ino=638875 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:passenger_var_run_t:s0 tclass=sock_file
+avc:  denied  { getattr search } for  pid=2916 comm="ps" path="/proc/2174" dev=proc ino=2415720 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:restorecond_t:s0 tclass=dir
+avc:  denied  { getattr search } for  pid=2980 comm="ps" path="/proc/2248" dev=proc ino=2416285 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:nrpe_t:s0 tclass=dir
+avc:  denied  { read open } for  pid=3455 comm="ps" name="stat" dev=proc ino=2426199 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:nrpe_t:s0 tclass=file
+avc:  denied  { read open } for  pid=3791 comm="ps" name="stat" dev=proc ino=2415912 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:restorecond_t:s0 tclass=file
+avc:  denied  { getattr } for  pid=13512 comm="ps" path="/proc/13508" dev=proc ino=7910127 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:system_cronjob_t:s0-s0:c0.c1023 tclass=dir
+

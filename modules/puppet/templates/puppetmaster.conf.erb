@@ -1,0 +1,26 @@
+[master]
+<% if certname -%>
+    certname = <%= certname %>
+<% end -%>
+<% if dns_alt_names -%>
+    dns_alt_names = <%= dns_alt_names %>
+<% end -%>
+<% if reports -%>
+    reports = <%= reports %>
+<% end -%>
+<% if reporturl -%>
+    reporturl = <%= reporturl %>
+<% end -%>
+<% if storeconfigs -%>
+    storeconfigs = <%= storeconfigs %>
+    dbadapter = <%= dbadapter %>
+    dbserver = <%= dbserver %>
+    dbname = <%= dbname %>
+    dbuser = <%= dbuser %>
+    dbpassword = <%= dbpassword %>
+    dbsocket = <%= dbsocket %>
+<% end -%>
+<% extraopts.each do |key,value| -%>
+    <%= key %> = <%= value %>
+<% end -%>
+
