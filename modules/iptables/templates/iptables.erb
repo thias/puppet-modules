@@ -128,7 +128,7 @@
 -A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED 
 <% end -%>
 COMMIT
-<% if masq or !raw_rules_nat.empty? or !redirect_tcp_port.empty? -%>
+<% if masq or !raw_rules_nat.empty? or !redirect_tcp_port.empty? or !dnat_tcp_port.empty? -%>
 
 # NAT table, used for masquerading and DNAT
 *nat
@@ -138,10 +138,16 @@ COMMIT
 <% raw_rules_nat.each do |line| -%>
 <%= line %>
 <% end -%>
-<% if redirect_tcp_port -%>
+<% if !redirect_tcp_port.empty? -%>
 <% redirect_tcp_port.each do |key,value| -%>
 # Redirect TCP traffic arriving on port <%= key %> to local port <%= value %>
 -A PREROUTING -p tcp -m tcp --dport <%= key %> -j REDIRECT --to-ports <%= value %>
+<% end -%>
+<% end -%>
+<% if !dnat_tcp_port.empty? -%>
+<% dnat_tcp_port.each do |key,value| -%>
+# Redirect TCP traffic arriving on port <%= key %> to remote <%= value %>
+-A PREROUTING -p tcp -m tcp --dport <%= key %> -j DNAT --to-destination <%= value %>
 <% end -%>
 <% end -%>
 <% if masq -%>

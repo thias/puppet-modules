@@ -40,6 +40,7 @@ define iptables (
     $raw_rules_filter   = [],
     $raw_rules_nat      = [],
     $redirect_tcp_port  = {},
+    $dnat_tcp_port      = {},
     $masq               = false,
     # Options related to iptables-config
     $modules            = "",
