@@ -5,8 +5,10 @@ class php::fpm::daemon (
     $emergency_restart_interval = '0',
     $process_control_timeout = '0',
     $log_owner = 'root',
-    $log_group = false
-) {
+    $log_group = false,
+    $pidfile = $php::params::fpm_pid,
+    $error_log = $php::params::fpm_error_log
+) inherits php::params {
 
     # Hack-ish to default to user for group too
     $log_group_final = $log_group ? {
@@ -20,29 +22,38 @@ class php::fpm::daemon (
 
     } else {
 
-        package { 'php-fpm': ensure => installed }
+        realize Package[$php::params::package_fpm]
 
-        service { 'php-fpm':
+        service { $php::params::fpm_service:
             ensure    => running,
             enable    => true,
-            restart   => '/sbin/service php-fpm reload',
+            restart   => "/etc/init.d/${php::params::fpm_service} reload",
             hasstatus => true,
-            require   => Package['php-fpm'],
+            require   => Package[$php::params::package_fpm],
         }
 
         # When running FastCGI, we don't always use the same user
         file { '/var/log/php-fpm':
+            ensure  => directory,
             owner   => $log_owner,
             group   => $log_group_final,
-            require => Package['php-fpm'],
+            require => Package[$php::params::package_fpm],
         }
 
-        file { '/etc/php-fpm.conf':
-            notify  => Service['php-fpm'],
+        file { $php::params::fpm_conf:
+            notify  => Service[$php::params::fpm_service],
             content => template('php/fpm/php-fpm.conf.erb'),
             owner   => 'root',
             group   => 'root',
-            mode    => 0644,
+            mode    => '0644',
+        }
+
+        # For distributions where it doesn't exist by default
+        file { $php::params::fpm_confd:
+            ensure => directory,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0755',
         }
 
     }

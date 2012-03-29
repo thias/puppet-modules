@@ -17,11 +17,13 @@ include=/etc/php-fpm.d/*.conf
 [global]
 ; Pid file
 ; Default Value: none
-pid = /var/run/php-fpm/php-fpm.pid
+<% if $pidfile -%>
+pid = <%= pidfile -%>
+<% end -%>
 
 ; Error log file
 ; Default Value: /var/log/php-fpm.log
-error_log = /var/log/php-fpm/error.log
+error_log = <%= error_log %>
 
 ; Log level
 ; Possible Values: alert, error, warning, notice, debug

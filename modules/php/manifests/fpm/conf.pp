@@ -41,28 +41,29 @@ define php::fpm::conf (
     $chroot = false,
     $chdir = false,
     $catch_workers_output = 'no',
-    $env = [],
-    $rawenv = [],
-    $php_directives = [],
-    $error_log = true
+    $env = {},
+    $error_log = "/var/log/php-fpm/${name}-error.log",
+    $php_directives = []
 ) {
 
     $pool = $title
+
+    include php::params
 
     # Hack-ish to default to user for group too
     $group_final = $group ? { false => $user, default => $group }
 
     if ( $ensure == 'absent' ) {
 
-        file { "/etc/php-fpm.d/${pool}.conf":
-            notify => Service['php-fpm'],
+        file { "${php::params::fpm_confd}/${pool}.conf":
+            notify => Service[$php::params::fpm_service],
             ensure => absent,
         }
 
     } else {
 
-        file { "/etc/php-fpm.d/${pool}.conf":
-            notify  => Service['php-fpm'],
+        file { "${php::params::fpm_confd}/${pool}.conf":
+            notify  => Service[$php::params::fpm_service],
             content => template('php/fpm/pool.conf.erb'),
             owner   => 'root',
             group   => 'root',
