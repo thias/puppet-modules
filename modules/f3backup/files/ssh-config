@@ -1,0 +1,4 @@
+Host *
+    PasswordAuthentication no
+    CheckHostIP no
+    StrictHostKeyChecking no
