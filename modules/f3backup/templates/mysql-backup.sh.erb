@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# Directory where to store the backups
+BACKUPDIR="<%= mysql_backupdir %>"
+# How many days are going to be stored?
+DAYSTOKEEP=<%= mysql_daystokeep %>
+# How many months are going to be stored?
+MONTHSTOKEEP=<%= mysql_monthstokeep %>
+# Kind of compression to be used. It can be gzip bzip2 none later_gzip later_bzip2
+COMPRESS=<%= mysql_compress %>
+# Use --opt parameter in mysqldump. Will lock all tables and run some optimizations
+LOCK_TABLES=<%= mysql_lock_tables %>
+# Kind of encryption to be used. It can be: none gpg later_gpg
+ENCRYPT=<%= mysql_encrypt %>
+# Extra parameters to be apended to mysqldump
+EXTRAPARAMETERS="<%= mysql_extraparameters %>"
+
+MYSQL=/usr/bin/mysql
+MYSQLDUMP=/usr/bin/mysqldump
+DATE=`date +%Y%m%d`
+HOST=`hostname -f`
+
+# create the pidfile
+
+echo $$ > /var/run/mysql-backup.pid
+
+# Calculate the filename
+DUMPFILE="$HOST-`date +%Y%m%d`.sql"
+if [ $COMPRESS == "gzip" ]; then
+    DUMPFILE=$DUMPFILE.gz
+elif [ $COMPRESS = "bzip2" ]; then
+    DUMPFILE=$DUMPFILE.bz2
+fi
+if [ $ENCRYPT == "gpg" ]; then
+    DUMPFILE=$DUMPFILE.gpg
+fi
+
+# check if the server is a slave
+if [ -f /var/lib/mysql/.mysql_is_slave ] && [ "`cat /var/lib/mysql/.mysql_is_slave`" = "true" ]; then
+    is_slave="true"
+fi
+
+# create the destination directories if don't exist
+mkdir -p $BACKUPDIR/{day,month}
+
+# generate the full dump command
+cmd="("
+if [ $is_slave ]; then
+    $MYSQL -e "STOP SLAVE SQL_THREAD;"
+    `$MYSQL -e "show slave status\G" | grep -v "\*\*\*" | sed "s/:/=/g" | awk '{print "export " $1$2 }'`
+    cmd="$cmd echo \"CHANGE MASTER TO MASTER_LOG_FILE='$Master_Log_File', MASTER_LOG_POS=$Exec_Master_Log_Pos;\" && "
+fi
+
+cmd="$cmd $MYSQLDUMP --all-databases"
+if [ $LOCK_TABLES == "true" ]; then
+    cmd="$cmd --opt"
+else
+    cmd="$cmd --opt --skip-lock-tables"
+fi
+cmd="$cmd $EXTRAPARAMETERS )"
+
+if [ $COMPRESS == "gzip" ]; then
+    cmd="$cmd | gzip"
+elif [ $COMPRESS = "bzip2" ]; then
+    cmd="$cmd | bzip2"
+fi
+
+if [ $ENCRYPT == "gpg" ]; then
+    cmd="$cmd | gpg -r backup -e --trust-model always"
+fi
+
+cmd="$cmd > $BACKUPDIR/day/$DUMPFILE"
+
+echo $cmd | bash
+
+[ $is_slave ] && mysql -e "start slave"
+
+if [ $COMPRESS == "later_gzip" ]; then
+    nice gzip $BACKUPDIR/day/$DUMPFILE
+    DUMPFILE=$DUMPFILE.gz
+elif [ $COMPRESS = "later_bzip2" ]; then
+    nice bzip2 $BACKUPDIR/day/$DUMPFILE
+    DUMPFILE=$DUMPFILE.bz2
+fi
+
+if [ $ENCRYPT == "later_gpg" ]; then
+    nice gpg -r backup --trust-model always --output $BACKUPDIR/day/$DUMPFILE.gpg --yes --encrypt $BACKUPDIR/day/$DUMPFILE && rm -f $BACKUPDIR/day/$DUMPFILE
+    DUMPFILE=$DUMPFILE.gpg
+fi
+
+
+if [ "`date +%d`" = "01" ]; then
+    ln $BACKUPDIR/day/$DUMPFILE $BACKUPDIR/month/$DUMPFILE
+fi
+
+# clean old backups
+find $BACKUPDIR/day/ -type f -mtime +$DAYSTOKEEP -exec rm -f '{}' \;
+find $BACKUPDIR/month/ -type f -mtime +$(( $MONTHSTOKEEP * 30 )) -exec rm -f '{}' \;
+
+rm -f /var/run/mysql-backup.pid

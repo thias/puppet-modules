@@ -1,13 +1,30 @@
-= Summary
+nginx
 
-Summary::  Nginx web server module
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  December 2011
+Install, enable and configure an NGINX web server instance with its main
+configuration file options as well as additional configuration snippets.
+
+The module is very Red Hat Enterprise Linux focused, as the defaults try to
+change everything in ways which are typical for RHEL, but it also works on
+other distributions and is very easy to port if needed.
+
+* `nginx` : Main class for the NGINX web server.
+* `nginx::conf` : Manage additional configuration snippets.
 
 = Sample Usage
 
-Basic default web server instance :
-
-    include nginx
+  # Default server, with a typical minimal virtualhost
+  # You'll want to use a real template to make it more readable
+  include nginx
+  $listen_http = [ '127.0.0.1:80', '192.168.0.12:80' ]
+  nginx::file { 'www.example.com.conf':
+      content => inline_template('# Sample configuration file
+  server {
+  <% listen_http.each do |listen_line| -%>
+      listen <%= listen_line %>;
+  <% end -%>
+      server_name www.example.com;
+      root /var/www/www.example.com;
+  }
+  '),
+  }
 
