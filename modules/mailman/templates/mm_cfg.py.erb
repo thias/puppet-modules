@@ -80,6 +80,12 @@ DEFAULT_EMAIL_HOST = '<%= default_email_host %>'
 DEFAULT_URL_PATTERN = '<%= default_url_pattern %>'
 MAILMAN_SITE_LIST = '<%= mailman_site_list %>'
 
+<% if ! add_virtualhost.empty? -%>
+<% add_virtualhost.each do |key,value| -%>
+add_virtualhost('<%= key %>', '<%= value %>')
+<% end -%>
+
+<% end -%>
 # Because we've overriden the virtual hosts above add_virtualhost
 # MUST be called after they have been defined.
 

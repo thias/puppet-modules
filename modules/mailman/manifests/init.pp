@@ -26,6 +26,7 @@ class mailman (
     $default_email_host = $::fqdn,
     $default_url_pattern = 'http://%s/mailman/',
     $mailman_site_list = 'mailman',
+    $add_virtualhost = {},
     $mm_cfg_settings = {}
 ) {
 
