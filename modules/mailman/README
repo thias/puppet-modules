@@ -1,0 +1,12 @@
+mailman
+
+This module manages the main Mailman configuration. In addition, you will need
+other modules to provide :
+* The web server configuration needed for the web interface.
+* The mail transport agent configuration needed to receive and send emails.
+
+You can use the default puppet 'maillist' type to create and delete lists once
+the instance is up and running.
+
+* `mailman` : Configure the main Mailman instance
+
