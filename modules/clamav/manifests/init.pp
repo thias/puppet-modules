@@ -1,4 +1,4 @@
-# Main ClamAV class.
+# Class: clamav
 #
 # Since the Fedora/RHEL packages have changed a lot over time, but that only
 # the latest version(s) of ClamAV are actually supported, no efforts are made
@@ -8,7 +8,7 @@
 #
 class clamav {
 
-    package { "clamd": ensure => installed }
+    package { 'clamd': ensure => installed }
 
     # TODO: Include freshclam related stuff here?
 
