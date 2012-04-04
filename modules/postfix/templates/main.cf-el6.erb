@@ -723,6 +723,13 @@ smtpd_tls_key_file = /etc/pki/tls/private/<%= ssl %>.key
 smtpd_tls_cert_file = /etc/pki/tls/certs/<%= ssl %>.crt
 
 <% end -%>
+<% if smtpd_sasl_auth -%>
+# Auth against external daemon (usually dovecot or cyrus)
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = <%= smtpd_sasl_type %>
+smtpd_sasl_path = <%= smtpd_sasl_path %>
+
+<% end -%>
 <% if mail_name -%>
 # Change the mail daemon name
 mail_name = <%= mail_name %>
@@ -778,6 +785,9 @@ virtual_gid_maps = <%= virtual_gid_maps %>
 <% end -%>
 <% if virtual_transport -%>
 virtual_transport = <%= virtual_transport %>
+<% if virtual_transport == 'dovecot' -%>
+dovecot_destination_recipient_limit = 1
+<% end -%>
 
 <% end -%>
 # SMTP restrictions (block bogus stuff)
@@ -800,3 +810,7 @@ smtpd_recipient_restrictions =
 <% end -%>
 body_checks = regexp:/etc/postfix/body_checks
 
+<% if sender_canonical_maps -%>
+sender_canonical_maps = <%= sender_canonical_maps %>
+
+<% end -%>

@@ -1,4 +1,4 @@
-# Postfix MTA server definition.
+# Define: postfix::server
 #
 # The title is used for the 'myhostname' parameter.
 #
@@ -48,6 +48,7 @@ define postfix::server (
     $smtpd_sasl_auth = false,
     $smtpd_sasl_type = 'dovecot',
     $smtpd_sasl_path = 'private/auth',
+    $sender_canonical_maps = false,
     # master.cf
     $smtp_content_filter = [],
     $submission = false,
@@ -58,6 +59,8 @@ define postfix::server (
     $submission_smtpd_sasl_auth_enable = "yes",
     $submission_smtpd_client_restrictions = "permit_sasl_authenticated,reject",
     $master_services = [],
+    # Other files
+    $header_checks = [],
     # Spamassassin
     $spamassassin        = false,
     $sa_required_hits    = "5",
