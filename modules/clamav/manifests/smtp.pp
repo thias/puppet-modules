@@ -12,8 +12,13 @@ class clamav::smtp {
     include clamav
 
     # Main package and services
+    if $operatingsystemrelease < 6 {
+        $clamd_service = 'clamd.smtp'
+    } else {
+        $clamd_service = 'clamsmtp-clamd'
+    }
     package { [ 'clamsmtp' ]: ensure => installed }
-    service { [ 'clamsmtpd', 'clamsmtp-clamd' ]:
+    service { [ 'clamsmtpd', $clamd_service ]:
         enable    => true,
         ensure    => running,
         hasstatus => true,
