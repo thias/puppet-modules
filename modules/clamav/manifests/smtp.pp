@@ -12,7 +12,7 @@ class clamav::smtp {
     include clamav
 
     # Main package and services
-    if $operatingsystemrelease < 6 {
+    if $::operatingsystemrelease < 6 {
         $clamd_service = 'clamd.smtp'
     } else {
         $clamd_service = 'clamsmtp-clamd'
