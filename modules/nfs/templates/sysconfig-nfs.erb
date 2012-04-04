@@ -1,0 +1,65 @@
+#
+# Define which protocol versions mountd 
+# will advertise. The values are "no" or "yes"
+# with yes being the default
+<% if mountd_nfs_v1 == "yes" %>#<% end %>MOUNTD_NFS_V1="<%= mountd_nfs_v1 %>"
+<% if mountd_nfs_v2 == "yes" %>#<% end %>MOUNTD_NFS_V2="<%= mountd_nfs_v2 %>"
+<% if mountd_nfs_v3 == "yes" %>#<% end %>MOUNTD_NFS_V3="<%= mountd_nfs_v3 %>"
+#
+#
+# Path to remote quota server. See rquotad(8)
+RQUOTAD="<%= rquotad %>"
+# Port rquotad should listen on.
+RQUOTAD_PORT=<%= rquotad_port %>
+# Optinal options passed to rquotad
+<% if rquotadopts == "" %>#<% end %>RPCRQUOTADOPTS="<%= rquotadopts %>"
+#
+#
+# Optional arguments passed to in-kernel lockd
+<% if lockdarg == "" %>#<% end %>LOCKDARG="<%= lockdarg %>"
+# TCP port rpc.lockd should listen on.
+LOCKD_TCPPORT=<%= lockd_tcpport %>
+# UDP port rpc.lockd should listen on.
+LOCKD_UDPPORT=<%= lockd_udpport %>
+#
+#
+# Optional arguments passed to rpc.nfsd. See rpc.nfsd(8)
+# Turn off v2 and v3 protocol support
+#RPCNFSDARGS="-N 2 -N 3"
+# Turn off v4 protocol support
+#RPCNFSDARGS="-N 4"
+<% if rpcnfsdargs -%>RPCNFSDARGS="<%= rpcnfsdargs %>"<% end -%>
+# Number of nfs server processes to be started.
+# The default is 8. 
+<% if rpcnfsdcount == "8" %>#<% end %>RPCNFSDCOUNT=<%= rpcnfsdcount %>
+# Stop the nfsd module from being pre-loaded
+#NFSD_MODULE="noload"
+#
+#
+# Optional arguments passed to rpc.mountd. See rpc.mountd(8)
+<% if rpcmountdopts == "" %>#<% end %>RPCMOUNTDOPTS="<%= rpcmountdopts %>"
+# Port rpc.mountd should listen on.
+MOUNTD_PORT=<%= mountd_port %>
+#
+#
+# Optional arguments passed to rpc.statd. See rpc.statd(8)
+<% if statdarg == "" %>#<% end %>STATDARG="<%= statdarg %>"
+# Port rpc.statd should listen on.
+STATD_PORT=<%= statd_port %>
+# Outgoing port statd should used. The default is port
+# is random
+<% if statd_outgoing_port == "2020" %>#<% end %>STATD_OUTGOING_PORT=<%= statd_outgoing_port %>
+# Specify callout program 
+<% if statd_ha_callout == "/usr/local/bin/foo" %>#<% end %>STATD_HA_CALLOUT="<%= statd_ha_callout %>"
+#
+#
+# Optional arguments passed to rpc.idmapd. See rpc.idmapd(8)
+<% if rpcidmapdargs == "" %>#<% end %>RPCIDMAPDARGS="<%= rpcidmapdargs %>"
+#
+# Set to turn on Secure NFS mounts. 
+<% if secure_nfs == "no" %>#<% end %>SECURE_NFS="<%= secure_nfs %>"
+# Optional arguments passed to rpc.gssd. See rpc.gssd(8)
+<% if rpcgssdargs == "" %>#<% end %>RPCGSSDARGS="<%= rpcgssdargs %>"
+# Optional arguments passed to rpc.svcgssd. See rpc.svcgssd(8)
+<% if rpcsvcgssdargs == "" %>#<% end %>RPCSVCGSSDARGS="<%= rpcsvcgssdargs %>"
+#
