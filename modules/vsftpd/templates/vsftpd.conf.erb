@@ -171,6 +171,9 @@ listen_port=<%= listen_port %>
 pam_service_name=<%= pam_service_name %>
 userlist_enable=<%= userlist_enable %>
 tcp_wrappers=<%= tcp_wrappers %>
+<% if hide_file -%>
+hide_file=<%= hide_file %>
+<% end -%>
 hide_ids=<%= hide_ids %>
 setproctitle_enable=<%= setproctitle_enable %>
 text_userdb_names=<%= text_userdb_names %>

@@ -42,6 +42,7 @@ class vsftpd (
     $pam_service_name = 'vsftpd',
     $userlist_enable = 'YES',
     $tcp_wrappers = 'YES',
+    $hide_file = false,
     $hide_ids = 'NO',
     $setproctitle_enable = 'NO',
     $text_userdb_names = 'NO'
