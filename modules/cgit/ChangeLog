@@ -1,0 +1,4 @@
+2012-04-04 - 0.2.0
+* Clean up the module to match current puppetlabs guidelines.
+* Fix the cgitrc repo.* generation by sorting hash elements.
+

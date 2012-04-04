@@ -1,0 +1,8 @@
+cgit
+
+Set up a cgit instance for giving access to git repositories through a powerful
+web interface. This module requires a web server to be set up, typically from
+the apache_httpd module.
+
+* `cgit` : Main class to enable and configure cgit
+
