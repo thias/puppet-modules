@@ -84,9 +84,9 @@ mimetype.svg=image/svg+xml
 #repo.desc=the master foo repository
 #repo.owner=fooman@example.com
 #repo.readme=info/web/about.html
-<% repos.sort_by {|key, value| key}.each do |reponame, repooptions| -%>
+<% repos.sort_by {|key, value| key}.each do |repourl, repooptions| -%>
 
-repo.name=<%= reponame %>
+repo.url=<%= repourl %>
 <% repooptions.sort_by {|key, value| key}.each do |key, value| -%>
 repo.<%= key %>=<%= value %>
 <% end -%>
