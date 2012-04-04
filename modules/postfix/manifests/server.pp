@@ -44,7 +44,10 @@ define postfix::server (
     $virtual_transport = false,
     $smtpd_sender_restrictions = [],
     $smtpd_recipient_restrictions = [],
-    $ssl          = false,
+    $ssl = false,
+    $smtpd_sasl_auth = false,
+    $smtpd_sasl_type = 'dovecot',
+    $smtpd_sasl_path = 'private/auth',
     # master.cf
     $smtp_content_filter = [],
     $submission = false,
@@ -64,6 +67,11 @@ define postfix::server (
     $sa_skip_rbl_checks  = "1",
     $sa_loadplugin       = [ "Mail::SpamAssassin::Plugin::SPF" ],
     $sa_score            = [ "FH_DATE_PAST_20XX 0" ],
+    $spampd_port         = '10026',
+    $spampd_relayport    = '10027',
+    $spampd_children     = '20',
+    $spampd_maxsize      = '512',
+    # Other filters
     $postgrey     = false,
     $clamav       = false
 ) {
@@ -99,8 +107,8 @@ define postfix::server (
     }
 
     # Optional certificates to be installed
-    if ( $ssl and !defined(Key-and-crt[$ssl]) ) {
-        key-and-crt { $ssl: }
+    if ( $ssl and !defined(Tlsfiles[$ssl]) ) {
+        tlsfiles { $ssl: }
     }
 
     # Optional Spamassassin setup (using spampd)

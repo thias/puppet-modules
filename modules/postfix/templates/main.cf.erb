@@ -714,6 +714,13 @@ smtpd_tls_key_file = /etc/pki/tls/private/<%= ssl %>.key
 smtpd_tls_cert_file = /etc/pki/tls/certs/<%= ssl %>.crt
 
 <% end -%>
+<% if smtpd_sasl_auth -%>
+# Auth against external daemon (usually dovecot or cyrus)
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = <%= smtpd_sasl_type %>
+smtpd_sasl_path = <%= smtpd_sasl_path %>
+
+<% end -%>
 <% if mail_name -%>
 # Change the mail daemon name
 mail_name = <%= mail_name %>
