@@ -1,11 +1,11 @@
-# DHCP module.
+# Class: dhcpd
 #
 # Sample Usage :
-#     class { 'dhcpd':
-#         configsource => 'puppet:///files/dhcpd.conf-foo',
-#         # Restrict listening to a single interface
-#         dhcpdargs    => 'br1',
-#     }
+#  class { 'dhcpd':
+#      configsource => 'puppet:///files/dhcpd.conf-foo',
+#      # Restrict listening to a single interface
+#      dhcpdargs    => 'br1',
+#  }
 #
 class dhcpd (
     $configsource,
@@ -28,7 +28,12 @@ class dhcpd (
         notify  => Service['dhcpd'],
     }
 
-    file { '/etc/dhcp/dhcpd.conf':
+    if $::operatingsystemrelease < 6 {
+        $dhcpd_conf = '/etc/dhcpd.conf'
+    } else {
+        $dhcpd_conf = '/etc/dhcp/dhcpd.conf'
+    }
+    file { $dhcpd_conf :
         source  => $configsource,
         require => Package['dhcp'],
         notify  => Service['dhcpd'],
