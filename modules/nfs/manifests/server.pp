@@ -1,9 +1,14 @@
 # Class: nfs::server
 #
 # Simple nfs-server class, for both v3 and v4
-# Usage : class { 'nfs-server': }
+# Sample Usage :
+#  class { 'nfs::server':
+#      exports_content => "/nfs 192.168.1.0/24(rw,no_root_squash,async)\n",
+#  }
 #
 class nfs::server (
+    $exports_source      = undef,
+    $exports_content     = undef,
     $mountd_nfs_v1       = 'yes',
     $mountd_nfs_v2       = 'yes',
     $mountd_nfs_v3       = 'yes',
@@ -14,7 +19,7 @@ class nfs::server (
     $lockd_tcpport       = '32803',
     $lockd_udpport       = '32769',
     $rpcnfsdargs         = false,
-    $rpcnfsdcount        = '64',
+    $rpcnfsdcount        = '8',
     $rpcmountdopts       = '',
     $mountd_port         = '892',
     $statdarg            = '',
@@ -26,7 +31,7 @@ class nfs::server (
     $secure_nfs          = 'no',
     $rpcgssdargs         = '',
     $rpcsvcgssdargs      = '',
-    $idmapd_domain       = $domain
+    $idmapd_domain       = $::domain
 ) {
 
     package { 'nfs-utils': ensure => installed }
