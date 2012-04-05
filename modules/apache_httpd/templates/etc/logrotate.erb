@@ -4,6 +4,10 @@
     <%= opt %>
 <% end -%>
     postrotate
-	    /bin/kill -HUP `cat /var/run/httpd.pid 2>/dev/null` 2>/dev/null || true
+<% if operatingsystem =~ /^(Fedora|RedHat|CentOS)$/ -%>
+        /sbin/service httpd reload > /dev/null 2>/dev/null || true
+<% else -%>
+        /bin/kill -HUP `cat /var/run/httpd.pid 2>/dev/null` 2>/dev/null || true
+<% end -%>
     endscript
 }
