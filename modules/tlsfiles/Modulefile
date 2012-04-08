@@ -1,8 +1,9 @@
 name 'tlsfiles'
-version '0.1.0'
+version '0.2.0'
+source 'git://github.com/thias/puppet-modules/modules/skel'
 author 'Matthias Saou'
-summary 'TLS Files'
-description "Module to manage Private Key Infrastructure (PKI) Transport Layer
- Security (TLS) files"
-license 'Apache'
-project_page 'http://glee.thias.es/'
+license 'Apache 2.0'
+summary 'Transport Layer Security (TLS) Files'
+description "Manage Private Key Infrastructure (PKI) Transport Layer Security
+    (TLS) files"
+project_page 'http://glee.thias.es/puppet'

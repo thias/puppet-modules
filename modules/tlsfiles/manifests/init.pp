@@ -1,6 +1,11 @@
+# Define: tlsfiles
+#
 # Manage Private Key Infrastructure (PKI) Transport Layer Security (TLS) files.
 #
 # Sample Usage :
+#  tlsfile { 'www.example.com':
+#      srcdir => '/etc/puppet/files/tlsfiles',
+#  }
 #
 define tlsfiles (
     $crtpath = '/etc/pki/tls/certs',
