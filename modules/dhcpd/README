@@ -1,26 +1,9 @@
-= Summary
+dhcpd
 
-Summary::  DHCP Server module
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  December 2011
+This module installs and enables a dhcpd server using a pre-existing
+configuration file. This is because different dhcpd configuration files would
+be hard to base on a single template without introducing unnecessary
+complexity. Included is a dhcpd.conf-example file to get started.
 
-= Sample Usage
-
-Basic DHCP server (pre-created dhcpd.conf) :
-
-    class { 'dhcpd':
-        configsource => 'puppet:///files/dhcpd.conf-foo',
-        ensure       => 'running',
-    }
-
-Example trivial dhcpd.conf content (useful for PXE/ks networks) :
-
-    option domain-name-servers 192.168.10.1;
-    authoritative;
-
-    subnet 192.168.10.0 netmask 255.255.255.0 {
-        range 192.168.10.210 192.168.10.220;
-        option routers 192.168.10.1;
-    }
+* `dhcpd` : Install and enabled a DHCP server
 
