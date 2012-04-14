@@ -50,6 +50,7 @@ define apache_httpd (
     $maxsparethreads        = '75',
     $threadsperchild        = '32',
     $listen                 = '80',
+    $namevirtualhost        = undef,
     $extendedstatus         = 'Off',
     $user                   = 'apache',
     $group                  = 'apache',
