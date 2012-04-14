@@ -61,7 +61,12 @@ define apache_httpd (
     $welcome                = true,
     $logrotate_files        = '/var/log/httpd/*log',
     $logrotate_freq         = 'daily',
-    $logrotate_opts         = [ 'compress', 'missingok', 'notifempty', 'sharedscripts' ]
+    $logrotate_opts         = [
+        'compress',
+        'missingok',
+        'notifempty',
+        'sharedscripts'
+    ]
 ) {
 
     # Since this is a definition, make the title somewhat meaningful
