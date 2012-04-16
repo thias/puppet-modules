@@ -84,7 +84,12 @@ class puppet::agent (
         if $cron_enable {
             if $puppet_noop { $cmd_noop = ' --noop' } else { $cmd_noop = '' }
             # We might not care about the output when we have a Dashboard
-            if $cron_silent { $cmd_end = ' >/dev/null' } else { $cmd_end = '' }
+            if $cron_silent {
+                $cmd_end = ' >/dev/null'
+            } else {
+                # How can the log level be set from the CLI options?
+                $cmd_end = " | grep -v 'Finished catalog run in'"
+            }
             cron { 'puppet-agent':
                 command => "/usr/local/sbin/repuppet${cmd_noop}${cmd_end}",
                 user    => 'root',

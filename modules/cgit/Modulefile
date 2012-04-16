@@ -1,9 +1,9 @@
 name 'cgit'
-version '0.1.1'
+version '0.2.0'
+source 'git://github.com/thias/puppet-modules/modules/cgit'
 author 'Matthias Saou'
+license 'Apache 2.0'
 summary 'Web interface for git repositories'
 description "Set up a cgit instance for giving access to git repositories
- through a powerful web interface"
-license 'Apache'
-project_page 'http://glee.thias.es/'
-dependency ( 'apache-httpd', '>= 0.1.0' )
+    through a powerful web interface"
+project_page 'http://glee.thias.es/puppet'

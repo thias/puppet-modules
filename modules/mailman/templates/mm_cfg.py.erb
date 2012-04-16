@@ -80,6 +80,12 @@ DEFAULT_EMAIL_HOST = '<%= default_email_host %>'
 DEFAULT_URL_PATTERN = '<%= default_url_pattern %>'
 MAILMAN_SITE_LIST = '<%= mailman_site_list %>'
 
+<% if ! add_virtualhost.empty? -%>
+<% add_virtualhost.each do |key,value| -%>
+add_virtualhost('<%= key %>', '<%= value %>')
+<% end -%>
+
+<% end -%>
 # Because we've overriden the virtual hosts above add_virtualhost
 # MUST be called after they have been defined.
 
@@ -93,6 +99,6 @@ add_virtualhost(DEFAULT_URL_HOST, DEFAULT_EMAIL_HOST)
 # Note - if you're looking for something that is imported from mm_cfg, but you
 # didn't find it above, it's probably in Defaults.py.
 
-<% mm_cfg_settings.each do |key,value| -%>
+<% mm_cfg_settings.sort_by {|key, value| key}.each do |key, value| -%>
 <%= key %> = <%= value %>
 <% end -%>
