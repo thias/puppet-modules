@@ -1,4 +1,4 @@
-name 'vsftpd
+name 'thias-vsftpd'
 version '0.1.1'
 source 'git://github.com/thias/puppet-modules/modules/vsftpd'
 author 'Matthias Saou'
