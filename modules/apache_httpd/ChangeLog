@@ -1,3 +1,6 @@
+2012-04-20 - 0.3.1
+* Support multiple listens and setting namevirtualhosts (Jared Curtis).
+
 2012-03-07 - 0.3.0
 * Rename from apache-httpd to apache_httpd to conform with puppetlabs docs.
 * Update tests to cover more cases.

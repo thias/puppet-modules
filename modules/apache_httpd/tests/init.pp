@@ -6,7 +6,7 @@ apache_httpd { 'worker':
     ssl             => true,
     modules         => [],
     welcome         => false,
-    listen          => ['80','443'],
+    listen          => [ '80', '443' ],
     namevirtualhost => '*:80',
     serversignature => 'Off',
 }

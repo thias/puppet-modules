@@ -1036,10 +1036,8 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 # Use name-based virtual hosting.
 #
 #NameVirtualHost *:80
-<% if namevirtualhost != :undef then -%>
 <% namevirtualhost.each do |host| -%>
 NameVirtualHost <%= host %>
-<% end -%>
 <% end -%>
 #
 # NOTE: NameVirtualHost cannot be used without a port specifier 

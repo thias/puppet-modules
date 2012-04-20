@@ -49,8 +49,8 @@ define apache_httpd (
     $minsparethreads        = '25',
     $maxsparethreads        = '75',
     $threadsperchild        = '32',
-    $listen                 = '80',
-    $namevirtualhost        = undef,
+    $listen                 = [ '80' ],
+    $namevirtualhost        = [],
     $extendedstatus         = 'Off',
     $user                   = 'apache',
     $group                  = 'apache',
@@ -66,7 +66,7 @@ define apache_httpd (
         'compress',
         'missingok',
         'notifempty',
-        'sharedscripts'
+        'sharedscripts',
     ]
 ) {
 
