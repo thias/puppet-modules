@@ -138,7 +138,9 @@ MaxRequestsPerChild <%= maxrequestsperchild %>
 # prevent Apache from glomming onto all bound IP addresses (0.0.0.0)
 #
 #Listen 12.34.56.78:80
-Listen <%= listen %>
+<% listen.each do |i| -%>
+Listen <%= i %>
+<% end -%>
 
 #
 # Dynamic Shared Object (DSO) Support
@@ -1034,6 +1036,11 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 # Use name-based virtual hosting.
 #
 #NameVirtualHost *:80
+<% if namevirtualhost != :undef then -%>
+<% namevirtualhost.each do |host| -%>
+NameVirtualHost <%= host %>
+<% end -%>
+<% end -%>
 #
 # NOTE: NameVirtualHost cannot be used without a port specifier 
 # (e.g. :80) if mod_ssl is being used, due to the nature of the
