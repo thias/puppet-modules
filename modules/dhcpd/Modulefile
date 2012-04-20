@@ -1,4 +1,4 @@
-name 'dhcpd'
+name 'thias-dhcpd'
 version '0.2.0'
 source 'git://github.com/thias/puppet-modules/modules/dhcpd'
 author 'Matthias Saou'
