@@ -1,4 +1,4 @@
-name 'mongodb'
+name 'thias-mongodb'
 version '0.0.1'
 source 'git://github.com/thias/puppet-modules/modules/mongodb'
 author 'Matthias Saou'
