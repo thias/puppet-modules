@@ -1,0 +1,150 @@
+# mongodb.conf
+
+#where to log
+logpath=<%= logpath %>
+
+# fork and run in background
+fork = true
+
+bind_ip = <%= bind_ip %>
+port = <%= port %>
+
+dbpath=<%= dbpath %>
+
+pidfilepath=/var/run/mongodb/mongodb.pid
+
+# Enables periodic logging of CPU utilization and I/O wait
+#cpu = true
+
+# Turn on/off security.  Off is currently the default
+#noauth = true
+#auth = true
+
+# Verbose logging output.
+<% if verbose == 'true' -%>
+verbose = true
+<% else -%>
+#verbose = true
+<% end -%>
+
+# Inspect all client data for validity on receipt (useful for
+# developing drivers)
+<% if objcheck == 'true' -%>
+objcheck = true
+<% else -%>
+#objcheck = true
+<% end -%>
+
+# Enable db quota management
+<% if quota == 'true' -%>
+quota = true
+<% else -%>
+#quota = true
+<% end -%>
+
+# Set oplogging level where n is
+#   0=off (default)
+#   1=W
+#   2=R
+#   3=both
+#   7=W+some reads
+<% if oplog != '0' -%>
+oplog = <%= oplog %>
+<% else -%>
+#oplog = 0
+<% end -%>
+
+# Diagnostic/debugging option
+#nocursors = true
+
+# Ignore query hints
+#nohints = true
+
+# Disable the HTTP interface (Defaults to localhost:27018).
+#nohttpinterface = true
+
+# Turns off server-side scripting.  This will result in greatly limited
+# functionality
+#noscripting = true
+
+# Turns off table scans.  Any query that would do a table scan fails.
+#notablescan = true
+
+# Disable data file preallocation.
+#noprealloc = true
+
+# Specify .ns file size for new databases.
+# nssize = <size>
+
+# Accout token for Mongo monitoring server.
+#mms-token = <token>
+
+# Server name for Mongo monitoring server.
+#mms-name = <server-name>
+
+# Ping interval for Mongo monitoring server.
+#mms-interval = <seconds>
+
+# Replication Options
+
+# in replicated mongo databases, specify here whether this is a slave or master
+<% if slave == 'true' -%>
+slave = <%= slave %>
+<% if source -%>
+source = <%= source %>
+<% else -%>
+#source = master.example.com
+<% end -%>
+<% else -%>
+#slave = true
+#source = master.example.com
+<% end -%>
+# Slave only: specify a single database to replicate
+<% if slave == 'true' and only -%>
+only = <%= only %>
+<% else -%>
+#only = master.example.com
+<% end -%>
+# or
+<% if master == 'true' -%>
+master = <%= master %>
+<% if source -%>
+source = <%= source %>
+<% else -%>
+#source = slave.example.com
+<% end -%>
+<% else -%>
+#master = true
+#source = slave.example.com
+<% end -%>
+
+# Address of a server to pair with.
+<% if pairwith -%>
+pairwith = <%= pairwith %>
+<% else -%>
+#pairwith = <server:port>
+<% end -%>
+# Address of arbiter server.
+<% if arbiter -%>
+arbiter = <%= arbiter %>
+<% else -%>
+#arbiter = <server:port>
+<% end -%>
+# Automatically resync if slave data is stale
+<% if autoresync -%>
+autoresync = <%= autoresync %>
+<% else -%>
+#autoresync
+<% end -%>
+# Custom size for replication operation log.
+<% if oplogSize -%>
+oplogSize = <%= oplogSize %>
+<% else -%>
+#oplogSize = <MB>
+<% end -%>
+# Size limit for in-memory storage of op ids.
+<% if opIdMem -%>
+opIdMem = <%= opIdMem %>
+<% else -%>
+#opIdMem = <bytes>
+<% end -%>
