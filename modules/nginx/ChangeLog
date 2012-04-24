@@ -1,3 +1,5 @@
+* Fix markdown in the README.
+
 2012-03-12 - 0.1.1
 * Clean up the nginx module to match current puppetlabs guidelines.
 * Rename the conf definition to file, to be consistent with apache_httpd::file.

@@ -11,21 +11,21 @@ other distributions and is very easy to port if needed.
 * `nginx::file` : Manage additional configuration snippets.
 * `nginx::params` : Class to set distribution specific defaults.
 
-= Sample Usage
+# Sample Usage
 
-  # Default server, with a typical minimal virtualhost
-  # You'll want to use a real template to make it more readable
-  include nginx
-  $listen_http = [ '127.0.0.1:80', '192.168.0.12:80' ]
-  nginx::file { 'www.example.com.conf':
-      content => inline_template('# Sample configuration file
-  server {
-  <% listen_http.each do |listen_line| -%>
-      listen <%= listen_line %>;
-  <% end -%>
-      server_name www.example.com;
-      root /var/www/www.example.com;
-  }
-  '),
-  }
+    # Default server, with a typical minimal virtualhost
+    # You'll want to use a real template to make it more readable
+    include nginx
+    $listen_http = [ '127.0.0.1:80', '192.168.0.12:80' ]
+    nginx::file { 'www.example.com.conf':
+        content => inline_template('# Sample configuration file
+    server {
+    <% listen_http.each do |listen_line| -%>
+        listen <%= listen_line %>;
+    <% end -%>
+        server_name www.example.com;
+        root /var/www/www.example.com;
+    }
+    '),
+    }
 
