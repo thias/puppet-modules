@@ -32,16 +32,19 @@ define ipset (
 
     if $ensure == 'absent' {
         exec { "/usr/sbin/ipset destroy ${title}":
-            onlyif => "/usr/sbin/ipset list ${title} &>/dev/null",
+            onlyif  => "/usr/sbin/ipset list ${title} &>/dev/null",
+            require => Package['ipset'],
         }
     } else {
 
         # Run in the from_file mode (the only one implemented initially
         if $from_file {
-            exec { "ipset-test-${title}":
-                command     => "/usr/local/sbin/ipset_from_file -n ${title} -f ${from_file} -t \"${ipset_type}\" -c \"${ipset_create_options}\" -a \"${ipset_add_options}\"",
-                subscribe   => File[$from_file],
-                refreshonly => true,
+            exec { "ipset-${title}":
+                command   => "/usr/local/sbin/ipset_from_file -n ${title} -f ${from_file} -t \"${ipset_type}\" -c \"${ipset_create_options}\" -a \"${ipset_add_options}\"",
+                # Both : set doesn't exist case *and* IP list changes case
+                unless    => "/usr/sbin/ipset list ${title}",
+                subscribe => File[$from_file],
+                require   => Package['ipset'],
             }
         }
 

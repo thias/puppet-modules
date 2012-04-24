@@ -11,7 +11,10 @@
 class ipset::base inherits ipset::params {
 
     # Main package
-    package { $ipset::params::package: ensure => installed }
+    package { $ipset::params::package:
+        alias  => 'ipset',
+        ensure => installed,
+    }
 
     # Custom script
     file { '/usr/local/sbin/ipset_from_file':
