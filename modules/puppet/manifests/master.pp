@@ -1,8 +1,11 @@
-# Simple puppetmaster class.
+# Class: puppet::master
 #
-#     class { 'puppet::master':
-#         runtype => 'service|passenger|none',
-#     }
+# Install and configure a puppet master.
+#
+# Sample Usage :
+#   class { 'puppet::master':
+#       runtype => 'service|passenger|none',
+#   }
 #
 class puppet::master (
     $ensure         = 'present',
@@ -113,7 +116,6 @@ class puppet::master (
         'none': {
         }
     }
-
 
 }
 

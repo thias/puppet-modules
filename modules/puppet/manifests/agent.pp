@@ -1,5 +1,23 @@
-# Simple puppet agent class
-
+# Class: puppet::agent
+#
+# Install and configure a puppet agent on a node.
+#
+# Sample Simple Usage:
+#  include puppet::agent
+#
+# Sample Advanced Usage :
+#  class { 'puppet::agent':
+#      sysconfig => $operatingsystem ? {
+#          'Gentoo' => false,
+#           default => true,
+#      },
+#      forcenoop     => true,
+#      service       => false,
+#      cron_enable   => true,
+#      cron_silent   => true,
+#      puppet_server => 'puppet.example.com',
+#  }
+#
 class puppet::agent (
     $service            = true,
     $sysconfig          = true,
