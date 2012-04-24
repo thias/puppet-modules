@@ -1,17 +1,8 @@
-= Summary
+puppet
 
-Summary::  Puppet module
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  March 2012
+Manage puppet masters and agents.
 
-= Sample Usage
-
-Basic puppet agent on a client node :
-
-    include puppet::agent
-
-More advanced puppet client node configuration to be set in site.pp :
+Example puppet agent :
 
     class { 'puppet::agent':
         sysconfig => $operatingsystem ? {
