@@ -1,0 +1,88 @@
+#!/bin/bash
+#
+# Simple script to create/update atomically a set from a file containing a
+# list of elements (usually IP addresses or networks).
+#
+# Author: Matthias Saou
+# License : Apache License, Version 2.0
+#
+
+usage() {
+cat << EOF
+Usage: ${0/*\//}} -n IPSET_NAME -f FILE_PATH [OPTION]...
+Create or update IPSET_NAME kernel IP set based on FILE_PATH's content.
+
+Mandatory parameters :
+  -n    IP set name (REQUIRED)
+  -f    File to load IP set elements from (REQUIRED)
+
+Optional parameters:
+  -h  	Show this help
+  -t    IP set type, defaults to hash:ip
+  -c    IP set create options
+  -a    IP set add options
+
+Example : ${0/*\//} -n my_iplist -f my_iplist.txt -c "maxelem 262144"
+EOF
+}
+
+IPSET_NAME=""
+FILE=""
+IPSET_TYPE="hash:ip"
+IPSET_OPTIONS=""
+IPSET_ADD_OPTIONS=""
+
+while getopts "hn:f:t:c:a:" OPTION; do
+    case $OPTION in
+      h)
+        usage
+        exit 1
+        ;;
+      n)
+        IPSET_NAME=$OPTARG
+        ;;
+      f)
+        FILE=$OPTARG
+        ;;
+      t)
+        IPSET_TYPE=$OPTARG
+        ;;
+      c)
+        IPSET_CREATE_OPTIONS=$OPTARG
+        ;;
+      a)
+        IPSET_ADD_OPTIONS=$OPTARG
+        ;;
+    esac
+done
+
+# Very basic sanity checks
+if [ -z "${IPSET_NAME}" ]; then
+    echo "ERROR: IP set name must be given."
+    usage
+    exit 1
+fi
+if [ -z "${FILE}" ]; then
+    echo "ERROR: IP set elements file must be given."
+    usage
+    exit 1
+fi
+
+# Remove leftover temp if it exists
+ipset list ${IPSET_NAME}_temp &>/dev/null && ipset destroy ${IPSET_NAME}_temp
+
+# Create new temp
+ipset create ${IPSET_NAME}_temp ${IPSET_TYPE} ${IPSET_CREATE_OPTIONS}
+
+# Loop on the file, exclude empty lines and comments
+for IPSET_ELEMENT in `egrep -v '^(#|$)' ${FILE}`; do
+    ipset add ${IPSET_NAME}_temp ${IPSET_ELEMENT} ${IPSET_ADD_OPTIONS}
+done
+
+# Create new if it doesn't exist, so that swap works unconditionally
+ipset list ${IPSET_NAME} &>/dev/null || ipset create ${IPSET_NAME} ${IPSET_TYPE} ${IPSET_CREATE_OPTIONS}
+
+# Swap temp to final, remove temp
+ipset swap ${IPSET_NAME}_temp ${IPSET_NAME}
+ipset destroy ${IPSET_NAME}_temp
+
