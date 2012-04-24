@@ -8,7 +8,8 @@ change everything in ways which are typical for RHEL, but it also works on
 other distributions and is very easy to port if needed.
 
 * `nginx` : Main class for the NGINX web server.
-* `nginx::conf` : Manage additional configuration snippets.
+* `nginx::file` : Manage additional configuration snippets.
+* `nginx::params` : Class to set distribution specific defaults.
 
 = Sample Usage
 
