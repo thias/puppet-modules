@@ -1,3 +1,6 @@
+2012-04-25 - 0.2.1
+* Fix sysconfig template when setting multiple command line options.
+
 2012-04-08 - 0.2.0
 * Clean up the module to match current puppetlabs guidelines.
 
