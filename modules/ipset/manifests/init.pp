@@ -39,12 +39,24 @@ define ipset (
 
         # Run in the from_file mode (the only one implemented initially
         if $from_file {
-            exec { "ipset-${title}":
-                command   => "/usr/local/sbin/ipset_from_file -n ${title} -f ${from_file} -t \"${ipset_type}\" -c \"${ipset_create_options}\" -a \"${ipset_add_options}\"",
-                # Both : set doesn't exist case *and* IP list changes case
+
+            # We need two execs, one for when the set doesn't exist and the
+            # other when the file changes. It's not possible to mix both
+            # "unless" and "subscribe", as "unless" will prevent the
+            # "subscribe" triggered runs from actually being executed.
+            $command = "/usr/local/sbin/ipset_from_file -n ${title} -f ${from_file} -t \"${ipset_type}\" -c \"${ipset_create_options}\" -a \"${ipset_add_options}\""
+            exec { "ipset-create-${name}":
+                command   => $command,
                 unless    => "/usr/sbin/ipset list ${title}",
-                subscribe => File[$from_file],
                 require   => Package['ipset'],
+                path      => [ '/sbin', '/usr/sbin', '/bin', '/usr/bin' ],
+            }
+            exec { "ipset-refresh-${name}":
+                command     => $command,
+                subscribe   => File[$from_file],
+                refreshonly => true,
+                require     => Package['ipset'],
+                path        => [ '/sbin', '/usr/sbin', '/bin', '/usr/bin' ],
             }
         }
 

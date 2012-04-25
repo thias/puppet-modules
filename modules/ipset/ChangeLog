@@ -1,3 +1,6 @@
+2012-04-25 - 0.0.2
+* Fix the main exec, since mixing "unless" and "subscribe" wasn't working.
+
 2012-04-24 - 0.0.1
 * Initial module release.
 
