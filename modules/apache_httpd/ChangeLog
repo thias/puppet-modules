@@ -1,3 +1,7 @@
+2012-04-26 - 0.3.2
+* Fix logrotate file, the PID path was wrong for most systems (thomasvs).
+* Make sure the default logrotate file is identical to the original RHEL6 one.
+
 2012-04-20 - 0.3.1
 * Support multiple listens and setting namevirtualhosts (Jared Curtis).
 
