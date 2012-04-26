@@ -139,13 +139,13 @@ COMMIT
 <%= line %>
 <% end -%>
 <% if !redirect_tcp_port.empty? -%>
-<% redirect_tcp_port.each do |key,value| -%>
+<% redirect_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
 # Redirect TCP traffic arriving on port <%= key %> to local port <%= value %>
 -A PREROUTING -p tcp -m tcp --dport <%= key %> -j REDIRECT --to-ports <%= value %>
 <% end -%>
 <% end -%>
 <% if !dnat_tcp_port.empty? -%>
-<% dnat_tcp_port.each do |key,value| -%>
+<% dnat_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
 # Redirect TCP traffic arriving on port <%= key %> to remote <%= value %>
 -A PREROUTING -p tcp -m tcp --dport <%= key %> -j DNAT --to-destination <%= value %>
 <% end -%>
