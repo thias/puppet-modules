@@ -11,6 +11,7 @@ define nagios::host (
     $hostgroups          = $nagios::var::hostgroups,
     $contact_groups      = $nagios::var::contactgroups,
     $check_period        = $nagios::var::check_period,
+    $check_command       = $nagios::var::check_command,
     $notification_period = $nagios::var::notification_period,
     # Our default is hardware specs of the main host, so exclude
     $notes               = undef,
@@ -25,6 +26,7 @@ define nagios::host (
         hostgroups          => $hostgroups,
         contact_groups      => $contact_groups,
         check_period        => $check_period,
+        check_command       => $check_command,
         notification_period => $notification_period,
         notes               => $notes,
         notes_url           => $notes_url,
