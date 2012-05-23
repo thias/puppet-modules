@@ -1,4 +1,4 @@
-# Testing, 1... 2... 3...
+# Define: nagios::host
 #
 # Wrap around the original nagios_host :
 # * To be able to export with the default tag
@@ -28,7 +28,8 @@ define nagios::host (
         notification_period => $notification_period,
         notes               => $notes,
         notes_url           => $notes_url,
-        tag                 => "nagios-${nagios::var::server}",
+        # Support an arrays of tags for multiple nagios servers
+        tag                 => regsubst($nagios::var::server,'^(.+)$','nagios-\1'),
     }
 
 }

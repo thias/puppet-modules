@@ -1,47 +1,43 @@
 class nagios::client (
     # nrpe.cfg
-    $nrpe_log_facility = 'daemon',
-    $nrpe_pid_file = '/var/run/nrpe.pid',
-    $nrpe_server_port = '5666',
-    $nrpe_server_address = undef,
-    $nrpe_user = 'nrpe',
-    $nrpe_group = 'nrpe',
-    $nrpe_allowed_hosts = '127.0.0.1',
-    $nrpe_dont_blame_nrpe = '0',
-    $nrpe_command_prefix = undef,
-    $nrpe_command_timeout = '60',
+    $nrpe_log_facility       = 'daemon',
+    $nrpe_pid_file           = $nagios::params::nrpe_pid_file,
+    $nrpe_server_port        = '5666',
+    $nrpe_server_address     = undef,
+    $nrpe_user               = $nagios::params::nrpe_user,
+    $nrpe_group              = $nagios::params::nrpe_group,
+    $nrpe_allowed_hosts      = '127.0.0.1',
+    $nrpe_dont_blame_nrpe    = '0',
+    $nrpe_command_prefix     = undef,
+    $nrpe_command_timeout    = '60',
     $nrpe_connection_timeout = '300',
+    # service defaults
+    $service_check_period        = undef,
+    $service_notification_period = undef,
+    $service_max_check_attempts  = undef,
+    $service_use                 = 'generic-service',
     # other
-    $nagios_service_use = 'generic-service',
-    $plugin_dir = '/usr/libexec/nagios/plugins',
-    $perl = true,
-    $selinux = true
-) {
+    $perl                    = true,
+    $selinux                 = true
+) inherits nagios::params {
 
-    # Get all of the variables
+    # Get all of the possibly-fact-overriden variables or their default values
     include nagios::var
 
-    # Base packages
-    case $operatingsystem {
-        'RedHat', 'CentOS': {
-            package { [ 'nrpe', 'nagios-plugins' ]: ensure => installed }
-        }
-        'Gentoo': {
-            package { 'net-analyzer/nagios-nrpe':
-                alias  => 'nrpe',
-                ensure => installed,
-            }
-        }
+    # Base package(s)
+    package { $nagios::params::nrpe_package:
+        ensure => installed,
+        alias  => $nagios::params::nrpe_package_alias,
     }
 
     # Most plugins use nrpe, so we install it everywhere
-    service { 'nrpe':
+    service { $nagios::params::nrpe_service:
         ensure    => running,
         enable    => true,
         hasstatus => true,
-        subscribe => File['/etc/nagios/nrpe.cfg'],
+        subscribe => File[$nagios::params::nrpe_cfg_file],
     }
-    file { '/etc/nagios/nrpe.cfg':
+    file { $nagios::params::nrpe_cfg_file:
         owner   => 'root',
         group   => $nrpe_group,
         mode    => '0640',
@@ -49,7 +45,7 @@ class nagios::client (
         require => Package['nrpe']
     }
     # Included in the package, but we need to enable purging
-    file { '/etc/nagios/nrpe.d':
+    file { $nagios::params::nrpe_cfg_dir:
         owner   => 'root',
         group   => $nrpe_group,
         mode    => '0750',
@@ -67,65 +63,33 @@ class nagios::client (
         require => Package['nrpe'],
     }
 
-    # Optional plugin packages, to be realized where needed
-    # The main magic is in nagios::package
-    case $operatingsystem {
-        'RedHat', 'CentOS': {
-            @package { [
-                'nagios-plugins-disk',
-                'nagios-plugins-file_age',
-                'nagios-plugins-ide_smart',
-                'nagios-plugins-ifstatus',
-                'nagios-plugins-linux_raid',
-                'nagios-plugins-load',
-                'nagios-plugins-log',
-                'nagios-plugins-mailq',
-                'nagios-plugins-mysql',
-                'nagios-plugins-mysql_health',
-                'nagios-plugins-ntp',
-                'nagios-plugins-oracle_health',
-                'nagios-plugins-perl',
-                'nagios-plugins-pgsql',
-                'nagios-plugins-procs',
-                'nagios-plugins-sensors',
-                'nagios-plugins-swap',
-                'nagios-plugins-users',
-            ]:
-                ensure => installed,
-            }
-        }
-        'Gentoo': {
-            # No package splitting in Gentoo
-            @package { 'net-analyzer/nagios-plugins':
-                ensure => installed,
-            }
-        }
-    }
-
     # The main nagios_host entry
     @@nagios_host { $nagios::var::host_name:
         alias               => $nagios::var::host_alias,
         address             => $nagios::var::host_address,
         use                 => $nagios::var::host_use,
-        hostgroups          => $nagios::var::hostgroups,
-        contact_groups      => $nagios::var::contactgroups,
+        hostgroups          => $nagios::var::host_hostgroups,
+        contact_groups      => $nagios::var::host_contact_groups,
         #icon_image =>
         #statusmap_image =>
-        check_period        => $nagios::var::check_period,
-        notification_period => $nagios::var::notification_period,
+        check_period        => $nagios::var::host_check_period,
+        notification_period => $nagios::var::host_notification_period,
         notes               => $nagios::var::host_notes,
         notes_url           => $nagios::var::host_notes_url,
-        tag                 => "nagios-${nagios::var::server}",
+        tag                 => regsubst($nagios::var::server,'^(.+)$','nagios-\1'),
     }
 
-    # Set the defaults for all service checks ("tag" doesn't work here)
+    # TODO: Remove once all check/*.pp files are updated
     Nagios_service {
-        host_name => $nagios::var::host_name,
-        use       => $nagios_service_use,
+        use => 'generic-service,nagiosgraph-service',
     }
-    include nagios::checks
+    $plugin_dir = $nagios::params::plugin_dir
+
+    # Enable all default checks by... default
+    include nagios::defaultchecks
 
     # The perl bindings are required by multiple packages
+    # FIXME: Find a nicer way to avoid duplicate definitions
     if $perl {
         nagios::package { 'nagios-plugins-perl': }
     }

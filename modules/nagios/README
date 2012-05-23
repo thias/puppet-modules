@@ -1,18 +1,16 @@
-= Summary
-
-Summary::  Nagios server and client module
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  February 2012
+nagios
 
 = Requirements
 
-This module requires the apache-httpd and php modules for the server part,
+This module requires the apache_httpd and php modules for the server part,
 though they can be disabled.
 
 The plugin packages used for RHEL with selinux enabled should have the
 libexecdir directory properly set to /usr/libexec in order to avoid selinux
 denials. Such packages can be found on http://dl.marmotte.net/rpms/
+
+When SELinux is enforcing, the selinux::audit2allow definition is required
+to allow some basic nagios/nrpe accesses, though it can also be disabled.
 
 = Sample Usage
 
@@ -34,23 +32,25 @@ Nagios server instance (node specific) :
 
 Nagios client instances (from site.pp) :
 
-    if ( $operatingsystem == 'Gentoo' ) {
-        class { 'nagios::client':
-            nrpe_pid_file      => '/var/run/nrpe/nrpe.pid',
-            nrpe_user          => 'nagios',
-            nrpe_group         => 'nagios',
-            nrpe_allowed_hosts => '127.0.0.1,192.168.1.1',
-        }
-        Nagios::Client::Nrpe {
-            plugin_dir => '/usr/lib64/nagios/plugins',
-        }
+    class { 'nagios::client':
+        nrpe_allowed_hosts => '127.0.0.1,192.168.1.1',
     }
 
-Nagios client specific overrides :
+Nagios client specific overrides (see var.pp for the list) :
 
     nagios::client::config { 'host_address': value => $ipaddress_eth2 }
 
+Nagios client check configuration examples :
+
+    nagios::client::config { 'check_ram_ensure': value => 'absent' }
+    nagios::client::config { 'check_cpu_args': value => '-w 50 -c 20' }
+
+Global disabling of a default check :
+
+    Nagios::Check::Swap { ensure => absent }
+
 Debug any startup or configuration problems on the server with :
+
     nagios -v /etc/nagios/nagios.cfg
 
 To enable nagiosgraph on the server :
@@ -74,6 +74,14 @@ To enable nagiosgraph on the server :
 To enable nagiosgraph for the client's services in the server web interface :
 
     class { 'nagios::client':
-        nagios_service_use => 'generic-service,nagiosgraph-service',
+        service_use => 'generic-service,nagiosgraph-service',
     }
+
+
+Notes :
+ Client overrides should be done in this order :
+ * For all services on some nodes : Using nagios::client service_* parameters
+ * For all services on a node : Using the nagios::client host_* parameters
+ * For specific services on all nodes : Using Nagios::Check::Foo { paramname => 'value' }
+ * For specific services on a node : Using nagios::client::config { 'check_foo_ensure': value => 'absent' }
 

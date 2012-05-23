@@ -1,5 +1,8 @@
-# Class to access all nagios related variables, the defaults or overriden
-# using facts created by nagios::client::config.
+# Class: nagios::var
+#
+# Access all nagios client related variables, the defaults or overriden using
+# facts created by nagios::client::config, accessed using $::nagios::var::
+# scoped variables.
 #
 class nagios::var {
 
@@ -9,6 +12,7 @@ class nagios::var {
     } else {
         $server = 'default'
     }
+
     # Values used for nagios_host
     if $::nagios_host_name != '' {
         $host_name = $::nagios_host_name
@@ -30,7 +34,13 @@ class nagios::var {
     } else {
         $host_use = 'linux-server'
     }
-    # TODO: hostgroups
+    if $::nagios_host_hostgroups != '' {
+        $host_hostgroups = $::nagios_host_hostgroups
+    }
+    if $::nagios_host_contact_groups != '' {
+        $host_contact_groups = $::nagios_hostcontact_groups
+    }
+
     # TODO: icon_image
     # TODO: statusmap_image
     if $::nagios_host_notes != '' {
@@ -44,29 +54,19 @@ class nagios::var {
         $host_notes_url = "/nagios/cgi-bin/status.cgi?host=${host_name}"
     }
 
-    # check_period
-    if $::nagios_check_period != '' {
-        $check_period = $::nagios_check_period
-    } else {
-        $check_period = '24x7'
-    }
-
-    # notification_period
-    if $::nagios_notification_period != '' {
-        $notification_period = $::nagios_notification_period
-    } else {
-        $notification_period = '24x7'
-    }
-
-    # hostgroups (defaults to undef)
-    if $::nagios_hostgroups != '' {
-        $hostgroups = $::nagios_hostgroups
-    }
-
-    # contactgroups (defaults to undef)
-    if $::nagios_contactgroups != '' {
-        $contactgroups = $::nagios_contactgroups
-    }
+    # Values used for nagios_service
+#    if $::nagios_service_use != '' {
+#        $service_use = $::nagios_service_use
+#    }
+#    if $::nagios_service_check_period != '' {
+#        $service_check_period = $::nagios_service_check_period
+#    }
+#    if $::nagios_service_notification_period != '' {
+#        $service_notification_period = $::nagios_service_notification_period
+#    }
+#    if $::nagios_service_max_check_attempts != '' {
+#        $service_max_check_attempts = $::nagios_service_max_check_attempts
+#    }
 
 }
 

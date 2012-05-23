@@ -1,0 +1,5 @@
+2012-05-23 - 0.2.0
+* Clean up the module to match current puppetlabs guidelines.
+* Add new params.pp and use it from nagios::client for Gentoo specifics.
+* Renamed checks.pp to defaultchecks.pp to be more explicit.
+
