@@ -1,0 +1,6 @@
+2012-04-26 - 0.1.4
+* Add support for custom chains.
+* Force sorting hashes to keep order the same on each run with puppet 2.7+.
+* Add support for fwmark.
+* Add support for srctcpports, hash of tcp ports with arrays of sources.
+

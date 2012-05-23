@@ -1,15 +1,35 @@
-= Summary
+iptables
 
-Summary::  Manage IPv4 iptables rules
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Updated::  December 2011
+This is a simple monolithic iptables module which is based around a single
+class and a single template for all rules. It has the disadvantage of not
+being modular, but has the advantages of being very simple and robust.
 
-= Sample Usage
+To manage IPv6 rules in the same way, see the ip6tables module.
+
+Note: "iptables" is still a definition, but will be changed into a parametrized
+class at some point, since it is not meant to be called more than once.
+
+* `iptables` : Main class to enable and configure IPv4 iptables rules.
+* `iptables::params` : Class to set distribution specific defaults.
+
+# Sample Usage
 
 Simple rules to allow ssh, http and https globally :
 
     iptables { '/etc/sysconfig/iptables':
         tcpports => [ '22', '80', '443' ],
+    }
+
+More complex rules :
+
+    iptables { '/etc/sysconfig/iptables':
+        ethpub       => 'br0',
+        ethpriv      => 'br1',
+        tcpports     => [ '53', '80', '443' ],
+        udpports     => [ '53' ],
+        privtcpports => [ '3306' ],
+        hosts_ssh    => [ '192.0.2.1' ],
+        knock        => true, knockone => '1111', knocktwo => '2222',
+        masq         => true,
     }
 

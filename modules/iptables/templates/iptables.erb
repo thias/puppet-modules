@@ -9,6 +9,9 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :CLOSED - [0:0]
+<% chains_filter.sort_by {|key,value| key}.each do |key,value| -%>
+:<%= key %> - [0:0]
+<% end -%>
 <% if knock -%>
 :KNOCK-INPUT - [0:0]
 :KNOCK-MAIN - [0:0]
@@ -36,6 +39,11 @@
 <% end -%>
 <% tcpports.each do |port| -%>
 -A INPUT -p tcp -m tcp --dport <%= port %> -j ACCEPT 
+<% end -%>
+<% srctcpports.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |src| -%>
+-A INPUT -p tcp -m tcp -s <%= src %> --dport <%= key %> -j ACCEPT
+<% end -%>
 <% end -%>
 <% udpports.each do |port| -%>
 -A INPUT -p udp -m udp --dport <%= port %> -j ACCEPT 
@@ -127,6 +135,11 @@
 -A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> -m state --state NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED 
 -A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED 
 <% end -%>
+<% chains_filter.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |line| -%>
+-A <%= key %> <%= line %>
+<% end -%>
+<% end -%>
 COMMIT
 <% if masq or !raw_rules_nat.empty? or !redirect_tcp_port.empty? or !dnat_tcp_port.empty? -%>
 
@@ -154,6 +167,22 @@ COMMIT
 -A POSTROUTING -s 10.0.0.0/8 -o <%= ethpub -%> -j MASQUERADE
 -A POSTROUTING -s 172.16.0.0/12 -o <%= ethpub -%> -j MASQUERADE
 -A POSTROUTING -s 192.168.0.0/16 -o <%= ethpub -%> -j MASQUERADE
+<% end -%>
+COMMIT
+<% end -%>
+<% if not fwmark.empty? -%>
+
+# MANGLE table, used for marking packets
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+<% fwmark.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |markrule| -%>
+-A PREROUTING <%= markrule %> -j MARK --set-mark <%= key %>
+<% end -%>
 <% end -%>
 COMMIT
 <% end -%>

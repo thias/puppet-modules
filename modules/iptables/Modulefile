@@ -1,2 +1,8 @@
-name 'iptables'
-version '0.1.3'
+name 'thias-iptables'
+version '0.1.4'
+source 'git://github.com/thias/puppet-modules/modules/iptables'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'Iptables module'
+description "Enable and configure IPv4 iptables rules."
+project_page 'http://glee.thias.es/puppet'
