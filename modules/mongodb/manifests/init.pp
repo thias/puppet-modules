@@ -21,6 +21,7 @@ class mongodb (
     $bind_ip        = '127.0.0.1',
     $port           = '27017',
     $dbpath         = '/var/lib/mongodb',
+    $auth           = 'false',
     $verbose        = 'false',
     $objcheck       = 'false',
     $quota          = 'false',
