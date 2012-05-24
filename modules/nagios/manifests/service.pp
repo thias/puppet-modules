@@ -5,7 +5,8 @@
 # * To be able to use defaults overridden or from facts
 #
 define nagios::service (
-    $host_name           = $nagios::var::host_name,
+    $server              = $nagios::client::server,
+    $host_name           = $nagios::client::host_name,
     $check_command,
     $service_description = $name,
     $servicegroups       = undef,
@@ -44,7 +45,7 @@ define nagios::service (
         notification_period => $final_notification_period,
         use                 => $final_use,
         # Support an arrays of tags for multiple nagios servers
-        tag                 => regsubst($nagios::var::server,'^(.+)$','nagios-\1'),
+        tag                 => regsubst($server,'^(.+)$','nagios-\1'),
         ensure              => $ensure,
     }
 

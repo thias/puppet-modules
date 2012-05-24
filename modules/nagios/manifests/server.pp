@@ -61,7 +61,7 @@ class nagios::server (
     $admin_pager = 'pagenagios@localhost',
     # private/resource.cfg for $USERx$ macros (from 1 to 32)
     $user = {
-        '1' => '/usr/libexec/nagios/plugins',
+        '1' => $nagios::params::plugin_dir,
     },
     # Options for all nrpe-based checks
     $nrpe_options   = '-t 15',
@@ -71,10 +71,10 @@ class nagios::server (
     $notify_host_by_email_command_line    = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
     $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
     $timeperiod_workhours = '09:00-17:00',
-    $plugin_dir           = '/usr/libexec/nagios/plugins',
+    $plugin_dir           = $nagios::params::plugin_dir,
     $plugin_nginx         = false,
     $selinux              = true
-) {
+) inherits nagios::params {
 
     # Full nrpe command to run, with default options
     $nrpe = "\$USER1\$/check_nrpe -H \$HOSTADDRESS\$ ${nrpe_options}"
@@ -159,13 +159,9 @@ class nagios::server (
     }
         
     if $php {
-        class { 'php::mod_php5': inifile => '/etc/httpd/conf/php.ini' }
-        php::ini { '/etc/httpd/conf/php.ini':
-            require => Package['httpd'],
-        }
-        if $php_apc {
-            php::module { 'pecl-apc': }
-        }
+        include php::mod_php5 
+        php::ini { '/etc/php.ini': }
+        if $php_apc { php::module { 'pecl-apc': } }
     }
 
     # Configuration files
@@ -213,6 +209,10 @@ class nagios::server (
     # FIXME: This does not work from outside here, wrong scope.
     # We'll need to wrap around these types with our own
     # definitions like for "host"
+    Nagios_command {
+        notify  => Service['nagios'],
+        require => Package['nagios'],
+    }
     Nagios_contact {
         notify  => Service['nagios'],
         require => Package['nagios'],
@@ -290,7 +290,7 @@ class nagios::server (
         command_line => '$USER1$/check_dhcp $ARG1$',
     }
     nagios_command { 'check_ping':
-        command_line => '$USER1$/check_ping -H $HOSTADDRESS$ -w $ARG1$ -c $ARG2$ -p 5',
+        command_line => '$USER1$/check_ping -H $HOSTADDRESS$ $ARG1$',
     }
     nagios_command { 'check_pop':
         command_line => '$USER1$/check_pop -H $HOSTADDRESS$ $ARG1$',
@@ -374,79 +374,6 @@ class nagios::server (
     nagios_command { 'check_nrpe_mptsas':
         command_line => "${nrpe} -c check_mptsas",
     }
-    nagios_command { 'check_nrpe_jobs_status':
-        command_line => "${nrpe} -c check_jobs_status",
-    }
-    # TODO: sort these
-    nagios_command { 'check_nrpe_conntrack':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_conntrack',
-    }
-    nagios_command { 'check_nrpe_sslcerts':
-        command_line => '$USER1$/check_nrpe -t 25 -H $HOSTADDRESS$ -c check_sslcerts',
-    }
-    nagios_command { 'check_nrpe_mysql':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_mysql',
-    }
-    nagios_command { 'check_nrpe_mysql_health':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_mysql_health_$ARG1$',
-    }
-    nagios_command { 'check_nrpe_mysqlbackup':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_mysqlbackup',
-    }
-    nagios_command { 'check_nrpe_mysql_slave':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_mysql_slave',
-    }
-    nagios_command { 'check_nrpe_mysql_query':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_mysql_query',
-    }
-    nagios_command { 'check_nrpe_oracle_health':
-        command_line => '$USER1$/check_nrpe -t 200 -H $HOSTADDRESS$ -c check_oracle_health_$ARG1$',
-    }
-    nagios_command { 'check_nrpe_megaraid':
-        command_line => '$USER1$/check_nrpe -t 120 -H $HOSTADDRESS$ -c check_megaraid',
-    }
-    nagios_command { 'check_nrpe_perc':
-        command_line => '$USER1$/check_nrpe -t 25 -H $HOSTADDRESS$ -c check_perc',
-    }
-    nagios_command { 'check_nrpe_cerc':
-        command_line => '$USER1$/check_nrpe -t 25 -H $HOSTADDRESS$ -c check_cerc',
-    }
-    nagios_command { 'check_nrpe_lsi':
-        command_line => '$USER1$/check_nrpe -t 25 -H $HOSTADDRESS$ -c check_lsi',
-    }
-    nagios_command { 'check_nrpe_mdraid':
-        command_line => '$USER1$/check_nrpe -t 25 -H $HOSTADDRESS$ -c check_mdraid',
-    }
-    nagios_command { 'check_ldap':
-        command_line => '$USER1$/check_ldap -H $HOSTADDRESS$ -D $ARG1$ -P $ARG2$ -b $ARG3$',
-    }
-    nagios_command { 'check_ldaps':
-        command_line => '$USER1$/check_ldaps -H $HOSTNAME$ -D $ARG1$ -P $ARG2$ -b $ARG3$',
-    }
-    nagios_command { 'check_nrpe_ldapdb':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_ldapdb',
-    }
-    nagios_command { 'check_nrpe_ldaprep':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_ldaprep',
-    }
-    nagios_command { 'check_nrpe_xen':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_xen',
-    }
-    nagios_command { 'check_nrpe_radius':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_radius',
-    }
-    nagios_command { 'check_nrpe_squale':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_squale',
-    }
-    nagios_command { 'check_nrpe_search':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_search',
-    }
-    nagios_command { 'check_nrpe_gdns':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_gdns',
-    }
-    nagios_command { 'check_nrpe_bonding':
-        command_line => '$USER1$/check_nrpe -t 15 -H $HOSTADDRESS$ -c check_bonding',
-    }
 
     # Nagios contacts and contactgroups
     # Taken from contacts.cfg
@@ -492,17 +419,6 @@ class nagios::server (
             source => 'puppet:///modules/nagios/messages.nagios',
         }
     }
-
-    # TODO : Clean
-
-    # Custom icons
-#    file { '/usr/share/nagios/html/images/logos':
-#        ensure  => directory,
-#        recurse => true,
-#        owner   => 'root',
-#        group   => 'root',
-#        source  => 'puppet:///modules/nagios/usr/share/nagios/html/images/logos',
-#    }
 
 }
 

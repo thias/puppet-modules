@@ -20,17 +20,16 @@ define nagios::check::ntp_time ( $args = '' ) {
         $critical = '2'
     }
 
-    nagios::package { 'nagios-plugins-ntp': }
+    Package <| tag == 'nagios-plugins-ntp' |>
 
-    nagios::client::nrpe { 'check_ntp_time':
+    nagios::client::nrpe_file { 'check_ntp_time':
         args => "-H 1.rhel.pool.ntp.org -w ${warning} -c ${critical} ${args}",
     }
 
-    @@nagios_service { "check_ntp_time_${title}":
+    nagios::service { "check_ntp_time_${title}":
         check_command       => 'check_nrpe_ntp_time',
         service_description => 'ntp_time',
         #servicegroups       => 'ntp_time',
-        tag                 => "nagios-${nagios::var::server}",
     }
 
 }

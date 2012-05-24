@@ -6,7 +6,7 @@ class nagios::nagiosgraph (
     $nagios_service_action_url = '/nagiosgraph/cgi-bin/show.cgi?host=$HOSTNAME$&service=$SERVICEDESC$',
     # The apache config snippet, more useful as a template when using a custom
     $apache_httpd              = true,
-    $apache_httpd_conf_content = template('nagios/apache-httpd/httpd-nagiosgraph.conf.erb'),
+    $apache_httpd_conf_content = template('nagios/apache_httpd/httpd-nagiosgraph.conf.erb'),
     $apache_httpd_conf_file    = '/etc/httpd/conf.d/nagiosgraph.conf',
     # Used in the nagiosgraph.conf template
     $perflog     = '/var/log/nagios/service_perfdata.log',

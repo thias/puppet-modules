@@ -26,16 +26,15 @@ define nagios::check::memcached (
         ensure  => $ensure,
     }
 
-    nagios::client::nrpe { 'check_memcached':
+    nagios::client::nrpe_file { 'check_memcached':
         args    => $fullargs,
         ensure  => $ensure,
     }
 
-    @@nagios_service { "check_memcached_${title}":
+    nagios::service { "check_memcached_${title}":
         check_command       => 'check_nrpe_memcached',
         service_description => 'memcached',
         #servicegroups       => 'memcached',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

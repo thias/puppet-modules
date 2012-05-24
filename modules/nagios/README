@@ -82,6 +82,21 @@ Notes :
  Client overrides should be done in this order :
  * For all services on some nodes : Using nagios::client service_* parameters
  * For all services on a node : Using the nagios::client host_* parameters
- * For specific services on all nodes : Using Nagios::Check::Foo { paramname => 'value' }
+ * For specific services on all nodes : Using Nagios::Check::Foo { paramname => 'value' } (the scope must be the same or lower than where nagios::client is called from)
  * For specific services on a node : Using nagios::client::config { 'check_foo_ensure': value => 'absent' }
+
+Note : nagios::client::config can also be used to override just about anything, though you must take into account that since it's done using custom facts, you'll need two puppet runs on the client node then one on the server node for the change to be applied : one for the fact to be created, then another for the client configuration to take the new fact into account, then the server run to update the nagios configuration. This might take a little while depending on how often puppet is run on the nodes.
+
+class { 'nagios::client':
+    nrpe_allowed_hosts => '127.0.0.1,192.168.10.5,176.31.253.124',
+    service_use => 'generic-service,nagiosgraph-service',
+}
+if $hostname == 'wip' {
+    Nagios::Check::Cpu { use => 'generic-service,nagiosgraph-service,bar' }
+}
+
+Don't use nagios::client::server, can't be overridden with nagios::client::config. You want nagios::var::server instead.
+
+The server part is still very Red Hat Enterprise Linux specific. The client
+part is much more generic and has been tested on both RHEL and Gentoo.
 

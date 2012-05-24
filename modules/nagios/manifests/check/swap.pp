@@ -20,17 +20,16 @@ define nagios::check::swap ( $args = '' ) {
         $critical = '2%'
     }
 
-    nagios::package { 'nagios-plugins-swap': }
+    Package <| tag == 'nagios-plugins-swap' |>
 
-    nagios::client::nrpe { 'check_swap':
+    nagios::client::nrpe_file { 'check_swap':
         args => "-w ${warning} -c ${critical} ${args}",
     }
 
-    @@nagios_service { "check_swap_${title}":
+    nagios::service { "check_swap_${title}":
         check_command       => 'check_nrpe_swap',
         service_description => 'swap',
         #servicegroups       => 'swap',
-        tag                 => "nagios-${nagios::var::server}",
     }
 
 }

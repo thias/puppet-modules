@@ -1,28 +1,52 @@
+# Class: nagios::client
+#
+# This is the main class to be included on all nodes to be monitored by nagios.
+#
 class nagios::client (
+    $nagios_host_name            = $::nagios_host_name,
+    $nagios_server               = $::nagios_server,
     # nrpe.cfg
-    $nrpe_log_facility       = 'daemon',
-    $nrpe_pid_file           = $nagios::params::nrpe_pid_file,
-    $nrpe_server_port        = '5666',
-    $nrpe_server_address     = undef,
-    $nrpe_user               = $nagios::params::nrpe_user,
-    $nrpe_group              = $nagios::params::nrpe_group,
-    $nrpe_allowed_hosts      = '127.0.0.1',
-    $nrpe_dont_blame_nrpe    = '0',
-    $nrpe_command_prefix     = undef,
-    $nrpe_command_timeout    = '60',
-    $nrpe_connection_timeout = '300',
-    # service defaults
-    $service_check_period        = undef,
-    $service_notification_period = undef,
-    $service_max_check_attempts  = undef,
+    $nrpe_log_facility           = 'daemon',
+    $nrpe_pid_file               = $nagios::params::nrpe_pid_file,
+    $nrpe_server_port            = '5666',
+    $nrpe_server_address         = undef,
+    $nrpe_user                   = $nagios::params::nrpe_user,
+    $nrpe_group                  = $nagios::params::nrpe_group,
+    $nrpe_allowed_hosts          = '127.0.0.1',
+    $nrpe_dont_blame_nrpe        = '0',
+    $nrpe_command_prefix         = undef,
+    $nrpe_command_timeout        = '60',
+    $nrpe_connection_timeout     = '300',
+    # host defaults
+    $host_address                = $::nagios_host_address,
+    $host_alias                  = $::nagios_host_alias,
+    $host_check_period           = $::nagios_host_check_period,
+    $host_contact_groups         = $::nagios_host_contact_groups,
+    $host_hostgroups             = $::nagios_host_hostgroups,
+    $host_notes                  = $::nagios_host_notes,
+    $host_notes_url              = $::nagios_host_notes_url,
+    $host_notification_period    = $::nagios_host_notification_period,
+    $host_use                    = $::nagios_host_use,
+    # service defaults (hint: use host_* or override only service_use for efficiency)
+    $service_check_period        = $::nagios_service_check_period,
+    $service_notification_period = $::nagios_service_notification_period,
+    $service_max_check_attempts  = $::nagios_service_max_check_attempts,
     $service_use                 = 'generic-service',
     # other
-    $perl                    = true,
-    $selinux                 = true
+    $plugin_dir                  = $nagios::params::plugin_dir,
+    $selinux                     = true
 ) inherits nagios::params {
 
-    # Get all of the possibly-fact-overriden variables or their default values
-    include nagios::var
+    # Set the variables to be used, including scoped from elsewhere, based on the optional
+    # fact or parameter from here
+    $host_name = $nagios_host_name ? {
+        ''      => $::fqdn,
+        default => $nagios_host_name,
+    }
+    $server = $nagios_server ? {
+        ''      => 'default',
+        default => $nagios_server,
+    }
 
     # Base package(s)
     package { $nagios::params::nrpe_package:
@@ -64,35 +88,36 @@ class nagios::client (
     }
 
     # The main nagios_host entry
-    @@nagios_host { $nagios::var::host_name:
-        alias               => $nagios::var::host_alias,
-        address             => $nagios::var::host_address,
-        use                 => $nagios::var::host_use,
-        hostgroups          => $nagios::var::host_hostgroups,
-        contact_groups      => $nagios::var::host_contact_groups,
-        #icon_image =>
-        #statusmap_image =>
-        check_period        => $nagios::var::host_check_period,
-        notification_period => $nagios::var::host_notification_period,
-        notes               => $nagios::var::host_notes,
-        notes_url           => $nagios::var::host_notes_url,
-        tag                 => regsubst($nagios::var::server,'^(.+)$','nagios-\1'),
+    nagios::host { $host_name:
+        server              => $server,
+        address             => $host_address,
+        host_alias          => $host_alias,
+        check_period        => $host_check_period,
+        contact_groups      => $host_contact_groups,
+        hostgroups          => $host_hostgroups,
+        notes               => $host_notes,
+        notes_url           => $host_notes_url,
+        notification_period => $host_notification_period,
+        use                 => $host_use,
     }
 
     # TODO: Remove once all check/*.pp files are updated
     Nagios_service {
         use => 'generic-service,nagiosgraph-service',
     }
-    $plugin_dir = $nagios::params::plugin_dir
 
     # Enable all default checks by... default
     include nagios::defaultchecks
-
-    # The perl bindings are required by multiple packages
-    # FIXME: Find a nicer way to avoid duplicate definitions
-    if $perl {
-        nagios::package { 'nagios-plugins-perl': }
+    # Default checks, enabled on all hosts
+    nagios::check::cpu { $host_name: }
+    nagios::check::disk { $host_name: }
+    if $::nagios_httpd == 'true' {
+        nagios::check::httpd { $host_name: }
+    } else {
+        nagios::check::httpd { $host_name: ensure => absent }
     }
+    nagios::check::load { $host_name: }
+    nagios::check::ping { $host_name: }
 
     # With selinux, many nrpe plugins require additional rules to work
     if $selinux and $::selinux_enforced {

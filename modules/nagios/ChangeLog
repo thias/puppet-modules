@@ -2,4 +2,9 @@
 * Clean up the module to match current puppetlabs guidelines.
 * Add new params.pp and use it from nagios::client for Gentoo specifics.
 * Renamed checks.pp to defaultchecks.pp to be more explicit.
+* Removed var.pp as everything is inside client.pp now.
+* Finished updating host.pp and service.pp wrappers, use them from client.pp.
+* Remove package.pp and use tag + realize to work around duplicates.
+* Renamed nagios::client::nrpe to nagios::client::nrpe_file, more explicit.
+* Simplified the check_ping to have a single argument.
 

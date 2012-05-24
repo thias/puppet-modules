@@ -28,15 +28,14 @@ define nagios::check::ram ( $args = '' ) {
         ensure  => $ensure,
     }
 
-    nagios::client::nrpe { 'check_ram':
+    nagios::client::nrpe_file { 'check_ram':
         args => "-w ${warning} -c ${critical} ${args}",
     }
 
-    @@nagios_service { "check_ram_${title}":
+    nagios::service { "check_ram_${title}":
         check_command       => 'check_nrpe_ram',
         service_description => 'ram',
         #servicegroups       => 'ram',
-        tag                 => "nagios-${nagios::var::server}",
     }
 
 }

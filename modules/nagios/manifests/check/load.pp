@@ -1,47 +1,43 @@
-define nagios::check::load () {
+define nagios::check::load (
+    $args                = $::nagios_check_load_args,
+    $servicegroups       = $::nagios_check_load_servicegroups,
+    $check_period        = $::nagios_check_load_check_period,
+    $max_check_attempts  = $::nagios_check_load_max_check_attempts,
+    $notification_period = $::nagios_check_load_notification_period,
+    $use                 = $::nagios_check_load_use,
+    $ensure              = $::nagios_check_load_ensure
+) {
 
-    # Generic overrides
-    if $::nagios_check_load_check_period != '' {
-        Nagios_service { check_period => $::nagios_check_load_check_period }
-    }
-    if $::nagios_check_load_notification_period != '' {
-        Nagios_service { notification_period => $::nagios_check_load_notification_period }
-    }
-    if $::nagios_check_load_max_check_attempts != '' {
-        Nagios_service { max_check_attempts => $::nagios_check_load_max_check_attempts }
+    if $ensure != 'absent' {
+        Package <| tag == 'nagios-plugins-load' |>
     }
 
-    # Service specific overrides
-    if ( $::nagios_check_load_warning  != '' ) and
-       ( $::nagios_check_load_critical != '' ) {
-        $warning  = $::nagios_check_load_warning
-        $critical = $::nagios_check_load_critical
-    } else {
-        # If both thresholds aren't specified, we choose defaults based on the
-        # number of processors.
+    # We choose defaults based on the number of CPU cores.
+    if $args == '' {
         if ( $::processorcount > 8 ) {
-            $warning  = '25,20,20'
-            $critical = '40,35,35'
+            $final_args = '-w 25,20,20 -c 40,35,35'
         } elsif ( $::processorcount > 4 ) and ( $::processorcount <= 8 ) {
-            $warning  = '20,15,15'
-            $critical = '35,30,30'
+            $final_args = '-w 20,15,15 -c 35,30,30'
         } else {
-            $warning  = '15,10,10'
-            $critical = '30,25,25'
+            $final_args = '-w 15,10,10 -c 30,25,25'
         }
+    } else {
+        $final_args = $args
     }
-            
-    nagios::package { 'nagios-plugins-load': }
-
-    nagios::client::nrpe { 'check_load':
-        args => "-w ${warning} -c ${critical}",
+    nagios::client::nrpe_file { 'check_load':
+        args   => $final_args,
+        ensure => $ensure,
     }
 
-    @@nagios_service { "check_load_${title}":
+    nagios::service { "check_load_${title}":
         check_command       => 'check_nrpe_load',
         service_description => 'load',
-        #servicegroups       => 'load',
-        tag                 => "nagios-${nagios::var::server}",
+        servicegroups       => $servicegroups,
+        check_period        => $check_period,
+        max_check_attempts  => $max_check_attempts,
+        notification_period => $notification_period,
+        use                 => $use,
+        ensure              => $ensure,
     }
 
 }

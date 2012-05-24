@@ -1,6 +1,8 @@
-# Definition to install client nrpe config snippets, avoid repeating details.
+# Define: nagios::client::nrpe_file
 #
-define nagios::client::nrpe (
+# Install check-specific client nrpe configuration snippet files.
+#
+define nagios::client::nrpe_file (
     $plugin     = $name,
     $template   = 'check_generic',
     $command    = $name,

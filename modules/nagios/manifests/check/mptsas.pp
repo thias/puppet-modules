@@ -51,16 +51,17 @@ define nagios::check::mptsas (
         }
     }
 
-    nagios::client::nrpe { 'check_mptsas':
+    Package <| tag == 'nagios-plugins-perl' |>
+
+    nagios::client::nrpe_file { 'check_mptsas':
         args   => $fullargs,
         ensure => $ensure,
     }
 
-    @@nagios_service { "check_mptsas_${title}":
+    nagios::service { "check_mptsas_${title}":
         check_command       => 'check_nrpe_mptsas',
         service_description => 'mptsas',
         #servicegroups       => 'mptsas',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

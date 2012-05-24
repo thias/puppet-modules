@@ -22,20 +22,19 @@ define nagios::check::moxi (
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        content => template('nagios/plugins/check_moxi.erb'),
+        content => template('nagios/plugins/check_moxi'),
         ensure  => $ensure,
     }
 
-    nagios::client::nrpe { 'check_moxi':
+    nagios::client::nrpe_file { 'check_moxi':
         args    => $fullargs,
         ensure  => $ensure,
     }
 
-    @@nagios_service { "check_moxi_${title}":
+    nagios::service { "check_moxi_${title}":
         check_command       => 'check_nrpe_moxi',
         service_description => 'moxi',
         #servicegroups       => 'moxi',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

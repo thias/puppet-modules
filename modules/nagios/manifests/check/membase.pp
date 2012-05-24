@@ -30,16 +30,15 @@ define nagios::check::membase (
         ensure  => $ensure,
     }
 
-    nagios::client::nrpe { 'check_membase':
+    nagios::client::nrpe_file { 'check_membase':
         args    => $fullargs,
         ensure  => $ensure,
     }
 
-    @@nagios_service { "check_membase_${title}":
+    nagios::service { "check_membase_${title}":
         check_command       => 'check_nrpe_membase',
         service_description => 'membase',
         #servicegroups       => 'membase',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

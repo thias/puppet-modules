@@ -51,16 +51,17 @@ define nagios::check::megaraid_sas (
         }
     }
 
-    nagios::client::nrpe { 'check_megaraid_sas':
+    Package <| tag == 'nagios-plugins-perl' |>
+
+    nagios::client::nrpe_file { 'check_megaraid_sas':
         args   => $fullargs,
         ensure => $ensure,
     }
 
-    @@nagios_service { "check_megaraid_sas_${title}":
+    nagios::service { "check_megaraid_sas_${title}":
         check_command       => 'check_nrpe_megaraid_sas',
         service_description => 'megaraid_sas',
         #servicegroups       => 'megaraid_sas',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

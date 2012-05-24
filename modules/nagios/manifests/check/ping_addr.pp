@@ -12,7 +12,7 @@ define nagios::check::ping_addr () {
     if $::nagios_check_ping_addr_address != '' {
         $address = $::nagios_check_ping_addr_address
     } else {
-        $address = $nagios::var::host_address
+        $address = $nagios::client::host_address
     }
     if $::nagios_check_ping_addr_warning != '' {
         $warning = $::nagios_check_ping_addr_warning
@@ -25,11 +25,10 @@ define nagios::check::ping_addr () {
         $critical = '5000.0,100%'
     }
 
-    @@nagios_service { "check_ping_addr_${title}":
+    nagios::service { "check_ping_addr_${title}":
         check_command       => "check_ping_addr!${address}!${warning}!${critical}",
         service_description => 'ping_addr',
         #servicegroups       => 'ping_addr',
-        tag                 => "nagios-${nagios::var::server}",
     }
 
 }

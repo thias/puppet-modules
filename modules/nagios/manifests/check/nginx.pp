@@ -20,11 +20,10 @@ define nagios::check::nginx (
 
     # Needs "plugin_nginx => true" on nagios::server to get the check script
 
-    @@nagios_service { "check_nginx_${title}":
+    nagios::service { "check_nginx_${title}":
         check_command       => "check_nginx!${fullargs}",
         service_description => 'nginx',
         #servicegroups       => 'nginx',
-        tag                 => "nagios-${nagios::var::server}",
         ensure              => $ensure,
     }
 

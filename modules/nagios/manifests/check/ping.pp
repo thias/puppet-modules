@@ -1,30 +1,27 @@
-define nagios::check::ping () {
+define nagios::check::ping (
+    $args                = $::nagios_check_ping_args,
+    $servicegroups       = $::nagios_check_ping_servicegroups,
+    $check_period        = $::nagios_check_ping_check_period,
+    $max_check_attempts  = $::nagios_check_ping_max_check_attempts,
+    $notification_period = $::nagios_check_ping_notification_period,
+    $use                 = $::nagios_check_ping_use,
+    $ensure              = $::nagios_check_ping_ensure
+) {
 
-    # Generic overrides
-    if $::nagios_check_ping_check_period != '' {
-        Nagios_service { check_period => $::nagios_check_ping_check_period }
-    }
-    if $::nagios_check_ping_notification_period != '' {
-        Nagios_service { notification_period => $::nagios_check_ping_notification_period }
-    }
-
-    # Service specific overrides
-    if $::nagios_check_ping_warning != '' {
-        $warning = $::nagios_check_ping_warning
-    } else {
-        $warning = '2000.0,50%'
-    }
-    if $::nagios_check_ping_critical != '' {
-        $critical = $::nagios_check_ping_critical
-    } else {
-        $critical = '5000.0,100%'
+    $final_args = $args ? {
+        ''      => '-w 2000,50% -c 5000,100% -p 5',
+        default => $args,
     }
 
-    @@nagios_service { "check_ping_${title}":
-        check_command       => "check_ping!${warning}!${critical}",
+    nagios::service { "check_ping_${title}":
+        check_command       => "check_ping!${final_args}",
         service_description => 'ping',
-        #servicegroups       => 'ping',
-        tag                 => "nagios-${nagios::var::server}",
+        servicegroups       => $servicegroups,
+        check_period        => $check_period,
+        max_check_attempts  => $max_check_attempts,
+        notification_period => $notification_period,
+        use                 => $use,
+        ensure              => $ensure,
     }
 
 }
