@@ -76,16 +76,16 @@ try:
     output = 'ActiveConn:%s Reading:%s Writing:%s Waiting:%s' % (ActiveConn,reading,writing,waiting)
 except Exception:
     print "CRITICAL: Error while getting Connection"
-    sys.exit(1)
+    sys.exit(2)
 
 if 'warning' in dir() and 'critical' in dir():
     perfdata = 'activeconn=%s;%s;%s;0; reading=%s writing=%s waiting=%s' % (ActiveConn,warning,critical,reading,writing,waiting)
     if ActiveConn >= critical:
         print 'CRITICAL - %s|%s' % (output,perfdata)
-        sys.exit(1)
+        sys.exit(2)
     elif ActiveConn >= warning:
         print 'WARNING - %s|%s' % (output,perfdata)
-        sys.exit(2)
+        sys.exit(1)
     else:
         print 'OK - %s|%s' % (output,perfdata)
         sys.exit(0)

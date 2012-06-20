@@ -1,5 +1,6 @@
 2012-xx-xx
 * Add support for host_check_command.
+* Fix check_nginx exit statuses (warning and critical were inverted).
 
 2012-05-23 - 0.2.0
 * Clean up the module to match current puppetlabs guidelines.
