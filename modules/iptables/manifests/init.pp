@@ -47,7 +47,7 @@ define iptables (
     $redirect_tcp_port  = {},
     $dnat_tcp_port      = {},
     $masq               = false,
-    # Options related to iptables-config
+    # Options related to iptables-config (RHEL/Fedora)
     $modules            = '',
     $modules_unload     = 'yes',
     $save_on_stop       = 'no',
@@ -55,7 +55,11 @@ define iptables (
     $save_counter       = 'no',
     $status_numeric     = 'yes',
     $status_verbose     = 'no',
-    $status_linenumbers = 'yes'
+    $status_linenumbers = 'yes',
+    # Options related to conf.d/iptables (Gentoo only)
+    $iptables_save      = '/var/lib/iptables/rules-save',
+    $save_restore_options = ''  # default is "-c"
+    #$save_on_stop      = 'no'  # see above, original default is "yes"
 ) {
 
     include iptables::params
@@ -69,11 +73,17 @@ define iptables (
         mode    => '0600',
         content => template('iptables/iptables.erb'),
     }
-    if $iptables::params::config {
+    if $iptables::params::config == '/etc/sysconfig/iptables-config' {
         file { $iptables::params::config:
             notify  => Service[$iptables::params::service],
             mode    => '0600',
             content => template('iptables/iptables-config.erb'),
+        }
+    } elsif $iptables::params::config == '/etc/conf.d/iptables' {
+        file { $iptables::params::config:
+            notify  => Service[$iptables::params::service],
+            mode    => '0644',
+            content => template('iptables/conf.d-iptables.erb'),
         }
     }
 

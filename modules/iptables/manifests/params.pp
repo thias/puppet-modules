@@ -16,7 +16,7 @@ class iptables::params {
         'Gentoo': {
             $package = 'net-firewall/iptables'
             $rules   = '/var/lib/iptables/rules-save'
-            $config  = false
+            $config  = '/etc/conf.d/iptables'
             $restart = '/etc/init.d/iptables restart'
         }
         default: {
