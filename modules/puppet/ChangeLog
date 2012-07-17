@@ -1,3 +1,5 @@
+* Add some more AVC lines to be allowed for passenger puppetmaster.
+
 2012-04-24 - 0.4.0
 * Clean up the module to match current puppetlabs guidelines.
 
