@@ -72,6 +72,26 @@ http {
     # GeoIP city database
     geoip_city <%= geoip_city %>;
 <% end -%>
+<% if !upstream.empty? -%>
+
+    # Upstreams
+<% upstream.sort_by {|key,value| key}.each do |key,value| -%>
+<% key.each do |upstream| -%>
+    upstream <%= upstream %> {
+<% value.each do |line| -%>
+        <%= line %>;
+<% end -%>
+    }
+<% end -%>
+<% end -%>
+<% end -%>
+<% if !http_raw_lines.empty? -%>
+
+    # Other
+<% http_raw_lines.empty.each do |line| -%>
+    <%= line %>;
+<% end -%>
+<% end -%>
 
     # Include separately managed configuration file(s)
     include /etc/nginx/conf.d/*.conf;

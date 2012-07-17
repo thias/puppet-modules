@@ -35,6 +35,8 @@
 #  $geoip_country = Default: false
 #  $geoip_city = Default: false
 #  $index: Default: index.html
+#  $upstream: Default: empty
+#  $http_raw_lines: Default: empty
 #  $autoindex: Default: off
 #
 # Sample Usage :
@@ -67,6 +69,8 @@ class nginx (
     $geoip_country = false,
     $geoip_city = false,
     $index = 'index.html',
+    $upstream = {},
+    $http_raw_lines = [],
     # Module options
     $autoindex = 'off'
 ) inherits nginx::params {
@@ -79,7 +83,7 @@ class nginx (
     service { $nginx::params::service:
         enable    => true,
         ensure    => running,
-        restart   => '/sbin/service nginx reload',
+        restart   => $nginx::params::service_restart,
         hasstatus => true,
         require   => Package['nginx'],
         alias     => 'nginx',
@@ -94,6 +98,13 @@ class nginx (
         notify  => Service['nginx'],
         require => Package['nginx'],
     }
+    # Directory for configuration snippets
+    file { "${confdir}/conf.d":
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
+        require => Package['nginx'],
+    }
 
     # Default configuration file included in the package (usually unwanted)
     if $remove_default_conf {
@@ -101,7 +112,7 @@ class nginx (
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
-            content => '# Empty, not removed, to not reappear when the package is updated.\n',
+            content => "# Empty, not removed, to not reappear when the package is updated.\n",
             require => Package['nginx'],
         }
     }

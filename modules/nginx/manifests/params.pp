@@ -18,6 +18,13 @@ class nginx::params {
         'Gentoo': { $package = 'www-servers/nginx' }
          default: { $package = 'nginx' }
     }
+    # service restart
+    case $::operatingsystem {
+        'Fedora',
+        'RedHat',
+        'CentOS': { $service_restart = '/sbin/service nginx reload' }
+         default: { $service_restart = '/etc/init.d/nginx reload' }
+    }
     # remove_default_conf
     case $::operatingsystem {
         'Fedora',

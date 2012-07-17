@@ -1,4 +1,9 @@
+2012-07-17 - 0.1.2
 * Fix markdown in the README.
+* Move the service restart command to params, fix for Gentoo.
+* Add support for specifying "upstream" as hashes.
+* Add support for http_raw_lines for simple cases with no config snippet.
+* Fix \n in the disabled default.conf.
 
 2012-03-12 - 0.1.1
 * Clean up the nginx module to match current puppetlabs guidelines.
