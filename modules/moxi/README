@@ -1,0 +1,6 @@
+moxi
+
+Install, enable and configure moxi, the memcache proxy.
+
+* `moxi` : Main class to manage moxi.
+

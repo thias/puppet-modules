@@ -1,0 +1,10 @@
+# Moxi logrotate
+#
+/opt/moxi/moxi.log {
+  missingok
+  notifempty
+  sharedscripts
+  postrotate
+    [ -f /opt/moxi/moxi.pid ] && /bin/kill -HUP `cat /opt/moxi/moxi.pid`
+  endscript
+}
