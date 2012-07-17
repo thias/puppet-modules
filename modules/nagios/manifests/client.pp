@@ -30,6 +30,7 @@ class nagios::client (
     $host_use                    = $::nagios_host_use,
     # service defaults (hint: use host_* or override only service_use for efficiency)
     $service_check_period        = $::nagios_service_check_period,
+    $service_contact_groups      = $::nagios_service_contact_groups,
     $service_notification_period = $::nagios_service_notification_period,
     $service_max_check_attempts  = $::nagios_service_max_check_attempts,
     $service_use                 = 'generic-service',

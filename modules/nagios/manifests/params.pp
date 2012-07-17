@@ -9,13 +9,17 @@
 #  include nagios::params
 #
 class nagios::params {
+    $libdir = $::architecture ? {
+        'x86_64' => 'lib64',
+        'amd64'  => 'lib64',
+         default => 'lib',
+    }
     # The easy bunch
     $nagios_service = 'nagios'
     $nagios_user    = 'nagios'
     # nrpe
     $nrpe_service   = 'nrpe'
     $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
-    $nrpe_cfg_dir   = '/etc/nagios/nrpe.d'
     case $::operatingsystem {
         'Gentoo': {
             $nrpe_package       = [ 'net-analyzer/nagios-nrpe' ]
@@ -23,12 +27,21 @@ class nagios::params {
             $nrpe_user          = 'nagios'
             $nrpe_group         = 'nagios'
             $nrpe_pid_file      = '/var/run/nrpe/nrpe.pid'
+            $nrpe_cfg_dir       = '/etc/nagios/nrpe.d'
+        }
+        'Fedora': {
+            $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
+            $nrpe_user          = 'nrpe'
+            $nrpe_group         = 'nrpe'
+            $nrpe_pid_file      = '/var/run/nrpe.pid'
+            $nrpe_cfg_dir       = '/etc/nrpe.d'
         }
         default: {
             $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
             $nrpe_user          = 'nrpe'
             $nrpe_group         = 'nrpe'
             $nrpe_pid_file      = '/var/run/nrpe.pid'
+            $nrpe_cfg_dir       = '/etc/nagios/nrpe.d'
         }
     }
     # Optional plugin packages, to be realized by tag where needed
@@ -56,18 +69,25 @@ class nagios::params {
         'nagios-plugins-users',
     ]
     case $operatingsystem {
-        'RedHat', 'CentOS': {
-            $plugin_dir = '/usr/libexec/nagios/plugins'
+        'Fedora': {
+            $plugin_dir = "/usr/${libdir}/nagios/plugins"
             @package { $nagios_plugins_packages:
                 tag    => $name,
                 ensure => installed,
             }
         }
         'Gentoo': {
-            $plugin_dir = '/usr/lib64/nagios/plugins'
+            $plugin_dir = "/usr/${libdir}/nagios/plugins"
             # No package splitting in Gentoo
             @package { 'net-analyzer/nagios-plugins':
                 tag    => $nagios_plugins_packages,
+                ensure => installed,
+            }
+        }
+        default: {
+            $plugin_dir = '/usr/libexec/nagios/plugins'
+            @package { $nagios_plugins_packages:
+                tag    => $name,
                 ensure => installed,
             }
         }

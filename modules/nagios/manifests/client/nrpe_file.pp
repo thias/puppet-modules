@@ -11,7 +11,7 @@ define nagios::client::nrpe_file (
     $ensure     = undef
 ) {
 
-    file { "/etc/nagios/nrpe.d/nrpe-${title}.cfg":
+    file { "${nagios::params::nrpe_cfg_dir}/nrpe-${title}.cfg":
         owner   => 'root',
         group   => $nagios::client::nrpe_group,
         mode    => '0640',
