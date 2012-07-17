@@ -1,0 +1,6 @@
+npd6
+
+Install, configure and enable the Neighbor Proxy Daemon for IPv6.
+
+* `npd6` : Main class
+
