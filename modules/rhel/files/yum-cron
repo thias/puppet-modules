@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/usr/bin/yum -R 3  -e 0 -d 0 -y update yum
+/usr/bin/yum -R 10 -e 1 -d 1 -y update
+
