@@ -1,6 +1,6 @@
 nagios
 
-= Overview
+# Overview
 
 This module provides a full nagios monitoring solution, for setting up both
 servers and clients. There can be any number of each, though there is typically
@@ -11,7 +11,7 @@ same puppetmaster.
 The server part is still very Red Hat Enterprise Linux specific. The client
 part is much more generic and has been tested on both RHEL and Gentoo.
 
-= Requirements
+# Requirements
 
 * Stored configurations enabled on the puppetmaster (mandatory)
 * apache_httpd and php modules used for the nagios server node (optional)
@@ -33,7 +33,7 @@ denials. Such packages can be found on http://dl.marmotte.net/rpms/
 When SELinux is enforcing, the selinux::audit2allow definition is required
 to allow some basic nagios/nrpe accesses, though it can also be disabled.
 
-= Sample Usage
+# Sample Usage
 
 Nagios server instance (node specific, typically inside a node section) :
 
@@ -102,7 +102,7 @@ To enable nagiosgraph for the client's services in the server web interface :
         service_use => 'generic-service,nagiosgraph-service',
     }
 
-= Hints
+# Hints
 
 Debug any startup or configuration problems on the server with :
 
@@ -120,7 +120,7 @@ A lot can be configured semi-dynamically for nagios::client :
         host_hostgroups => $::domain,
     }
 
-= Notes
+# Notes
 
 Client overrides should be done in this order :
 * For all services on some nodes : Using nagios::client service_* parameters
