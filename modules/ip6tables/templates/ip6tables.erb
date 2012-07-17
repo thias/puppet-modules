@@ -9,18 +9,21 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :CLOSED - [0:0]
+<% chains_filter.sort_by {|key,value| key}.each do |key,value| -%>
+:<%= key %> - [0:0]
+<% end -%>
 <% if knock -%>
 :KNOCK-INPUT - [0:0]
 :KNOCK-MAIN - [0:0]
 <% end -%>
--A INPUT -i lo -j ACCEPT 
+-A INPUT -i lo -j ACCEPT
 <% if protectpriv -%>
 # Drop "private" packets arriving on the public interface
 # (we don't want to be doing that if we only have a single private interface!)
 -A INPUT -i <%= ethpub -%> -s fc00::/7 -j DROP
 <% end -%>
-<% extra_filter_lines.each do |extraline| -%>
-<%= extraline %>
+<% raw_rules_filter.each do |line| -%>
+<%= line %>
 <% end -%>
 <% if vrrp -%>
 -A INPUT -i <%= vrrp -%> -p vrrp -j ACCEPT
@@ -31,24 +34,29 @@
 <% end -%>
 <% end -%>
 <% tcpports.each do |port| -%>
--A INPUT -p tcp -m tcp --dport <%= port %> -j ACCEPT 
+-A INPUT -p tcp -m tcp --dport <%= port %> -j ACCEPT
+<% end -%>
+<% srctcpports.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |src| -%>
+-A INPUT -p tcp -m tcp -s <%= src %> --dport <%= key %> -j ACCEPT
+<% end -%>
 <% end -%>
 <% udpports.each do |port| -%>
--A INPUT -p udp -m udp --dport <%= port %> -j ACCEPT 
+-A INPUT -p udp -m udp --dport <%= port %> -j ACCEPT
 <% end -%>
 <% lsnraddrs.each do |lsnraddr| -%>
 -A INPUT -s <%= lsnraddr %> -p tcp -m tcp --dport 1521:1531 -j ACCEPT
 <% end -%>
 <% sipaddrs.each do |sipaddr| -%>
--A INPUT -s <%= sipaddr %> -p udp -m udp --dport 5060 -j ACCEPT 
+-A INPUT -s <%= sipaddr %> -p udp -m udp --dport 5060 -j ACCEPT
 <% end -%>
 <% privtcpports.each do |port| -%>
--A INPUT -i <%= ethpriv %> -p tcp -m tcp --dport <%= port %> -j ACCEPT 
--A INPUT -i tun+ -p tcp -m tcp --dport <%= port %> -j ACCEPT 
+-A INPUT -i <%= ethpriv %> -p tcp -m tcp --dport <%= port %> -j ACCEPT
+-A INPUT -i tun+ -p tcp -m tcp --dport <%= port %> -j ACCEPT
 <% end -%>
 <% privudpports.each do |port| -%>
--A INPUT -i <%= ethpriv %> -p udp -m udp --dport <%= port %> -j ACCEPT 
--A INPUT -i tun+ -p udp -m udp --dport <%= port %> -j ACCEPT 
+-A INPUT -i <%= ethpriv %> -p udp -m udp --dport <%= port %> -j ACCEPT
+-A INPUT -i tun+ -p udp -m udp --dport <%= port %> -j ACCEPT
 <% end -%>
 <% if hosts_ssh -%>
 # Accept ssh connections from a limited number of networks
@@ -75,48 +83,70 @@
 <% end -%>
 <% end -%>
 # Stateful firewall (beware of filling up the connection tracking table)
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 <% if icmp_limit_enable -%>
 # Limit ICMP requests globally (prevent DoS)
--A INPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
--A INPUT -p ipv6-icmp -j DROP 
+-A INPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT
+-A INPUT -p ipv6-icmp -j DROP
 <% else -%>
 # Accept all ICMP (most types are required for IPv6 to work)
 -A INPUT -p ipv6-icmp -j ACCEPT
 <% end -%>
 # Reject known "crappy ports" connections to avoid logging overhead
--A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED 
--A INPUT -p udp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED 
+-A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1026 -j CLOSED
+-A INPUT -p udp -m multiport --dports 135,137,138,139,445,1026,17500 -j CLOSED
 # Drop broadcast DHCP messages
--A INPUT -p udp -m udp --sport 68 --dport 67 -j DROP 
+-A INPUT -p udp -m udp --sport 68 --dport 67 -j DROP
+-A INPUT -p udp -m udp --sport 67 --dport 68 -j DROP
 <% if ! vrrp -%>
 # Drop broadcard VRRP messages
 -A INPUT -p vrrp -j DROP
 <% end -%>
 <% if knock -%>
 # Port knocking
--A INPUT -j KNOCK-MAIN 
+-A INPUT -j KNOCK-MAIN
 <% end -%>
 # Log to syslog kern.debug
--A INPUT -j LOG --log-level 7 
+-A INPUT -j LOG --log-level 7
 # Default to sending "connection refused" messages instead of silently dropping
--A INPUT -j CLOSED 
+-A INPUT -j CLOSED
 <% if icmp_limit_enable -%>
 # Limit ICMP replies globally (prevent DoS)
--A OUTPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT 
--A OUTPUT -p ipv6-icmp -j DROP 
+-A OUTPUT -p ipv6-icmp -m limit --limit <%= icmp_limit %> -j ACCEPT
+-A OUTPUT -p ipv6-icmp -j DROP
 <% end -%>
 # Custom table to send back "connection refused" messages
--A CLOSED -j REJECT --reject-with icmp6-port-unreachable 
+-A CLOSED -j REJECT --reject-with icmp6-port-unreachable
 <% if knock -%>
 # Port knocking magic
--A KNOCK-INPUT -m recent --set --name KNOCK1 --rsource -j CLOSED 
+-A KNOCK-INPUT -m recent --set --name KNOCK1 --rsource -j CLOSED
 <% knocktcpopen.each do |port| -%>
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT 
+-A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT
 <% end -%>
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knocktwo %> -m state --state NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED 
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT 
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> -m state --state NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED 
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED 
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knocktwo %> -m state --state NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> -m state --state NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED
+<% end -%>
+<% chains_filter.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |line| -%>
+-A <%= key %> <%= line %>
+<% end -%>
 <% end -%>
 COMMIT
+<% if not fwmark.empty? -%>
+
+# MANGLE table, used for marking packets
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+<% fwmark.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |markrule| -%>
+-A PREROUTING <%= markrule %> -j MARK --set-mark <%= key %>
+<% end -%>
+<% end -%>
+COMMIT
+<% end -%>

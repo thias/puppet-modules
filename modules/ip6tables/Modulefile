@@ -1,2 +1,8 @@
-name 'ip6tables'
+name 'thias-ip6tables'
 version '0.1.1'
+source 'git://github.com/thias/puppet-modules/modules/ip6tables'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'Iptables IPv6 module'
+description "Enable and configure IPv6 iptables rules."
+project_page 'http://glee.thias.es/puppet'

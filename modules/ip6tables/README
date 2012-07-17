@@ -1,8 +1,34 @@
-= Summary
+ip6tables
 
-Summary::  Manage IPv6 ip6tables rules
-Requires:: n/a
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Tested::   puppet-0.25.4
+This is a simple monolithic ip6tables module which is based around a single
+class and a single template for all rules. It has the disadvantage of not
+being modular, but has the advantages of being very simple and robust.
+
+To manage IPv4 rules in the same way, see the iptables module.
+
+Note: "ip6tables" is still a definition, but will be changed into a parametrized
+class at some point, since it is not meant to be called more than once.
+
+* `ip6tables` : Main class to enable and configure IPv6 iptables rules.
+* `ip6tables::params` : Class to set distribution specific defaults.
+
+# Sample Usage
+
+Simple rules to allow ssh, http and https globally :
+
+    ip6tables { '/etc/sysconfig/iptables':
+        tcpports => [ '22', '80', '443' ],
+    }
+
+More complex rules :
+
+    ip6tables { '/etc/sysconfig/iptables':
+        ethpub       => 'br0',
+        ethpriv      => 'br1',
+        tcpports     => [ '53', '80', '443' ],
+        udpports     => [ '53' ],
+        privtcpports => [ '3306' ],
+        hosts_ssh    => [ 'fe80::223:aeff:fe75:1302' ],
+        knock        => true, knockone => '1111', knocktwo => '2222',
+    }
 
