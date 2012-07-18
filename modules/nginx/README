@@ -13,19 +13,31 @@ other distributions and is very easy to port if needed.
 
 # Sample Usage
 
-    # Default server, with a typical minimal virtualhost
-    # You'll want to use a real template to make it more readable
+    # Default server, with a typical minimal virtualhost and ready for PHP-FPM
     include nginx
-    $listen_http = [ '127.0.0.1:80', '192.168.0.12:80' ]
     nginx::file { 'www.example.com.conf':
-        content => inline_template('# Sample configuration file
+        content => template('mymodule/www.example.com.conf.erb'),
+    }
+    # Use the included example FastCGI for PHP configuration
+    nginx::file { 'php.conf.inc':
+        source => 'puppet:///modules/nginx/php.conf.inc',
+    }
+
+# Sample configuration file mymodule/www.example.com.conf.erb :
+
+    # Fix for "upstream sent too big header ..." errors
+    fastcgi_buffers 8 8k;
+    fastcgi_buffer_size 8k;
+    upstream fpmbackend {
+        server unix:/var/run/php-fpm-www.sock;
+    }
+    # Main virtualhost
     server {
-    <% listen_http.each do |listen_line| -%>
-        listen <%= listen_line %>;
-    <% end -%>
+        listen 80;
         server_name www.example.com;
         root /var/www/www.example.com;
-    }
-    '),
+        include /etc/nginx/conf.d/php.conf.inc;
+        access_log /var/log/nginx/www.example.com-access.log main;
+        error_log /var/log/nginx/www.example.com-error.log;
     }
 

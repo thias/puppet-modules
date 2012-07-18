@@ -1,3 +1,5 @@
+* Update README and include mentioned example php.conf.inc file.
+
 2012-07-17 - 0.1.2
 * Fix markdown in the README.
 * Move the service restart command to params, fix for Gentoo.
