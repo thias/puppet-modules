@@ -1,7 +1,9 @@
-# Class to modify the main vimrc file with custom defaults.
+# Class: cosmetic::vimrc
+#
+# Modify the main vimrc file with custom defaults.
 #
 # Sample Usage :
-#     include cosmetic::vimrc
+#  include cosmetic::vimrc
 #
 class cosmetic::vimrc (
     $lines = [

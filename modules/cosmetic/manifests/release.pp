@@ -1,8 +1,9 @@
-# Class to create useful and good looking motd and issue/issue.net files
-# using linux_logo.
+# Class: cosmetic::release
+#
+# Create useful and nice looking motd and issue files using linux_logo.
 #
 # Sample Usage :
-#     include cosmetic::release
+#  include cosmetic::release
 #
 class cosmetic::release (
     $format_string = '$R - Linux $V\\n#N #M #X #T cpu#S with #R RAM\\n-> #H <-\n',

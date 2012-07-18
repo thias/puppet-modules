@@ -1,7 +1,13 @@
-# Class to modify globally some simple cosmetic aspects of the bash shell.
+# Class: cosmetic::bash
+#
+# Modify globally some simple cosmetic aspects of the bash shell.
 #
 # Sample Usage :
-#     include cosmetic::bash
+#  include cosmetic::bash
+#  class { 'cosmetic::bash':
+#      # Red prompt
+#      ps1 => '\[\033[1;31m\][\u@\h \W]\[\033[0m\]\\$ ',
+#  }
 #
 class cosmetic::bash (
     $histtimeformat = '%Y%m%d %H:%M:%S ',
@@ -16,7 +22,7 @@ class cosmetic::bash (
             content => template('cosmetic/cosmetic.sh.erb'),
             owner   => 'root',
             group   => 'root',
-            mode    => '0755',
+            mode    => '0644',
         }
     }
 
