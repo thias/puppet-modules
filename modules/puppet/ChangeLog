@@ -1,4 +1,7 @@
 * Add some more AVC lines to be allowed for passenger puppetmaster.
+* Remove legacy cron job removal.
+* Disable color for the cron output, makes emails more readable.
+* Create a trivial script as verbose cron command, to shorten email subject.
 
 2012-04-24 - 0.4.0
 * Clean up the module to match current puppetlabs guidelines.

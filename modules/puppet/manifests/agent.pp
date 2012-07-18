@@ -103,23 +103,22 @@ class puppet::agent (
             if $puppet_noop { $cmd_noop = ' --noop' } else { $cmd_noop = '' }
             # We might not care about the output when we have a Dashboard
             if $cron_silent {
-                $cmd_end = ' >/dev/null'
+                $cron_command = "/usr/local/sbin/repuppet${cmd_noop} >/dev/null",
             } else {
-                # How can the log level be set from the CLI options?
-                $cmd_end = " | grep -v 'Finished catalog run in'"
+                $cron_command = '/usr/local/sbin/cron-repuppet'
+                file { '/usr/local/sbin/cron-repuppet':
+                    mode    => '0750',
+                    content => "#!/bin/bash \n/usr/local/sbin/repuppet${cmd_noop} --show_diff --color=false | egrep -v '^notice: Finished catalog run in'\n",
+                }
             }
             cron { 'puppet-agent':
-                command => "/usr/local/sbin/repuppet${cmd_noop}${cmd_end}",
+                command => $cron_command,
                 user    => 'root',
                 hour    => $cron_hour,
                 minute  => $cron_minute,
             }
-            # Legacy name, remove job to avoid a duplicate
-            cron { 'puppet-client':
-                command => "/usr/local/sbin/repuppet${cmd_noop}${cmd_end}",
-                user    => 'root',
-                ensure  => absent,
-            }
+        } else {
+            file { '/usr/local/sbin/cron-repuppet': ensure => absent }
         }
     }
 
