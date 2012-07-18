@@ -83,7 +83,7 @@ define postfix::server (
     $myhostname = $title
 
     # Default has el5 files, for el6 a few defaults have changed
-    if ( $operatingsystem == "RedHat" ) and ( $operatingsystemrelease >= 6 ) {
+    if ( $::operatingsystem == "RedHat" ) and ( $::operatingsystemrelease >= 6 ) {
         $filesuffix = "-el6"
     } else {
         $filesuffix = ""
