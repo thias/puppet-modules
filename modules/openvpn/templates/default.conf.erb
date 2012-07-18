@@ -1,6 +1,8 @@
 dev <%= dev %>
 remote <%= remote %>
-<% if float %>float<% end -%>
+<% if float -%>
+float
+<% end -%>
 # Local  : <%= ipaddress_local %>
 # Remote : <%= ipaddress_remote %>
 ifconfig <%= ipaddress_local %> <%= ipaddress_remote %>
