@@ -1,0 +1,13 @@
+couchbase
+
+Install and enable a Couchbase Server instance.
+
+* `couchbase::server` : Couchbase Server
+
+This module is quite basic, since all of the configuration is done using
+the web interface on port 8091 once the daemon is running.
+
+Example :
+
+    include couchbase::server
+

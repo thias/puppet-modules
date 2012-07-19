@@ -1,0 +1,31 @@
+#!/sbin/runscript
+
+depend() {
+    need net
+    # Same as memcached, it makes sense
+    after ntp-client ntpd rdate openrdate adjtimex hwclock
+}
+
+start() {
+    ebegin "Starting couchbase-server"
+    if [ -f "${PIDFILE}" ]; then
+        einfo "  Removing stale pidfile ${PIDFILE}"
+        rm -f "${PIDFILE}"
+    fi
+    /sbin/start-stop-daemon --start --pidfile "${PIDFILE}" \
+        --user "couchbase" \
+        --exec "${BASEDIR}/bin/couchbase-server" -- \
+        -noinput -detached
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping couchbase-server"
+    start-stop-daemon --stop --quiet --pidfile "${PIDFILE}"
+    # This epmd is a harmless leftover, "known bug" *sigh*
+    start-stop-daemon --stop --quiet \
+        --exec /opt/couchbase/lib/erlang/erts-5.8.4/bin/epmd
+    rm -f "${PIDFILE}"
+    eend $?
+}
+
