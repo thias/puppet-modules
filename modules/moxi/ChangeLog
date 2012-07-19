@@ -1,3 +1,5 @@
+* Add SELinux support when using unix sockets.
+
 2012-06-07 - 0.0.1
 * Initial module.
 
