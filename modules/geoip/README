@@ -1,0 +1,21 @@
+geoip
+
+Install any of the GeoIP database files.
+
+* `geoip::file` : Definition to install any GeoIP database file.
+
+There is no magic here, you need to have the Geo*.dat files available on
+your puppetmaster somewhere, and reference them. This module is only a minor
+convenience, since using the "file" type over and over with hardcoded
+paths gets quite ugly.
+
+Example :
+
+    # In site.pp :
+    Geoip::File {
+        path        => '/usr/local/share',
+        source_path => 'puppet:///modules/mymodule/GeoIP',
+    }
+    # For a node where nginx will have its geoip module enabled :
+    geoip::file { 'GeoIP.dat': before => Class['nginx'] }
+
