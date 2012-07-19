@@ -63,8 +63,10 @@ exitstatus=$STATE_CRITICAL
 
 # If a socket is given, use that and ignore host/port
 if [ -n "$socket" ]; then
+    # sanity check
+    which socat >/dev/null || message="socat not found. "
     # socat check
-    message="Socket ${socket}"
+    message="${message}Socket ${socket}"
     STATS="`echo 'stats' | socat - UNIX-CONNECT:${socket} 2>/dev/null`"
     RETVAL=$?
 else

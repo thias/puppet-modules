@@ -5,7 +5,7 @@
 * Fix check_nginx exit statuses (warning and critical were inverted).
 * Fix check_disk with configfs on Fedora 17.
 * Conditionalize libdir to support Fedora/EPEL plugins.
-
+* Add check for socat presence when checking for moxi+socket.
 
 2012-05-23 - 0.2.0
 * Clean up the module to match current puppetlabs guidelines.
