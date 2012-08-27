@@ -1,0 +1,8 @@
+name 'thias-percona'
+version '0.0.1'
+source 'git://github.com/thias/puppet-modules/modules/percona'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'Percona module'
+description "Install and configure Percona software, such as Server, Toolkit and XtraBackup."
+project_page 'http://glee.thias.es/puppet'
