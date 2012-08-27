@@ -72,7 +72,7 @@ define xinetd::serviceconf (
         }
 
         # We don't want to make xinetd mandatory for absent
-        exec { '/sbin/service xinetd reload':
+        exec { '/etc/init.d/xinetd reload':
             subscribe   => File["/etc/xinetd.d/${service_name}"],
             refreshonly => true,
         }
