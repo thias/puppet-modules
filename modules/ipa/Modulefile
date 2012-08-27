@@ -1,0 +1,8 @@
+name 'thias-ipa'
+version '0.0.1'
+source 'git://github.com/thias/puppet-modules/modules/ipa'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'IPA Module'
+description "Install and configure IPA servers and clients."
+project_page 'http://glee.thias.es/puppet'

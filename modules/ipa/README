@@ -1,0 +1,8 @@
+skel
+
+This is not a real module. It's just the skeleton to be copied when creating
+a new module. Everything is just bla bla and examples.
+
+* `skel::server` : Manage server
+* `skel::client` : Manager client
+
