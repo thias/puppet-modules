@@ -1,0 +1,8 @@
+name 'thias-nfs'
+version '0.1.0'
+source 'git://github.com/thias/puppet-modules/modules/nfs'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'Network File System module'
+description "Install and configure NFS (Network File System) servers and clients."
+project_page 'http://glee.thias.es/puppet'
