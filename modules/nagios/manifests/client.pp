@@ -80,6 +80,11 @@ class nagios::client (
         ensure  => directory,
         require => Package['nrpe'],
     }
+    # Create resource for the check_* parent resource
+    file { $nagios::client::plugin_dir:
+        ensure  => directory,
+        require => Package['nrpe'],
+    }
 
     # Where to store configuration for our custom nagios_* facts
     file { '/etc/nagios/facter':

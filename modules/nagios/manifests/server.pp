@@ -407,6 +407,9 @@ class nagios::server (
         thursday    => $timeperiod_workhours,
         friday      => $timeperiod_workhours,
     }
+    nagios_timeperiod { 'none':
+        alias => 'No Time Is A Good Time',
+    }
 
     # Nagios hostgroup, we need at least one for puppet to create the file
     nagios_hostgroup { 'nagios':
