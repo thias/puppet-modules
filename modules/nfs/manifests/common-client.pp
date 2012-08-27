@@ -3,10 +3,7 @@
 class nfs::common-client {
 
     package { 'nfs-utils': ensure => installed }
-
-    service { 'netfs':
-        enable => true,
-    }
+    service { 'netfs': enable => true }
 
 }
 

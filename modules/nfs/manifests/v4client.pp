@@ -1,14 +1,11 @@
 # Class: nfs::v4client
 #
 class nfs::v4client (
-    $idmapd_domain = $::domain
+    $idmapd_domain = $::domain,
+    $secure_nfs    = false
 ) inherits nfs::common-client {
 
-    if ( $::operatingsystem == 'RedHat' and $::operatingsystemrelease < 6 ) {
-        include nfs::portmap
-    } else {
-        include nfs::rpcbind
-    }
+    include nfs::rpcbind
     service { 'rpcidmapd':
         require   => Package['nfs-utils'],
         enable    => true,
@@ -20,12 +17,27 @@ class nfs::v4client (
         content => template('nfs/idmapd.conf.erb'),
     }
     service { 'nfslock':
-        require => Service['rpcbind'],
-        enable  => false,
-        ensure  => stopped,
+        require   => Service['rpcbind'],
+        enable    => false,
+        ensure    => stopped,
         # Returns zero even when stopped :-(
-        #hasstatus => true,
-        status  => '/sbin/pidof rpc.statd',
+        hasstatus => false,
+        status    => '/sbin/pidof rpc.statd',
+    }
+
+    # This is a bit ugly...
+    if $secure_nfs {
+        file { '/etc/sysconfig/nfs':
+            content => "SECURE_NFS=\"yes\"\n",
+            require => Package['nfs-utils'],
+        }
+        service { 'rpcgssd':
+            enable    => true,
+            ensure    => running,
+            hasstatus => true,
+            # Only starts once the SECURE_NFS is set
+            subscribe => File['/etc/sysconfig/nfs'],
+        }
     }
 
 }
