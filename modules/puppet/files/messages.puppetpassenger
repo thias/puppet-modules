@@ -119,3 +119,4 @@ avc:  denied  { getattr } for  pid=13512 comm="ps" path="/proc/13508" dev=proc i
 avc:  denied  { setattr } for  pid=18086 comm="ruby" name="puppet" dev=vda1 ino=16804 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=dir
 avc:  denied  { getattr search } for  pid=28889 comm="ps" path="/proc/28888" dev=proc ino=9861663 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sysstat_t:s0-s0:c0.c1023 tclass=dir
 avc:  denied  { read open } for  pid=8723 comm="ps" name="stat" dev=proc ino=10393431 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sysstat_t:s0-s0:c0.c1023 tclass=file
+avc:  denied  { getattr } for  pid=31973 comm="ps" path="/proc/30140" dev=proc ino=11133148 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:rpm_script_t:s0-s0:c0.c1023 tclass=dir
