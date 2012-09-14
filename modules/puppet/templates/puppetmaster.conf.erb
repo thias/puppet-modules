@@ -20,7 +20,7 @@
     dbpassword = <%= dbpassword %>
     dbsocket = <%= dbsocket %>
 <% end -%>
-<% extraopts.each do |key,value| -%>
+<% extraopts.sort_by {|key, value| key}.each do |key,value| -%>
     <%= key %> = <%= value %>
 <% end -%>
 
