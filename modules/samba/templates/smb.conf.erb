@@ -23,20 +23,20 @@
 	max log size = <%= max_log_size %>
 	security = user
 	passdb backend = <%= passdb_backend %>
-<% if domain_master -%>
+<% if @domain_master -%>
 	domain master = yes 
 <% end -%>
-<% if domain_logons -%>
+<% if @domain_logons -%>
 	domain logons = yes
 <% end -%>
-<% if local_master -%>
-	local master = <%= local_master %>
+<% if @local_master -%>
+	local master = <%= @local_master %>
 <% end -%>
-<% if os_level -%>
-	os level = <%= os_level %>
+<% if @os_level -%>
+	os level = <%= @os_level %>
 <% end -%>
-<% if preferred_master -%>
-	preferred master = <%= preferred_master %>
+<% if @preferred_master -%>
+	preferred master = <%= @preferred_master %>
 <% end -%>
 <% extra_global_options.each do |line| -%>
     <%= line %>
