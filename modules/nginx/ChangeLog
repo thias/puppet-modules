@@ -1,4 +1,5 @@
 * Update README and include mentioned example php.conf.inc file.
+* Add mime_types hash to allow adding mime type extensions.
 
 2012-07-17 - 0.1.2
 * Fix markdown in the README.

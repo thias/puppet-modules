@@ -38,10 +38,15 @@
 #  $upstream: Default: empty
 #  $http_raw_lines: Default: empty
 #  $autoindex: Default: off
+#  $mime_types:
+#    Mime types with extension(s) to append to the main list. Default: empty
 #
 # Sample Usage :
 #  include nginx
 #  class { 'nginx':
+#      mime_types => {
+#          'text/plain' => 'ks repo',
+#      }
 #  }
 #
 class nginx (
@@ -72,7 +77,9 @@ class nginx (
     $upstream = {},
     $http_raw_lines = [],
     # Module options
-    $autoindex = 'off'
+    $autoindex = 'off',
+    # mime.types
+    $mime_types = false
 ) inherits nginx::params {
 
     package { $nginx::params::package:
@@ -114,6 +121,18 @@ class nginx (
             mode    => '0644',
             content => "# Empty, not removed, to not reappear when the package is updated.\n",
             require => Package['nginx'],
+        }
+    }
+
+    # Since mime types can only be set from a single "types" directive
+    if $mime_types {
+        file { "${confdir}/mime.types":
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            content => template('nginx/mime.types.erb'),
+            require => Package['nginx'],
+            notify  => Service['nginx'],
         }
     }
 
