@@ -40,6 +40,7 @@ class samba::server (
     }
 
     file { '/etc/samba/smb.conf':
+        require => Package['samba'],
         content => template('samba/smb.conf.erb'),
     }
 
