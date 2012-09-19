@@ -1,6 +1,8 @@
 # Trivial dhcpd.conf example, useful for PXE/ks
 
 option domain-name-servers 192.168.10.1;
+max-lease-time 120;
+default-lease-time 120;
 authoritative;
 
 subnet 192.168.10.0 netmask 255.255.255.0 {

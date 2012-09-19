@@ -1,3 +1,6 @@
+2012-09-19 - 0.2.2
+* Lower the lease time in the example, much more useful in the real world.
+
 2012-04-25 - 0.2.1
 * Fix sysconfig template when setting multiple command line options.
 
