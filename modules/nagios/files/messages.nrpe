@@ -16,3 +16,7 @@ avc:  denied  { execute } for  pid=12537 comm="MegaCli" path="/opt/lsi/3rdpartyl
 avc:  denied  { write add_name } for  pid=5537 comm="MegaCli" name="megaraid_sas_ioctl_node" dev=devtmpfs ino=4 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=dir
 avc:  denied  { mknod } for  pid=6439 comm="MegaCli" capability=27  scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:nrpe_t:s0 tclass=capability
 avc:  denied  { create } for  pid=8122 comm="MegaCli" name="megaraid_sas_ioctl_node" scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=chr_file
+# check_moxi
+avc:  denied  { write } for  pid=5012 comm="socat" name="moxi.sock" dev=vda2 ino=792618 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=sock_file
+avc:  denied  { connectto } for  pid=5449 comm="socat" path="/opt/moxi/moxi.sock" scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=unix_stream_socket
+avc:  denied  { connectto } for  pid=6056 comm="socat" path="/opt/moxi/moxi.sock" scontext=system_u:system_r:nrpe_t:s0 tcontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 tclass=unix_stream_socket
