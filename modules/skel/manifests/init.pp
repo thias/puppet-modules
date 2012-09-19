@@ -1,5 +1,5 @@
-# Define: skel::server
-# Class: skel::client
+# Define: 
+# Class: 
 #
 # Description text.
 #

@@ -1,8 +1,8 @@
-skel
+# Overview
 
-This is not a real module. It's just the skeleton to be copied when creating
-a new module. Everything is just bla bla and examples.
+Install, enable and configure bla bla bla.
 
-* `skel::server` : Manage server
-* `skel::client` : Manager client
+* `skel::server` : Class to install and enable the server
+
+# Example Usage
 
