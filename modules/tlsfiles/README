@@ -9,3 +9,10 @@ joining keys and certificates into single files.
 
 * `tlsfiles` : Manage key and certificate
 
+Example Usage :
+
+    # In site.pp
+    Tlsfile { srcdir => 'puppet:///modules/mymodule/tls' }
+    # For a given node
+    tlsfile { [ 'www.example.com', 'admin.example.com' ]: }
+

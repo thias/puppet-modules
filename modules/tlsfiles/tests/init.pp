@@ -1,1 +1,1 @@
-tlsfiles { "www.example.com": intcert => "DigiCertCA" }
+tlsfiles { 'www.example.com': intcert => 'DigiCertCA' }
