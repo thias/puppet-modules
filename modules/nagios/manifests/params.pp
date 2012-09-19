@@ -22,7 +22,7 @@ class nagios::params {
     $nrpe_cfg_file  = '/etc/nagios/nrpe.cfg'
     case $::operatingsystem {
         'Gentoo': {
-            $nrpe_package       = [ 'net-analyzer/nagios-nrpe' ]
+            $nrpe_package       = [ 'net-analyzer/nrpe' ]
             $nrpe_package_alias = 'nrpe'
             $nrpe_user          = 'nagios'
             $nrpe_group         = 'nagios'

@@ -1,4 +1,4 @@
-2012-xx-xx
+2012-09-19 - 0.3.0
 * Add support for Fedora.
 * Add support for host_check_command.
 * Add support for service contact_groups.
@@ -8,6 +8,8 @@
 * Add check for socat presence when checking for moxi+socket.
 * Create resource for the check_* parent resource to avoid race condition
 * Add none timeperiod by default
+* Gentoo nrpe has been renamed net-analyzer/nrpe
+* Add !requiretty for the required sudo commands
 
 2012-05-23 - 0.2.0
 * Clean up the module to match current puppetlabs guidelines.
