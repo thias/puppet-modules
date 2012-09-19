@@ -7,7 +7,7 @@
 #
 # Sample Advanced Usage :
 #  class { 'puppet::agent':
-#      sysconfig => $operatingsystem ? {
+#      sysconfig => $::operatingsystem ? {
 #          'Gentoo' => false,
 #           default => true,
 #      },

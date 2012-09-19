@@ -10,7 +10,7 @@
 class puppet::master (
     $ensure         = 'present',
     $runtype        = 'service',
-    $selinux        = true,
+    $selinux        = $::selinux,
     # puppet.conf options
     $certname       = false,
     $dns_alt_names  = false,

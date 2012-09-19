@@ -5,7 +5,7 @@ Manage puppet masters and agents.
 Example puppet agent :
 
     class { 'puppet::agent':
-        sysconfig => $operatingsystem ? {
+        sysconfig => $::operatingsystem ? {
             'Gentoo' => false,
              default => true,
         },
