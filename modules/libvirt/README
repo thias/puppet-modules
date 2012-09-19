@@ -1,0 +1,12 @@
+libvirt
+
+Libvirt module. Useful on minimal Red Hat Enterprise Linux installations which
+need to be configured as KVM virtualization hosts.
+
+* `libvirt` : Main class to install, enable and configure libvirt.
+
+Example Usage
+
+    # Typical KVM/qemu host for virtualization
+    class { 'libvirt': mdns_adv => '0' }
+
