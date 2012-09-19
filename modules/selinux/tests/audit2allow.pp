@@ -1,1 +1,1 @@
-selinux::audit2allow { "nrpe": }
+selinux::audit2allow { 'nrpe': }

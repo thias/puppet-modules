@@ -1,3 +1,4 @@
+# This is an example file provided with the selinux module
 # check_disk wants more info
 avc:  denied  { search } for  pid=7029 comm="check_disk" scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:sysctl_fs_t:s0 tclass=dir
 avc:  denied  { getattr } for  pid=8700 comm="check_disk" path="/proc/sys/fs/binfmt_misc" dev=binfmt_misc ino=1 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:binfmt_misc_fs_t:s0 tclass=dir
