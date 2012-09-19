@@ -1,4 +1,4 @@
-name 'tlsfiles'
+name 'thias-tlsfiles'
 version '0.2.0'
 source 'git://github.com/thias/puppet-modules/modules/tlsfiles'
 author 'Matthias Saou'
