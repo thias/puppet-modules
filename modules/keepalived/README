@@ -1,6 +1,13 @@
 keepalived
 
-Keepalived module.
+Install, enable and configure the keepalived VRRP and LVS management daemon.
 
 * `keepalived` : Main class
+
+Example Usage
+
+    class { 'keepalived':
+        source  => 'puppet:///mymodule/keepalived.conf',
+        options => '-D --vrrp',
+    }
 
