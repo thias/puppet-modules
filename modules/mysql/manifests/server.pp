@@ -6,9 +6,8 @@
 # It can accept many different parameters. For example:
 # class { 'mysql::server':
 #     mysql_rootpw       => 'foobar',
-#     old_passwords      => false,
-#     skipnetworking     => false,
-#     skipinnodb         => false,
+#     skipnetworking     => true,
+#     skipinnodb         => true,
 #     backup_keepdays    => 2,
 # }
 #
@@ -31,16 +30,10 @@
 #     privileges => [ "select_priv", 'insert_priv', 'update_priv', 'delete_priv' ],
 # }
 #
-# To create a default mydba user for dba admins:
-#
-# $mysql_mydbapw="mydbapassword"
-# include mysql::user::mydba
 #
 
 class mysql::server (
-
-    $mysql_rootpw,
-    $old_passwords  = false,
+    $root_password,
     $skipnetworking = false,
     $query_cache_size = 4M,
     $query_cache_limit = 2M,
@@ -65,112 +58,91 @@ class mysql::server (
     $innodb_lock_wait_timeout = 30M,
     $innodb_thread_concurrency = 8,
     $innodb_log_file_size = 5242880,
-    $restart_on_update = true,
+    $restart_on_change = true,
     $replication_master = false,
     $replication_slave = false,
     $binlogs_to_keep = 5,
     $binlog_format = false,
     $relay_log_space_limit = 0,
     $backup = true,
-    $backup_dir = "/var/lib/mysql-backup",
-    $backup_keepdays = "5",
-    $backup_hour = "6",
-    $backup_minute = "30",
-    $processorcount = $::processorcount
+    $backup_dir = '/var/lib/mysql-backup',
+    $backup_hour = '6',
+    $backup_minute = '30',
+    $backup_keepdays = '5',
+    $processorcount = $::processorcount,
+    $mycnf_mysqld = [],
+    $mycnf_content = undef,
+    $mycnf_source = undef
 
 ) {
 
-    class { 'mysql::serverbase': mysql_rootpw => $mysql_rootpw }
-
-    $my_old_passwords = $old_passwords ? {
-        true    => "1",
-        default => "0",
-    }
-
-    # yeah... yeah... I know it's ugly. This is how puppet works
-    if $restart_on_update {
-        file { "/etc/my.cnf":
-            content => template("mysql/my.cnf.erb"),
-            notify  => Service["mysqld"],
+    if $mycnf_content or $mycnf_source {
+        file { '/etc/my.cnf':
+            content => $mycnf_content,
+            source  => $mycnf_source,
+        }
+    } elsif $mycnf_mysqld != [] {
+        file { '/etc/my.cnf':
+            content => template('mysql/my.cnf.erb'),
         }
     } else {
-        file { "/etc/my.cnf":
-            content => template("mysql/my.cnf.erb"),
+        file { '/etc/my.cnf':
+            content => template('mysql/my.cnf-old.erb'),
         }
     }
-
-    if $replication_slave {
-        file { "/var/lib/mysql/.mysql_is_slave":
-            ensure  => present,
-            content => "true",
-        }
-    } else {
-        file { "/var/lib/mysql/.mysql_is_slave":
-            ensure => absent,
-        }
-    }
-
-    if $replication_master {
-        file { "/var/lib/mysql/.mysql_is_master":
-            ensure  => present,
-            content => "true",
-        }
-        mysql_user { "replication@%":
-            ensure        => present,
-            password_hash => mysql_password("HidPyHogew"),
-        }
-        mysql_grant { "replication@%":
-            privileges => "repl_slave_priv",
-        }
-        package { "MySQL-python" :
-            ensure => installed,
-        }
-        file { "/usr/local/bin/purgeBinaryLogs.py":
-            source => "puppet:///modules/mysql/purgeBinaryLogs.py",
-            mode   => 0755,
-        }
-        cron { "purgeBinaryLogs":
-            command => "/usr/local/bin/purgeBinaryLogs.py -H localhost -l $binlogs_to_keep",
-            user    => "root",
-            minute  => "0",
-        }
-    } else {
-        file { "/var/lib/mysql/.mysql_is_master":
-            ensure => absent,
-        }
-        file { "/usr/local/bin/purgeBinaryLogs.py":
-            ensure => absent,
-        }
-        cron { "purgeBinaryLogs":
-            ensure => absent,
-        }
+    if $restart_on_change {
+        File['/etc/my.cnf'] ~> Service['mysqld']
     }
 
     # Optional backup
-    if $backup {
-        file { [
-             "${backup_dir}",
-             "${backup_dir}/day",
-             "${backup_dir}/month",
-        ]:
-            ensure => "directory",
-            mode   => 0700,
-        }
-        cron { "mysql-full":
-            command => "/usr/local/bin/mysql-full >/dev/null",
-            user    => "root",
-            hour    => $backup_hour,
-            minute  => $backup_minute,
-        }
-        file { "/usr/local/bin/mysql-full":
-            content => template("mysql/mysql-full.erb"),
-            mode    => 0755,
-        }
-    } else {
-        cron { "mysql-full": ensure => absent }
-        file { "/usr/local/bin/mysql-full": ensure => absent }
+    class { 'mysql::backup':
+        backup_dir      => $backup_dir,
+        backup_hour     => $backup_hour,
+        backup_minute   => $backup_minute,
+        backup_keepdays => $backup_keepdays,
+        ensure    => $backup ? {
+            true  => 'present',
+            false => 'absent',
+        },
     }
-    # Obsolete files, to be removed
-    file { "/etc/cron.d/mysql-full": ensure => absent }
-    file { "/usr/local/bin/mysql-full.sh": ensure => absent }
+
+    $archpackage = $::architecture ? {
+        'x86_64' => [ 'mysql.x86_64' ],
+        default  => [ 'mysql' ],
+    }
+    package { [ $archpackage, 'mysql-server' ]: ensure => installed, }
+
+    file {'/root/.my.cnf':
+        content => template('mysql/root-my.cnf.erb'),
+        require => Package['mysql-server'],
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0400';
+    }
+
+    # Remove default databases and users
+    Mysql_database { require => Service['mysqld'] }
+    Mysql_user     { require => Service['mysqld'] }
+    mysql_database { 'test':       ensure  => absent }
+    mysql_user     { '@localhost': ensure  => absent }
+    mysql_user     { "@${::fqdn}": ensure  => absent }
+
+    exec { 'set_mysql_root_password':
+        command => "mysql -uroot -e \"UPDATE mysql.user SET Password = PASSWORD('${root_password}') WHERE User = 'root'; flush privileges\"",
+        unless  => "egrep -q '^password=${root_password}\$' /root/.my.cnf",
+        require => Service['mysqld'],
+        before  => File['/root/.my.cnf'],
+        path    => [ '/bin', '/usr/bin' ],
+    }
+
+    service { 'mysqld':
+       ensure    => running,
+       enable    => true,
+       hasstatus => true,
+       require   => Package['mysql-server'],
+    }
+
+    # Collect all databases and users
+    Mysql_database <<| tag == "mysql_${::fqdn}" |>>
+    Mysql_user <<| tag == "mysql_${::fqdn}"  |>>
 }
