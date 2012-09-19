@@ -1,0 +1,17 @@
+gdnsd
+
+Install, enable and configure the gdnsd DNS server.
+
+* `gdnsd` : Main class to install, enable and configure the server.
+* `gdnsd::file` : Definition to manage configuration and zone files.
+
+Example Usage :
+
+    class { 'gdnsd': ip_nonlocal_bind => true }
+    gdnsd::file { 'config':
+        content => template('modules/mymodule/gdnsd/config.erb'),
+    }
+    gdnsd::file { 'example.com':
+        source => 'puppet:///modules/mymodule/dns/example.com',
+    }
+
