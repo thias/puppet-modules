@@ -120,12 +120,5 @@ class moxi (
         require   => Package['moxi-server'],
     }
 
-    # With selinux, we need more tweaks
-    if $selinux and $::selinux_enforced {
-        selinux::audit2allow { 'moxi':
-            source => 'puppet:///modules/moxi/messages.moxi',
-        }
-    }
-
 }
 

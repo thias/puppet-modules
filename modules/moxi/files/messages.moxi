@@ -1,2 +1,0 @@
-avc:  denied  { write } for  pid=5012 comm="socat" name="moxi.sock" dev=vda2 ino=792618 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=sock_file
-avc:  denied  { connectto } for  pid=5449 comm="socat" path="/opt/moxi/moxi.sock" scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:initrc_t:s0 tclass=unix_stream_socket
