@@ -5,3 +5,9 @@ Work In Progress.
 * `percona::server` : TODO
 * `percona::xtrabackup` : Percona XtraBackup
 
+# Sample Usage
+
+Install the Percona XtraDB Cluster Server :
+
+    include percona::server
+

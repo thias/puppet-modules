@@ -3,16 +3,18 @@
 class percona::params {
 
     case $::operatingsystem {
-        'Gentoo': {
-            $package = 'dev-db/xtrabackup'
-        }
         'Fedora', 'RedHat', 'CentOS': {
             include percona::yumrepo
-            $package = 'percona-xtrabackup'
+            # Include this client, otherwise an older one can be pulled in
+            $package = [
+                'Percona-Server-shared-51',
+                'Percona-Server-client-51',
+                'Percona-Server-server-51',
+            ]
             $package_require = Class['percona::yumrepo']
         }
         default: {
-            $package = 'percona-xtrabackup'
+            $package = 'Percona-XtraDB-Cluster-server'
         }
     }
 
