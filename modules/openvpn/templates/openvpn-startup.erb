@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Simple OpenVPN startup script to create and configure a tap device to use
+# with an existing network bridge device.
+#
+
+ifconfig <%= tapdev %> &>/dev/null || openvpn --mktun --dev <%= tapdev %>
+ifconfig <%= tapdev %> up
+brctl addif <%= tapbridge %> <%= tapdev %> &>/dev/null
+
