@@ -1,0 +1,74 @@
+[mysqld]
+<% if has_variable?('::mysql_server_id') then -%>
+server-id=<%= scope.lookupvar('::mysql_server_id') %>
+<% end -%>
+<% if replication_master -%>
+log-bin=mysql-bin
+innodb_flush_log_at_trx_commit=1
+sync_binlog=1
+<% if binlog_format -%>
+binlog_format=<%= binlog_format %>
+<% end -%>
+<% end -%>
+<% if replication_slave -%>
+#replicate-wild-ignore-table=mysql.%
+relay-log-space-limit=<%= relay_log_space_limit %>
+read-only
+<% end -%>
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+old_passwords=0
+<% if skipnetworking -%>
+skip-networking
+<% end -%>
+skip-locking
+max_connections=<%= max_connections %>
+<% if open_files_limit -%>
+open_files_limit=<%= open_files_limit %>
+<% end -%>
+<% if max_allowed_packet -%>
+max_allowed_packet=<%= max_allowed_packet %>
+<% end -%>
+<% if innodb_file_per_table -%>
+innodb_file_per_table=1
+<% end -%>
+
+
+query_cache_size=<%= query_cache_size %>
+query_cache_limit=<%= query_cache_limit %>
+key_buffer_size=<%= key_buffer_size %>
+key_buffer=<%= key_buffer %>
+table_cache=<%= table_cache %>
+thread_cache=<%= thread_cache %>
+# thread_cache_size should be equal to Max_used_connections (taken from show status)
+thread_cache_size=<%= thread_cache_size %>
+<% if thread_concurrency -%>
+thread_concurrency=<%= thread_concurrency %>
+<% else -%>
+# Set by default to the number of CPUs * 2 (mysql.com recommendation)
+thread_concurrency=<%= processorcount.to_i * 2 %>
+<% end -%>
+tmp_table_size=<%= tmp_table_size %>
+
+join_buffer_size=<%= join_buffer_size %>
+sort_buffer_size=<%= sort_buffer_size %>
+read_buffer_size=<%= read_buffer_size %>
+read_rnd_buffer_size=<%= read_rnd_buffer_size %>
+
+<% if skipinnodb -%>
+skip-innodb
+<% else -%>
+innodb_buffer_pool_size=<%= innodb_buffer_pool_size %>
+innodb_lock_wait_timeout=<%= innodb_lock_wait_timeout %>
+innodb_thread_concurrency=<%= innodb_thread_concurrency %>
+innodb_log_file_size=<%= innodb_log_file_size %>
+<% end -%>
+
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+<% if skipnetworking -%>
+skip-networking
+<% end -%>
