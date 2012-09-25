@@ -1,3 +1,5 @@
+* Update SELinux messages file.
+
 2012-09-19 - 0.3.0
 * Add support for Fedora.
 * Add support for host_check_command.
