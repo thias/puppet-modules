@@ -20,7 +20,7 @@ define iptables (
     $chains_filter      = {},
     $fwmark             = {},
     $protectpriv        = false,
-    $vrrp               = false,
+    $vrrp               = [],
     $ospf               = [],
     $tcpports           = [],
     $udpports           = [],

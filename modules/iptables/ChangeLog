@@ -1,3 +1,5 @@
+* Fix VRRP rule to also work with an empty array.
+
 2012-06-26 - 0.1.5
 * Fix defaults for Gentoo by disabling save_on_stop.
 

@@ -27,7 +27,7 @@
 <% raw_rules_filter.each do |line| -%>
 <%= line %>
 <% end -%>
-<% if vrrp -%>
+<% if !vrrp.empty? -%>
 <% vrrp.each do |int| -%>
 -A INPUT -i <%= int -%> -p vrrp -j ACCEPT
 <% end -%>
@@ -105,7 +105,7 @@
 -A INPUT -p udp -m udp --sport 67 --dport 68 -j DROP
 # Drop multicast messages
 -A INPUT -p igmp -d 224.0.0.1 -j DROP
-<% if ! vrrp -%>
+<% if vrrp.empty? -%>
 # Drop broadcard VRRP messages
 -A INPUT -p vrrp -j DROP
 <% end -%>
