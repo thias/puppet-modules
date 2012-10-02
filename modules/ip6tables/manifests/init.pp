@@ -12,7 +12,7 @@ define ip6tables (
     $chains_filter      = {},
     $fwmark             = {},
     $protectpriv        = false,
-    $vrrp               = false,
+    $vrrp               = [],
     $ospf               = [],
     $tcpports           = [],
     $udpports           = [],
