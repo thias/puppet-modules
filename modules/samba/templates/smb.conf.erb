@@ -17,7 +17,7 @@
 	interfaces = <%= interfaces.join(' ') %>
 <% end -%>
 <% if !hosts_allow.empty? -%>
-    hosts allow = <%= hosts_allow.join(' ') %>
+	hosts allow = <%= hosts_allow.join(' ') %>
 <% end -%>
 	log file = <%= log_file %>
 	max log size = <%= max_log_size %>
@@ -39,7 +39,7 @@
 	preferred master = <%= @preferred_master %>
 <% end -%>
 <% extra_global_options.each do |line| -%>
-    <%= line %>
+	<%= line %>
 <% end -%>
 
 <% shares.sort_by {|key, value| key}.each do |key,value| -%>
