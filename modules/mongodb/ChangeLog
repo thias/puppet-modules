@@ -1,4 +1,5 @@
 * Add replSet option.
+* Use undef by default instead of false where we want the defaults to apply
 
 2012-04-23
 * Add basic support for enabling auth.

@@ -15,8 +15,7 @@
 #
 class mongodb (
     # Just in case you wonder : quoted 'false' is for true/false text to be
-    # set in the configuration file, unquoted false is enable+value/disable
-    # a feature.
+    # set in the configuration file.
     $logpath        = '/var/log/mongodb/mongodb.log',
     $bind_ip        = '127.0.0.1',
     $port           = '27017',
@@ -28,12 +27,12 @@ class mongodb (
     $oplog          = '0',
     $slave          = 'false',
     $master         = 'false',
-    $source         = false,
-    $pairwith       = false,
-    $arbiter        = false,
-    $autoresync     = false,
-    $oplogSize      = false,
-    $opIdMem        = false,
+    $source         = undef,
+    $pairwith       = undef,
+    $arbiter        = undef,
+    $autoresync     = undef,
+    $oplogSize      = undef,
+    $opIdMem        = undef,
     $replSet        = undef
 ) {
 

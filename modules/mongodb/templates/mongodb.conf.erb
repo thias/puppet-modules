@@ -94,7 +94,7 @@ oplog = <%= oplog %>
 # in replicated mongo databases, specify here whether this is a slave or master
 <% if slave == 'true' -%>
 slave = <%= slave %>
-<% if source -%>
+<% if @source -%>
 source = <%= source %>
 <% else -%>
 #source = master.example.com
@@ -104,7 +104,7 @@ source = <%= source %>
 #source = master.example.com
 <% end -%>
 # Slave only: specify a single database to replicate
-<% if slave == 'true' and only -%>
+<% if slave == 'true' and @only -%>
 only = <%= only %>
 <% else -%>
 #only = master.example.com
@@ -112,7 +112,7 @@ only = <%= only %>
 # or
 <% if master == 'true' -%>
 master = <%= master %>
-<% if source -%>
+<% if @source -%>
 source = <%= source %>
 <% else -%>
 #source = slave.example.com
@@ -123,31 +123,31 @@ source = <%= source %>
 <% end -%>
 
 # Address of a server to pair with.
-<% if pairwith -%>
+<% if @pairwith -%>
 pairwith = <%= pairwith %>
 <% else -%>
 #pairwith = <server:port>
 <% end -%>
 # Address of arbiter server.
-<% if arbiter -%>
+<% if @arbiter -%>
 arbiter = <%= arbiter %>
 <% else -%>
 #arbiter = <server:port>
 <% end -%>
 # Automatically resync if slave data is stale
-<% if autoresync -%>
+<% if @autoresync -%>
 autoresync = <%= autoresync %>
 <% else -%>
 #autoresync
 <% end -%>
 # Custom size for replication operation log.
-<% if oplogSize -%>
+<% if @oplogSize -%>
 oplogSize = <%= oplogSize %>
 <% else -%>
 #oplogSize = <MB>
 <% end -%>
 # Size limit for in-memory storage of op ids.
-<% if opIdMem -%>
+<% if @opIdMem -%>
 opIdMem = <%= opIdMem %>
 <% else -%>
 #opIdMem = <bytes>
