@@ -45,6 +45,11 @@
 -A INPUT -p tcp -m tcp -s <%= src %> --dport <%= key %> -j ACCEPT
 <% end -%>
 <% end -%>
+<% srcudpports.sort_by {|key, value| key}.each do |key,value| -%>
+<% value.each do |src| -%>
+-A INPUT -p udp -m udp -s <%= src %> --dport <%= key %> -j ACCEPT
+<% end -%>
+<% end -%>
 <% udpports.each do |port| -%>
 -A INPUT -p udp -m udp --dport <%= port %> -j ACCEPT
 <% end -%>

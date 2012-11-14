@@ -29,6 +29,7 @@ define iptables (
     $privtcpports       = [],
     $privudpports       = [],
     $srctcpports        = {},
+    $srcudpports        = {},
     $hosts_ssh          = false,
     $hosts_nrpe         = false,
     $hosts_snmp         = false,
