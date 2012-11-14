@@ -8,4 +8,5 @@ The default generated configuration file is meant to be as close a possible to
 the one included in the Fedora/EPEL package.
 
 * `mongodb` : Manage the MongoDB NoSQL server
+* `mongodb::key` : Manage auth key file to be used for MongoDB replicas
 

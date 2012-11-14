@@ -1,5 +1,7 @@
 * Add replSet option.
 * Use undef by default instead of false where we want the defaults to apply
+* Add rest, keyFile options.
+* Add mongodb::key definition for installing rs keys.
 
 2012-04-23
 * Add basic support for enabling auth.

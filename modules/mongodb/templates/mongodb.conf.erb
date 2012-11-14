@@ -152,6 +152,12 @@ opIdMem = <%= opIdMem %>
 <% else -%>
 #opIdMem = <bytes>
 <% end -%>
+<% if @rest -%>
+rest = <%= rest %>
+<% end -%>
 <% if @replSet -%>
 replSet = <%= replSet %>
+<% end -%>
+<% if @keyFile -%>
+keyFile = <%= keyFile %>
 <% end -%>

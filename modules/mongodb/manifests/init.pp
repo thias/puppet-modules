@@ -33,7 +33,9 @@ class mongodb (
     $autoresync     = undef,
     $oplogSize      = undef,
     $opIdMem        = undef,
-    $replSet        = undef
+    $rest           = undef,
+    $replSet        = undef,
+    $keyFile        = undef
 ) {
 
     # Main package and service
