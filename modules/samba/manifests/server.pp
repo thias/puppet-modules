@@ -46,7 +46,7 @@ class samba::server (
 
     # SELinux options
     if $::selinux {
-        Selbool { persistent => true }
+        Selboolean { persistent => true }
         if $selinux_enable_home_dirs {
             selboolean { 'samba_enable_home_dirs': value => 'on' }
         }
