@@ -33,7 +33,8 @@ class mongodb (
     $arbiter        = false,
     $autoresync     = false,
     $oplogSize      = false,
-    $opIdMem        = false
+    $opIdMem        = false,
+    $replSet        = undef
 ) {
 
     # Main package and service
