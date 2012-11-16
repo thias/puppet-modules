@@ -27,7 +27,8 @@ class samba::server (
     $extra_global_options = [],
     $shares = {},
     # SELinux options
-    $selinux_enable_home_dirs = false
+    $selinux_enable_home_dirs = false,
+    $selinux_export_all_rw = false
 ) inherits samba::params {
 
     # Main package and service
@@ -49,6 +50,9 @@ class samba::server (
         Selboolean { persistent => true }
         if $selinux_enable_home_dirs {
             selboolean { 'samba_enable_home_dirs': value => 'on' }
+        }
+        if $selinux_export_all_rw {
+            selboolean { 'samba_export_all_rw': value => 'on' }
         }
     }
 

@@ -1,5 +1,6 @@
 * Fix tab vs. spaces in smb.conf template.
 * Fix persistence for SELinux changes.
+* Add samba_export_all_rw SELinux option.
 
 2012-09-19 - 0.0.2
 * Include fixes to smb.conf from Up2date Cyborg.
