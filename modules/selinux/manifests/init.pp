@@ -9,6 +9,10 @@ class selinux {
             'Fedora-10' => 'policycoreutils',
              default    => 'policycoreutils-python',
         }
+        # The restorecond tool was split out in -restorecond at some point
+        if $::operatingsystem == 'Fedora' and $::operatingsystemrelease > 16 {
+            package { 'policycoreutils-restorecond': ensure => installed }
+        }
         package { 'libselinux-ruby': ensure => installed }
         package { $audit2allow:
             alias  => 'audit2allow',
