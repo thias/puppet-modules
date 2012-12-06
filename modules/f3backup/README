@@ -1,6 +1,50 @@
 F3 Backup
 =========
 
+Server Example :
+
+    # The main backup server
+    class { 'f3backup::server': }
+    # The server can't back itself up, rdiff thinks it's already running
+    class { 'f3backup::configure': backup_rdiff => false }
+
+Client Examples :
+
+    # Enable full filesystem backup (from site.pp for all nodes)
+    include f3backup
+    # Disable full filesystem backup on a node
+    class { 'f3backup::configure':
+        backup_rdiff => false,
+    }
+    # Exclude filesystem paths from the backup on a node
+    class { 'f3backup::configure':
+        rdiff_exclude => [
+            # The ** is a recursive glob
+            '/var/lib/mysql/**',
+        ],
+    }
+
+You will need to deploy the ssh public key to the client nodes. Example :
+    ssh_authorized_key { 'backup@back.example.com':
+        key     => 'AAAA...=='
+        type    => 'rsa',
+        user    => 'root',
+        options => [
+            'command="rdiff-backup --server --restrict-read-only /"',
+            'from="back.example.com,198.51.100.1"',
+            'no-port-forwarding',
+            'no-agent-forwarding',
+            'no-X11-forwarding',
+            'no-pty',
+        ],
+        ensure  => present,
+    }
+
+Testing or forcing a backup run :
+
+# su - backup
+$ f3backup -r node1.example.com /etc/f3backup.ini
+
 Configurable options:
  * force_backup_server (default=""): Force a specific backup server instead of the default one.
  * rdiffbackup (default=true): if true will run an rdiff-backup for the full filesystem

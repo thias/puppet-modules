@@ -1,4 +1,5 @@
 class f3backup::configure (
+    $backup_home = '/backup',
     $backup_rdiff = true,
     $backup_mysql = false,
     $backup_command = false,
@@ -19,12 +20,12 @@ class f3backup::configure (
     $mysql_sshuser = 'root',
     $mysql_key = '/backup/.ssh/id_rsa-mysql-backup',
     $command_to_execute = '/bin/true',
-    # New
+    # Fact-based
     $backup_server = 'default',
     $myname = $::fqdn
 ) {
 
-    @@file { "/backup/f3backup/${myname}/config.ini":
+    @@file { "${backup_home}/f3backup/${myname}/config.ini":
         content => template('f3backup/f3backup-host.ini.erb'),
         owner   => 'backup',
         group   => 'backup',
@@ -32,17 +33,38 @@ class f3backup::configure (
     }
 
     if $rdiff_exclude {
-        @@file { "/backup/f3backup/${myname}/exclude.txt":
+        @@file { "${backup_home}/f3backup/${myname}/exclude.txt":
             content => template("f3backup/exclude.txt.erb"),
             owner   => 'backup',
             group   => 'backup',
             tag     => "f3backup-${backup_server}",
         }
     } else {
-        @@file { "/backup/f3backup/${myname}/exclude.txt":
+        @@file { "${backup_home}/f3backup/${myname}/exclude.txt":
             tag    => "f3backup-${backup_server}",
             ensure => absent,
         }
+    }
+
+    @file { '/etc/f3backup': ensure => directory }
+    @file { '/etc/f3backup/facter': ensure => directory }
+    if $backup_server != 'default' {
+        realize File['/etc/f3backup']
+        realize File['/etc/f3backup/facter']
+        file { '/etc/f3backup/facter/backup_server.conf':
+            content => $backup_server,
+        }
+    } else {
+        file { '/etc/f3backup/facter/backup_server.conf': ensure => absent }
+    }
+    if $myname != $::fqdn {
+        realize File['/etc/f3backup']
+        realize File['/etc/f3backup/facter']
+        file { '/etc/f3backup/facter/myname.conf':
+            content => $myname,
+        }
+    } else {
+        file { '/etc/f3backup/facter/myname.conf': ensure => absent }
     }
 
     # TODO : Fix all this...

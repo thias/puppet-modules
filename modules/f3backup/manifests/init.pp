@@ -1,6 +1,7 @@
 class f3backup (
+    $backup_home = '/backup',
     $backup_server = 'default',
-    $dirname = $::fqdn,
+    $myname = $::fqdn,
     $ensure = 'directory'
 ) {
 
@@ -12,12 +13,16 @@ class f3backup (
 #    } else {
 #        $backup_server = $server
 #    }
-    $backup_server_final = $::f3backup_force_server ? {
+    $backup_server_final = $::f3backup_backup_server ? {
         ''      => $backup_server,
-        default => $::f3backup_force_server,
+        default => $::f3backup_backup_server,
+    }
+    $myname_final = $::f3backup_myname ? {
+        ''      => $myname,
+        default => $::f3backup_myname,
     }
 
-    @@file { "/backup/f3backup/${dirname}":
+    @@file { "${backup_home}/f3backup/${myname_final}":
         owner  => 'backup',
         group  => 'backup',
         tag    => "f3backup-${backup_server}",

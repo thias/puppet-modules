@@ -32,7 +32,7 @@ keep = <%= rdiff_keep %>
 ; ssh user to connect for running the backup
 sshuser =  <%= mysql_sshuser %>
 ; ssh private key to be used
-sshkey = <%= mysql_sshkey %>
+sshkey = <%= backup_home %>/<%= mysql_sshkey %>
 <% end -%>
 <% if backup_command -%>
 

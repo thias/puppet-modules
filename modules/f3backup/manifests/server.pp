@@ -1,6 +1,8 @@
 class f3backup::server (
     # Name for the client resources to realize
     $backup_server = 'default',
+    # Home directory of the backup user
+    $backup_home = '/backup',
     # Main f3backup.ini options
     $threads = '5',
     $lognameprefix = '%Y%m%d-',
@@ -13,7 +15,7 @@ class f3backup::server (
     $rdiff_extra_parameters = '',
     $rdiff_keep = '4W',
     $mysql_sshuser = 'root',
-    $mysql_sshkey = '/backup/.ssh/id_rsa',
+    $mysql_sshkey = '.ssh/id_rsa',
     $command_to_execute = '/bin/true',
     # Cron job options
     $cron_hour = '03',
@@ -36,10 +38,10 @@ class f3backup::server (
     user { 'backup':
         comment    => 'Backup',
         shell      => '/bin/bash',
-        home       => '/backup',
+        home       => $backup_home,
         managehome => true,
     }
-    file { '/backup/f3backup':
+    file { "${backup_home}/f3backup":
         ensure  => directory,
         owner   => 'backup',
         group   => 'backup',
@@ -54,7 +56,7 @@ class f3backup::server (
     }
 
     # Create directory where the ssh key pair will be stored
-    file { '/backup/.ssh':
+    file { "${backup_home}/.ssh":
         ensure  => directory,
         owner   => 'backup',
         group   => 'backup',
@@ -62,7 +64,7 @@ class f3backup::server (
         require => User['backup'];
     }
     # Make ssh connections "relaxed" so that things work automatically
-    file { '/backup/.ssh/config':
+    file { "${backup_home}/.ssh/config":
         source  => 'puppet:///modules/f3backup/ssh-config',
         owner   => 'backup',
         group   => 'backup',
@@ -73,14 +75,14 @@ class f3backup::server (
     # Create the backup user's ssh key pair
     # Note that the pubkey needs to be set in the client
     exec { 'Creating key pair for user backup':
-        command => "/usr/bin/ssh-keygen -b 2048 -t rsa -f /backup/.ssh/id_rsa -N ''",
+        command => "/usr/bin/ssh-keygen -b 2048 -t rsa -f ${backup_home}/.ssh/id_rsa -N ''",
         user    => 'backup',
         group   => 'backup',
         require => [
             User['backup'],
-            File['/backup/.ssh'],
+            File["${backup_home}/.ssh"],
         ],
-        creates => '/backup/.ssh/id_rsa',
+        creates => "${backup_home}/.ssh/id_rsa",
     }
     
     # The main backup script
