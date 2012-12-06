@@ -1,0 +1,3 @@
+avc:  denied  { search } for  pid=27391 comm="puppetmasterd" name="mysql" dev=vda2 ino=275526 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:mysqld_db_t:s0 tclass=dir
+avc:  denied  { write } for  pid=27603 comm="puppetmasterd" name="mysql.sock" dev=vda2 ino=275615 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:mysqld_var_run_t:s0 tclass=sock_file
+avc:  denied  { connectto } for  pid=27603 comm="puppetmasterd" path="/var/lib/mysql/mysql.sock" scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:system_r:mysqld_t:s0 tclass=unix_stream_socket

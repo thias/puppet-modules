@@ -77,6 +77,11 @@ class puppet::master (
                     subscribe => Exec['catpuppetconf'],
                 }
             }
+            if $selinux and $::selinux_enforced {
+                selinux::audit2allow { 'puppetservice':
+                    source => 'puppet:///modules/puppet/messages.puppetservice',
+                }
+            }
         }
         'passenger': {
             $https_certname = $certname ? {
