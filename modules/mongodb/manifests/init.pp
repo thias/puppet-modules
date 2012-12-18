@@ -35,7 +35,8 @@ class mongodb (
     $opIdMem        = undef,
     $rest           = undef,
     $replSet        = undef,
-    $keyFile        = undef
+    $keyFile        = undef,
+    $smallfiles     = undef
 ) {
 
     # Main package and service
