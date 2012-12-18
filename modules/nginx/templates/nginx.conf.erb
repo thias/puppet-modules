@@ -85,6 +85,18 @@ http {
 <% end -%>
 <% end -%>
 <% end -%>
+<% if @fastcgi_buffers -%>
+fastcgi_buffers <%= fastcgi_buffers %>;
+<% end -%>
+<% if @fastcgi_buffer_size -%>
+fastcgi_buffer_size <%= fastcgi_buffer_size %>;
+<% end -%>
+<% if @proxy_buffers -%>
+proxy_buffers <%= proxy_buffers %>;
+<% end -%>
+<% if @proxy_buffer_size -%>
+proxy_buffer_size <%= proxy_buffer_size %>;
+<% end -%>
 <% if !http_raw_lines.empty? -%>
 
     # Other

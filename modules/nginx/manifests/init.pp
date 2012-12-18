@@ -75,6 +75,10 @@ class nginx (
     $geoip_city = false,
     $index = 'index.html',
     $upstream = {},
+    $fastcgi_buffers = undef,
+    $fastcgi_buffer_size = undef,
+    $proxy_buffers = undef,
+    $proxy_buffer_size = undef,
     $http_raw_lines = [],
     # Module options
     $autoindex = 'off',
