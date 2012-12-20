@@ -1,10 +1,10 @@
-= Overview
+# Overview
 
 Install, enable and configure a SAMBA Windows share server.
 
 * `samba::server` : Manage server
 
-= Example Usage
+# Example Usage
 
     class { 'samba::server':
         workgroup            => 'EXAMPLE',
