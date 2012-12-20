@@ -2,9 +2,8 @@
 #
 # Samba server.
 #
-# Parameters:
-#  $x:
-#    X. Default: none
+# For all main options, see the smb.conf(5) and samba(7) man pages.
+# For the SELinux related options, see smbd_selinux(8).
 #
 # Sample Usage :
 #  include samba::server
@@ -22,6 +21,8 @@ class samba::server (
     $domain_master = false,
     $domain_logons = false,
     $local_master = undef,
+    $security = 'user',
+    $map_to_guest = undef,
     $os_level = undef,
     $preferred_master = undef,
     $extra_global_options = [],

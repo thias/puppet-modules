@@ -21,7 +21,10 @@
 <% end -%>
 	log file = <%= log_file %>
 	max log size = <%= max_log_size %>
-	security = user
+	security = <%= security %>
+<% if @map_to_guest -%>
+	map to guest = <%= map_to_guest %>
+<% end -%>
 	passdb backend = <%= passdb_backend %>
 <% if @domain_master -%>
 	domain master = yes 
