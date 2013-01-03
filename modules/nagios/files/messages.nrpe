@@ -6,6 +6,7 @@ avc:  denied  { getattr } for  pid=5438 comm="check_disk" path="/proc/bus/usb" d
 avc:  denied  { getattr } for  pid=11462 comm="check_disk" path="/sys/kernel/config" dev="configfs" ino=7100 scontext=system_u:system_r:nagios_checkdisk_plugin_t:s0 tcontext=system_u:object_r:configfs_t:s0 tclass=dir
 avc:  denied  { getattr } for  pid=3195 comm="check_disk" path="/proc/fs/nfsd" dev=nfsd ino=1 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:nfsd_fs_t:s0 tclass=dir
 avc:  denied  { getattr } for  pid=4262 comm="check_disk" path="/export/gv0" dev=dm-1 ino=64 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:file_t:s0 tclass=dir
+avc:  denied  { getattr } for  pid=26371 comm="check_disk" path="/var/lib/mysql" dev=dm-1 ino=2 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:mysqld_db_t:s0 tclass=dir
 # check_megaraid_sas
 avc:  denied  { getattr ioctl } for  pid=5800 comm="check_megaraid_" path="/usr/share/perl5/strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
 avc:  denied  { read open } for  pid=6349 comm="check_megaraid_" name="strict.pm" dev=sda1 ino=270154 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:usr_t:s0 tclass=file
