@@ -11,6 +11,7 @@ class postfix::server (
     # To install postfix-mysql package instead of plain postfix (EL5)
     $mysql = false,
     # See the main.cf comments for help on these options
+    $myhostname = $::fqdn,
     $mydomain = false,
     $myorigin = '$myhostname',
     $inet_interfaces = 'localhost',
@@ -80,9 +81,6 @@ class postfix::server (
     $clamav       = false
 ) {
 
-    # Since this is a definition, make the title meaningful
-    $myhostname = $title
-
     # Default has el5 files, for el6 a few defaults have changed
     if ( $::operatingsystem =~ /RedHat|CentOS/ and $::operatingsystemrelease >= 6 ) {
         $filesuffix = '-el6'
@@ -108,11 +106,6 @@ class postfix::server (
     file { '/etc/postfix/main.cf':
         content => template("postfix/main.cf${filesuffix}.erb"),
         notify  => Service['postfix'],
-    }
-
-    # Optional certificates to be installed
-    if ( $ssl and !defined(Tlsfiles[$ssl]) ) {
-        tlsfiles { $ssl: }
     }
 
     # Optional Spamassassin setup (using spampd)
