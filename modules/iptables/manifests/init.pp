@@ -57,6 +57,7 @@ define iptables (
     $status_numeric     = 'yes',
     $status_verbose     = 'no',
     $status_linenumbers = 'yes',
+    $sysctl_load_list   = undef,
     # Options related to conf.d/iptables (Gentoo only)
     $iptables_save      = '/var/lib/iptables/rules-save',
     $save_restore_options = ''  # default is "-c"
