@@ -2,7 +2,10 @@
 #
 class samba::params {
 
-    $service = [ 'smb', 'nmb' ]
+  case $osfamily {
+    'RedHat': { $service = [ 'smb', 'nmb' ] }
+    'Debian': { $service = [ 'samba' ] }
+  }
 
 }
 
