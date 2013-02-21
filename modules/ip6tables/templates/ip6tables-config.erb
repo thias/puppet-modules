@@ -46,3 +46,13 @@ IP6TABLES_STATUS_VERBOSE="<%= status_verbose %>"
 #   Value: yes|no,  default: yes
 # Print a counter/number for every rule in the status output.
 IP6TABLES_STATUS_LINENUMBERS="<%= status_linenumbers %>"
+
+# Reload sysctl settings on start and restart
+#   Default: -none-
+# Space separated list of sysctl items which are to be reloaded on start.
+# List items will be matched by fgrep.
+<% if @sysctl_load_list -%>
+IP6TABLES_SYSCTL_LOAD_LIST="<%= sysctl_load_list %>"
+<% else -%>
+#IP6TABLES_SYSCTL_LOAD_LIST=".nf_conntrack .bridge-nf"
+<% end -%>

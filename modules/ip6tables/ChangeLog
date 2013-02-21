@@ -1,5 +1,6 @@
 * Fix VRRP rule to also work with an empty array.
 * Add support for srcudpports.
+* Add support for sysctl_load_list, introduced in RHEL 6.4.
 
 2012-07-17 - 0.1.1
 * Cleaned up module for the initial forge release.

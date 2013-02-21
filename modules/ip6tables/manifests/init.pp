@@ -45,6 +45,7 @@ define ip6tables (
     $status_numeric     = 'yes',
     $status_verbose     = 'no',
     $status_linenumbers = 'yes',
+    $sysctl_load_list   = undef,
     # Options related to conf.d/ip6tables (Gentoo only)
     $ip6tables_save     = '/var/lib/ip6tables/rules-save',
     $save_restore_options = ''  # default is "-c"
