@@ -1,3 +1,5 @@
+* Add support for Debian service name (sid3windr).
+
 2012-12-20 - 0.1.0
 * Fix tab vs. spaces in smb.conf template.
 * Fix persistence for SELinux changes.
