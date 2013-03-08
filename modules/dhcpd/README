@@ -1,9 +1,0 @@
-dhcpd
-
-This module installs and enables a dhcpd server using a pre-existing
-configuration file. This is because different dhcpd configuration files would
-be hard to base on a single template without introducing unnecessary
-complexity. Included is a dhcpd.conf-example file to get started.
-
-* `dhcpd` : Install and enabled a DHCP server
-
