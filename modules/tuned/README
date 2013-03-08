@@ -1,8 +1,0 @@
-# Overview
-
-Install, enable and configure the tuned adaptive system tuning daemon.
-
-* `tuned` : Class to install and enable tuned
-
-# Example Usage
-
