@@ -1,3 +1,5 @@
+* Split out the catpuppetconf into a common class, to fix logic.
+
 2012-09-19 - 0.4.1
 * Add some more AVC lines to be allowed for passenger puppetmaster.
 * Remove legacy cron job removal.

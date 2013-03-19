@@ -41,6 +41,8 @@ class puppet::agent (
     $puppet_extra_opts  = '--waitforcert=500'
 ) {
 
+    include puppet::common
+
     $puppetversion = $::puppetversion
 
     # Enable noop by default on all xen and physical hosts and puppetmasters
@@ -63,9 +65,11 @@ class puppet::agent (
     }
     # Main configuration for the service. Always install, just in case the
     # service is run when it shouldn't have been (we respect noop here).
-    $agentconfname = $master ? {
-        'true'  => '/etc/puppet/puppetagent.conf',
-        default => '/etc/puppet/puppet.conf',
+    if $master {
+        $agentconfname = '/etc/puppet/puppetagent.conf'
+        File[$agentconfname] ~> Exec['catpuppetconf']
+    } else {
+        $agentconfname = '/etc/puppet/puppet.conf'
     }
     file { $agentconfname:
         owner   => 'root',

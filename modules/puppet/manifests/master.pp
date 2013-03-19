@@ -26,6 +26,8 @@ class puppet::master (
     $extraopts      = {}
 ) {
 
+    include puppet::common
+
     # Package + partial configuration file + concatenation exec
     if $ensure != 'absent' {
 
@@ -45,14 +47,7 @@ class puppet::master (
         # a chicken and egg problem, which we solve here
         if $::puppetmaster == 'true' {
             # Merge agent+master configs for the master
-            exec { 'catpuppetconf':
-                command     => '/bin/cat /etc/puppet/puppetagent.conf /etc/puppet/puppetmaster.conf > /etc/puppet/puppet.conf',
-                refreshonly => true,
-                subscribe   => [
-                    File['/etc/puppet/puppetagent.conf'],
-                    File['/etc/puppet/puppetmaster.conf'],
-                ],
-            }
+            File['/etc/puppet/puppetmaster.conf'] ~> Exec['catpuppetconf']
         }
 
     } else {
