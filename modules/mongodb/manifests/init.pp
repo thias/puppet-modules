@@ -14,6 +14,10 @@
 #  }
 #
 class mongodb (
+    # From the params
+    $service        = $mongodb::params::service,
+    $conffile       = $mongodb::params::conffile,
+    $package        = $mongodb::params::package,
     # Just in case you wonder : quoted 'false' is for true/false text to be
     # set in the configuration file.
     $logpath        = '/var/log/mongodb/mongodb.log',
@@ -37,22 +41,22 @@ class mongodb (
     $replSet        = undef,
     $keyFile        = undef,
     $smallfiles     = undef
-) {
+) inherits mongodb::params {
 
     # Main package and service
-    package { 'mongodb-server': ensure => installed }
-    service { 'mongod':
+    package { $package: ensure => installed }
+    service { $service:
         enable    => true,
         ensure    => running,
         hasstatus => true,
-        subscribe => File['/etc/mongodb.conf'],
-        require   => Package['mongodb-server'],
+        subscribe => File[$conffile],
+        require   => Package[$package],
     }
 
     # Main configuration file
-    file { '/etc/mongodb.conf':
+    file { $conffile:
         content => template('mongodb/mongodb.conf.erb'),
-        require => Package['mongodb-server'],
+        require => Package[$package],
     }
 
 }
