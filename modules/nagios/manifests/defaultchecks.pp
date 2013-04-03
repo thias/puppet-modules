@@ -37,6 +37,12 @@ class nagios::defaultchecks {
     } else {
         nagios::check::membase { $nagios::client::host_name: ensure => absent }
     }
+    if $::nagios_check_couchbase_disable != 'true' and
+       $::nagios_couchbase == 'true' {
+        nagios::check::couchbase { $nagios::client::host_name: }
+    } else {
+        nagios::check::couchbase { $nagios::client::host_name: ensure => absent }
+    }
     if $::nagios_check_moxi_disable != 'true' and
        $::nagios_moxi == 'true' {
         nagios::check::moxi { $nagios::client::host_name: }

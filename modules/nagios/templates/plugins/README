@@ -6,4 +6,4 @@ membase_stats : https://github.com/appfirst/membase_stats
 check_ram : http://exchange.nagios.org/directory/Plugins/Uncategorized/Operating-Systems/Linux/Check_Ram-on-Linux-32-2Dbit-and-64-2Dbit-systems/details
 check_cpu : http://exchange.nagios.org/directory/Plugins/Uncategorized/Operating-Systems/Linux/check_cpu/details
 check_nginx : http://exchange.nagios.org/directory/Plugins/Web-Servers/nginx/check_nginx/details
-check_membase : https://github.com/appfirst/membase_stats
+check_membase / check_couchbase : https://github.com/appfirst/membase_stats

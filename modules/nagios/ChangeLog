@@ -1,4 +1,5 @@
 * Update SELinux messages file.
+* Change the Gentoo nrpe.pid location, to match the current one.
 
 2012-09-19 - 0.3.0
 * Add support for Fedora.

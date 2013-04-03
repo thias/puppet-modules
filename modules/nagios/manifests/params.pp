@@ -26,7 +26,7 @@ class nagios::params {
             $nrpe_package_alias = 'nrpe'
             $nrpe_user          = 'nagios'
             $nrpe_group         = 'nagios'
-            $nrpe_pid_file      = '/var/run/nrpe/nrpe.pid'
+            $nrpe_pid_file      = '/run/nrpe.pid'
             $nrpe_cfg_dir       = '/etc/nagios/nrpe.d'
         }
         'Fedora': {

@@ -364,6 +364,9 @@ class nagios::server (
     nagios_command { 'check_nrpe_membase':
         command_line => "${nrpe} -c check_membase",
     }
+    nagios_command { 'check_nrpe_couchbase':
+        command_line => "${nrpe} -c check_couchbase",
+    }
     nagios_command { 'check_nrpe_moxi':
         command_line => "${nrpe} -c check_moxi",
     }
