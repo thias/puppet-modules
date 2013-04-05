@@ -1,5 +1,7 @@
 [master]
+<% if @certname -%>
     certname = <%= certname %>
+<% end -%>
 <% if @dns_alt_names -%>
     dns_alt_names = <%= dns_alt_names %>
 <% end -%>

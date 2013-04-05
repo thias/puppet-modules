@@ -12,7 +12,7 @@ class puppet::master (
     $runtype        = 'service',
     $selinux        = $::selinux,
     # puppet.conf options
-    $certname       = $::fqdn,
+    $certname       = undef,
     $dns_alt_names  = undef,
     $reports        = undef,
     $reporturl      = undef,
@@ -81,7 +81,7 @@ class puppet::master (
         }
         'passenger': {
             $https_certname = $certname ? {
-                false   => $::fqdn,
+                undef   => $::fqdn,
                 default => $certname,
             }
             package { 'mod_passenger': ensure => installed }
