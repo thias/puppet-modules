@@ -62,6 +62,13 @@ define ip6tables (
         }
     }
 
+    # The module name and option names have changed
+    if $iptables::params::ctstate == true {
+        $mstate = '-m conntrack --ctstate'
+    } else {
+        $mstate = '-m state --state'
+    }
+
     # Configuration files
     file { $ip6tables::params::rules:
         notify  => Service[$ip6tables::params::service],

@@ -18,6 +18,7 @@ class ip6tables::params {
             $rules   = '/var/lib/ip6tables/rules-save'
             $config  = '/etc/conf.d/ip6tables'
             $restart = '/etc/init.d/ip6tables restart'
+            $ctstate = true
         }
         default: {
             # Has been merged back into iptables in Fedora (somewhere < 17)
@@ -26,6 +27,7 @@ class ip6tables::params {
             $config  = '/etc/sysconfig/ip6tables-config'
             # Since sysctl often fails, make sure we ignore it
             $restart = '/sbin/service ip6tables restart; RETVAL=$?; /sbin/sysctl -p; exit $RETVAL'
+            $ctstate = false
         }
     }
 }
