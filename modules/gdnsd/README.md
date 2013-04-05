@@ -17,10 +17,17 @@ the sysctl module) :
 Configure the server using a template, and install a single zone file :
 
     gdnsd::file { 'config':
-        content => template('modules/mymodule/gdnsd/config.erb'),
+      content => template('mymodule/gdnsd/config.erb'),
     }
     gdnsd::file { 'example.com':
-        source => 'puppet:///modules/mymodule/dns/example.com',
+      source => 'puppet:///modules/mymodule/dns/example.com',
+    }
+
+For multiple source-based files, use the `$source_base` parameter to be able
+to use an array of zone names :
+
+    gdnsd::file { [ 'example.com', 'example.net', 'example.org' ]:
+      source_base => 'puppet:///modules/mymodule/dns/',
     }
 
 For more information, including help and configuration examples, see :

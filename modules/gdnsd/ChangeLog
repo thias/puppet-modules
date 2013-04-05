@@ -1,3 +1,5 @@
+* Add source_base for multiple configuration files in the same source dir.
+
 2013-03-19 - 0.1.0
 * Switch to use 2 space indent.
 * Update the README and use markdown.

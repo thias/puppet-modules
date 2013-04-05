@@ -12,16 +12,20 @@
 #   }
 #
 define gdnsd::file (
-  $ensure  = undef,
-  $source  = undef,
-  $content = undef
+  $ensure      = undef,
+  $source      = undef,
+  $source_base = undef,
+  $content     = undef
 ) {
+
+  if $source      { $zone_source = $source }
+  if $source_base { $zone_source = "${source_base}${title}" }
 
   file { "/etc/gdnsd/${title}":
     owner   => 'root',
     group   => 'root',
     mode    => '0640',
-    source  => $source,
+    source  => $zone_source,
     content => $content,
     notify  => Service['gdnsd'],
     # For the parent directory
