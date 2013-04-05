@@ -92,7 +92,7 @@
 <% end -%>
 <% end -%>
 # Stateful firewall (beware of filling up the connection tracking table)
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT <%= mstate %> RELATED,ESTABLISHED -j ACCEPT
 <% if icmp_limit_enable -%>
 # Limit ICMP requests globally (prevent DoS)
 -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
@@ -133,12 +133,12 @@
 # Port knocking magic
 -A KNOCK-INPUT -m recent --set --name KNOCK1 --rsource -j CLOSED
 <% knocktcpopen.each do |port| -%>
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT
+-A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT
 <% end -%>
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knocktwo %> -m state --state NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> -m state --state NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED
--A KNOCK-MAIN -p tcp -m state --state NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knocktwo %> <%= mstate %> NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> <%= mstate %> NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED
 <% end -%>
 <% chains_filter.sort_by {|key, value| key}.each do |key,value| -%>
 <% value.each do |line| -%>

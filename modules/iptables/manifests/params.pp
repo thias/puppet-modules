@@ -18,6 +18,7 @@ class iptables::params {
             $rules   = '/var/lib/iptables/rules-save'
             $config  = '/etc/conf.d/iptables'
             $restart = '/etc/init.d/iptables restart'
+            $ctstate = true
         }
         default: {
             $package = 'iptables'
@@ -25,6 +26,7 @@ class iptables::params {
             $config  = '/etc/sysconfig/iptables-config'
             # Since sysctl often fails, make sure we ignore it
             $restart = '/sbin/service iptables restart; RETVAL=$?; /sbin/sysctl -p; exit $RETVAL'
+            $ctstate = false
         }
     }
 }

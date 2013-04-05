@@ -69,6 +69,13 @@ define iptables (
     # Main package
     package { $iptables::params::package: ensure => installed }
 
+    # The module name and option names have changed
+    if $iptables::params::ctstate == true {
+        $mstate = '-m conntrack --ctstate'
+    } else {
+        $mstate = '-m state --state'
+    }
+
     # Configuration files
     file { $iptables::params::rules:
         notify  => Service[$iptables::params::service],
