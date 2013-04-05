@@ -1,23 +1,33 @@
 [master]
-<% if certname -%>
     certname = <%= certname %>
-<% end -%>
-<% if dns_alt_names -%>
+<% if @dns_alt_names -%>
     dns_alt_names = <%= dns_alt_names %>
 <% end -%>
-<% if reports -%>
+<% if @reports -%>
     reports = <%= reports %>
 <% end -%>
-<% if reporturl -%>
+<% if @reporturl -%>
     reporturl = <%= reporturl %>
 <% end -%>
-<% if storeconfigs -%>
+<% if @storeconfigs -%>
     storeconfigs = <%= storeconfigs %>
+<% end -%>
+<% if @dbadapter -%>
     dbadapter = <%= dbadapter %>
+<% end -%>
+<% if @dbserver -%>
     dbserver = <%= dbserver %>
+<% end -%>
+<% if @dbname -%>
     dbname = <%= dbname %>
+<% end -%>
+<% if @dbuser -%>
     dbuser = <%= dbuser %>
+<% end -%>
+<% if @dbpassword -%>
     dbpassword = <%= dbpassword %>
+<% end -%>
+<% if @dbsocket -%>
     dbsocket = <%= dbsocket %>
 <% end -%>
 <% extraopts.sort_by {|key, value| key}.each do |key,value| -%>
