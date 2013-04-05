@@ -1,5 +1,6 @@
 * Split out the catpuppetconf into a common class, to fix logic.
 * Clean up the master parameters by defaulting most to undef.
+* Add missing /etc/puppet/rack content when enabling passenger.
 
 2012-09-19 - 0.4.1
 * Add some more AVC lines to be allowed for passenger puppetmaster.

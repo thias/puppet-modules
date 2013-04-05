@@ -108,6 +108,22 @@ class puppet::master (
                 group   => 'puppet',
                 welcome => false,
             }
+            file { '/etc/puppet/rack':
+                owner  => 'root',
+                group  => 'root',
+                ensure => directory,
+            }
+            file { '/etc/puppet/rack/public':
+                owner  => 'puppet',
+                group  => 'puppet',
+                ensure => directory,
+            }
+            file { '/etc/puppet/rack/config.ru':
+                owner  => 'puppet',
+                group  => 'puppet',
+                mode   => '0644',
+                source => 'puppet:///modules/puppet/config.ru',
+            }
             if $selinux and $::selinux_enforced {
                 selinux::audit2allow { 'puppetpassenger':
                     source => 'puppet:///modules/puppet/messages.puppetpassenger',
