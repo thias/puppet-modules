@@ -37,5 +37,8 @@ class ipa::server (
         require => Package["${ipa}-server"],
     }
 
+    # This shouldn't be needed...
+    service { 'httpd': enable => true, require => Exec['ipa-server-install'] }
+
 }
 
