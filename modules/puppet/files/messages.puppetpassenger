@@ -1,41 +1,26 @@
-avc:  denied  { search } for  pid=1910 comm="puppetmasterd" name="/" dev=sysfs ino=1 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:sysfs_t:s0 tclass=dir
-avc:  denied  { getattr execute } for  pid=1368 comm="puppetmasterd" path="/usr/bin/chage" dev=vda1 ino=4005 context=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:passwd_exec_t:s0 tclass=file
-avc:  denied  { name_bind } for  pid=1495 comm="puppetmasterd" src=13808 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=udp_socket
-avc:  denied  { node_bind } for  pid=1495 comm="puppetmasterd" src=20571 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:node_t:s0 tclass=udp_socket
-avc:  denied  { read open getattr } for  pid=1650 comm="puppetmasterd" name="config" dev=vda1 ino=11895 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:selinux_config_t:s0 tclass=file
-avc:  denied  { relabelfrom relabelto } for  pid=1650 comm="puppetmasterd" name="serial" dev=vda1 ino=14200 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:puppet_var_lib_t:s0 tclass=file
-avc:  denied  { search } for  pid=6183 comm="puppetmasterd" name="mysql" dev=vda1 ino=260574 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:mysqld_db_t:s0 tclass=dir
-avc:  denied  { name_connect } for  pid=6183 comm="puppetmasterd" dest=3000 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=system_u:object_r:ntop_port_t:s0 tclass=tcp_socket
-avc:  denied  { write } for  pid=6183 comm="puppetmasterd" name="mysql.sock" dev=vda1 ino=260680 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:mysqld_var_run_t:s0 tclass=sock_file
-avc:  denied  { getattr read open } for  pid=22059 comm="httpd.worker" path="/var/lib/puppet/ssl/certs/puppet.pem" dev=vda1 ino=13913 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+# Puppet Master files (SSL, reports, etc.)
+avc:  denied  { getattr read open write lock create setattr rename unlink } for  pid=22059 comm="httpd.worker" path="/var/lib/puppet/ssl/certs/puppet.pem" dev=vda1 ino=13913 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
+avc:  denied  { getattr read open write add_name create remove_name rmdir } for  pid=22791 comm="ruby" path="/var/lib/puppet/bucket" dev=vda1 ino=13886 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
+
 avc:  denied  { name_bind } for  pid=22108 comm="httpd.worker" src=8140 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_port_t:s0 tclass=tcp_socket
 avc:  denied  { read write } for  pid=22483 comm="PassengerHelper" path="/dev/pts/0" dev=devpts ino=3 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:user_devpts_t:s0 tclass=chr_file
 avc:  denied  { sigkill } for  pid=22480 comm="PassengerWatchd" scontext=unconfined_u:system_r:httpd_t:s0 tcontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tclass=process
-avc:  denied  { getattr } for  pid=22791 comm="ruby" path="/var/lib/puppet/bucket" dev=vda1 ino=13886 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
 avc:  denied  { search } for  pid=23577 comm="ruby" name="puppet" dev=vda1 ino=16805 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_run_t:s0 tclass=dir
 avc:  denied  { getattr } for  pid=23577 comm="ruby" path="/var/run/puppet" dev=vda1 ino=16805 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_run_t:s0 tclass=dir
 avc:  denied  { name_bind } for  pid=23592 comm="ruby" src=4917 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=udp_socket
 avc:  denied  { getattr } for  pid=23658 comm="ps" path="/proc/23650" dev=proc ino=1157979 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:initrc_t:s0 tclass=dir
 avc:  denied  { append } for  pid=23691 comm="PassengerHelper" path="/dev/pts/1" dev=devpts ino=4 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:object_r:user_devpts_t:s0 tclass=chr_file
-avc:  denied  { write } for  pid=23928 comm="ruby" name="node.yaml" dev=vda1 ino=17809 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
 avc:  denied  { name_connect } for  pid=23928 comm="ruby" dest=3000 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:ntop_port_t:s0 tclass=tcp_socket
 avc:  denied  { relabelfrom } for  pid=1354 comm="puppetmasterd" name="site.pp" dev=vda1 ino=18141 scontext=system_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:puppet_etc_t:s0 tclass=file
 avc:  denied  { read } for  pid=1764 comm="ifconfig" name="unix" dev=proc ino=4026531990 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:proc_net_t:s0 tclass=file
-avc:  denied  { write } for  pid=1763 comm="ruby" name="node.yaml" dev=vda1 ino=17809 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
 avc:  denied  { read open } for  pid=1769 comm="ps" name="stat" dev=proc ino=4026532016 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=file
 avc:  denied  { search getattr } for  pid=17243 comm="ps" name="17165" dev=proc ino=9797695 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:rpm_t:s0-s0:c0.c1023 tclass=dir
 avc:  denied  { read open } for  pid=7108 comm="ps" name="stat" dev=proc ino=9978154 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:rpm_t:s0-s0:c0.c1023 tclass=file
-avc:  denied  { lock } for  pid=1763 comm="ruby" path="/var/lib/puppet/yaml/node/node.yaml" dev=vda1 ino=18098 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
 avc:  denied  { getattr } for  pid=1907 comm="ps" path="/proc/3" dev=proc ino=7605 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dir
 avc:  denied  { getattr } for  pid=1942 comm="ps" path="/proc/1" dev=proc ino=18192 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:init_t:s0 tclass=dir
 avc:  denied  { search } for  pid=1942 comm="ps" name="2" dev=proc ino=18193 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dir
 avc:  denied  { read } for  pid=1989 comm="ps" name="stat" dev=proc ino=18237 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=file
 avc:  denied  { open } for  pid=2003 comm="ps" name="stat" dev=proc ino=18235 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=file
-avc:  denied  { read } for  pid=23124 comm="ruby" name="signed" dev=vda1 ino=13898 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
-avc:  denied  { open } for  pid=23124 comm="ruby" name="signed" dev=vda1 ino=13898 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
-avc:  denied  { write } for  pid=23124 comm="ruby" name="requests" dev=vda1 ino=13896 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
-avc:  denied  { add_name } for  pid=24448 comm="ruby" name="node.pem" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=dir
-avc:  denied  { create } for  pid=23124 comm="ruby" name="node.pem" scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_var_lib_t:s0 tclass=file
 avc:  denied  { setattr } for  pid=10393 comm="ruby" name="puppetmaster.log" dev=vda1 ino=18216 scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=file
 avc:  denied  { write } for  pid=27496 comm="ruby" name="puppet" dev=vda1 ino=16804 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=dir
 avc:  denied  { add_name } for  pid=27997 comm="ruby" name="masterhttp.log" scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:puppet_log_t:s0 tclass=dir
@@ -120,3 +105,11 @@ avc:  denied  { setattr } for  pid=18086 comm="ruby" name="puppet" dev=vda1 ino=
 avc:  denied  { getattr search } for  pid=28889 comm="ps" path="/proc/28888" dev=proc ino=9861663 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sysstat_t:s0-s0:c0.c1023 tclass=dir
 avc:  denied  { read open } for  pid=8723 comm="ps" name="stat" dev=proc ino=10393431 scontext=system_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:sysstat_t:s0-s0:c0.c1023 tclass=file
 avc:  denied  { getattr } for  pid=31973 comm="ps" path="/proc/30140" dev=proc ino=11133148 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:rpm_script_t:s0-s0:c0.c1023 tclass=dir
+# auditd
+avc:  denied  { getattr search } for  pid=13756 comm="ps" path="/proc/1091" dev=proc ino=10274 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:auditd_t:s0 tclass=dir
+avc:  denied  { read open } for  pid=14265 comm="ps" name="stat" dev=proc ino=825405 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=system_u:system_r:auditd_t:s0 tclass=file
+# PuppetDB
+avc:  denied  { getattr search } for  pid=13756 comm="ps" path="/proc/18772" dev=proc ino=907409 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:unconfined_java_t:s0 tclass=dir
+avc:  denied  { read open } for  pid=14262 comm="ps" name="stat" dev=proc ino=907453 scontext=unconfined_u:system_r:httpd_passenger_helper_t:s0 tcontext=unconfined_u:system_r:unconfined_java_t:s0 tclass=file
+# PuppetDB (tcp 8081)
+avc:  denied  { name_connect } for  pid=13056 comm="ruby" dest=8081 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:transproxy_port_t:s0 tclass=tcp_socket
