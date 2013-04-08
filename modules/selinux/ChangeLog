@@ -1,3 +1,5 @@
+* Add new dircontext definition, still a work in progress (Greg Anderson).
+
 2012-12-18 - 0.1.1
 * Add policycoreutils-restorecond package for recent Fedora versions.
 
