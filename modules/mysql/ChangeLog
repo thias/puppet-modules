@@ -1,3 +1,7 @@
+* Optimize the dump script.
+* Support creating the [mysql] section of the main my.cnf file.
+* Flatten mycnf_mysqld to allow nested arrays to be used.
+
 2012-09-19 - 0.2.0
 * Start cleaning up the module for forge inclusion.
 

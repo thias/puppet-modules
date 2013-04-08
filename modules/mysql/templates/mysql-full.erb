@@ -43,7 +43,7 @@ for database in `mysql --skip-column-names -e "show databases"`; do
     fi
     STARTTIME=`date +%s`
     echo -n "Performing MySQL database $database dump... "
-    mysqldump $database --skip-lock-tables | bzip2 -9 > ${DESTDIR}/$database/$database-${YYYYMMDD}.bz2
+    mysqldump $database --skip-lock-tables --single-transaction --no-autocommit | bzip2 -9 > ${DESTDIR}/$database/$database-${YYYYMMDD}.bz2
 
     # Get end time and size
     SIZE=`nice du -h ${DESTDIR}/$database/$database-${YYYYMMDD}.bz2 | cut -f1`

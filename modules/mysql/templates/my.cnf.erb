@@ -1,4 +1,11 @@
 # *** This my.cnf file is managed by Puppet, do not edit ***
+<% if @mycnf_mysql -%>
+
+[mysql]
+<% mycnf_mysql.flatten.each do |line| -%>
+<%= line %>
+<% end -%>
+<% end -%>
 
 [mysqld]
 datadir=/var/lib/mysql
@@ -8,7 +15,7 @@ user=mysql
 symbolic-links=0
 <% if !mycnf_mysqld.empty? -%>
 # Custom options passed in the puppet $mycnf_mysqld array
-<% mycnf_mysqld.each do |line| -%>
+<% mycnf_mysqld.flatten.each do |line| -%>
 <%= line %>
 <% end -%>
 <% end -%>

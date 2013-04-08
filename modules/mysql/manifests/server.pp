@@ -70,6 +70,7 @@ class mysql::server (
     $backup_minute = '30',
     $backup_keepdays = '5',
     $processorcount = $::processorcount,
+    $mycnf_mysql = undef,
     $mycnf_mysqld = [],
     $mycnf_content = undef,
     $mycnf_source = undef
