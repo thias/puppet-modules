@@ -18,3 +18,6 @@ avc:  denied  { execute } for  pid=12537 comm="MegaCli" path="/opt/lsi/3rdpartyl
 avc:  denied  { write add_name } for  pid=5537 comm="MegaCli" name="megaraid_sas_ioctl_node" dev=devtmpfs ino=4 scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=dir
 avc:  denied  { mknod } for  pid=6439 comm="MegaCli" capability=27  scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:system_r:nrpe_t:s0 tclass=capability
 avc:  denied  { create } for  pid=8122 comm="MegaCli" name="megaraid_sas_ioctl_node" scontext=system_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=chr_file
+# check_couchbase
+avc:  denied  { execute_no_trans } for  pid=4202 comm="cbstats" path="/opt/couchbase/lib/python/cbstats" dev=vda2 ino=13654 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:lib_t:s0 tclass=file
+avc:  denied  { name_connect } for  pid=4639 comm="python" dest=11219 scontext=unconfined_u:system_r:nrpe_t:s0 tcontext=system_u:object_r:port_t:s0 tclass=tcp_socket

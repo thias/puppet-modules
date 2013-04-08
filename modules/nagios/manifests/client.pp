@@ -127,7 +127,7 @@ class nagios::client (
     nagios::check::load { $host_name: }
     nagios::check::ping { $host_name: }
 
-    # With selinux, many nrpe plugins require additional rules to work
+    # With selinux, some nrpe plugins require additional rules to work
     if $selinux and $::selinux_enforced {
         selinux::audit2allow { 'nrpe':
             source => 'puppet:///modules/nagios/messages.nrpe',
