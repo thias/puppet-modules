@@ -1,0 +1,13 @@
+# User to run as. Default is root, to be able to listen on port 514.
+# If you will be using a port above 1024, then you may uncomment the following.
+#USER="graylog2"
+<% if @user -%>
+USER=<%= user %>
+<% end -%>
+
+# Options to pass to graylog2-server.jar.
+#OPTIONS="--debug"
+<% if @options -%>
+OPTIONS=<%= options %>
+<% end -%>
+

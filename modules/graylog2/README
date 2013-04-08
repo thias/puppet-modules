@@ -1,0 +1,10 @@
+# Overview
+
+Install, enable and configure graylog2.
+
+* `graylog2` : Class to install and enable the server
+
+# Example Usage
+
+You will need to open 12201/udp
+
