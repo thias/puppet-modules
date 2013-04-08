@@ -3,8 +3,9 @@
 # Manage Private Key Infrastructure (PKI) Transport Layer Security (TLS) files.
 #
 # Sample Usage :
+#  # Files would be inside mymodulename/templates/tlsfiles/
 #  tlsfile { 'www.example.com':
-#      srcdir => '/etc/puppet/files/tlsfiles',
+#      srcdir => 'mymodulename/tlsfiles',
 #  }
 #
 define tlsfiles (
