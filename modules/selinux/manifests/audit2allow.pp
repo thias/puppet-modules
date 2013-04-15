@@ -31,7 +31,7 @@ define selinux::audit2allow (
     } else {
         $messages_content = undef
         $messages_source  = $source ? {
-            false   => "puppet:///modules/selinux/messages.${title}",
+            false   => "puppet:///modules/${module_name}/messages.${title}",
             default => $source,
         }
     }

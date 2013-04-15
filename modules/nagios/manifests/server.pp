@@ -18,7 +18,7 @@ class nagios::server (
     ],
     # The apache config snippet, more useful as a template when using a custom
     $apache_httpd_conf_content    = template('nagios/apache_httpd/httpd-nagios.conf.erb'),
-    $apache_httpd_htpasswd_source = 'puppet:///modules/nagios/apache_httpd/htpasswd',
+    $apache_httpd_htpasswd_source = "puppet:///modules/${module_name}/apache_httpd/htpasswd",
     $php     = true,
     $php_apc = true,
     # cgi.cfg
@@ -422,7 +422,7 @@ class nagios::server (
     # With selinux, adjustements are needed for nagiosgraph
     if $selinux and $::selinux_enforced {
         selinux::audit2allow { 'nagios':
-            source => 'puppet:///modules/nagios/messages.nagios',
+            source => "puppet:///modules/${module_name}/messages.nagios",
         }
     }
 

@@ -130,7 +130,7 @@ class nagios::client (
     # With selinux, some nrpe plugins require additional rules to work
     if $selinux and $::selinux_enforced {
         selinux::audit2allow { 'nrpe':
-            source => 'puppet:///modules/nagios/messages.nrpe',
+            source => "puppet:///modules/${module_name}/messages.nrpe",
         }
     }
 

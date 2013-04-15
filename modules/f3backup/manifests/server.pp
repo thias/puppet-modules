@@ -65,7 +65,7 @@ class f3backup::server (
     }
     # Make ssh connections "relaxed" so that things work automatically
     file { "${backup_home}/.ssh/config":
-        source  => 'puppet:///modules/f3backup/ssh-config',
+        source  => "puppet:///modules/${module_name}/ssh-config",
         owner   => 'backup',
         group   => 'backup',
         mode    => '0600',
@@ -88,7 +88,7 @@ class f3backup::server (
     # The main backup script
     package { 'python-paramiko': ensure => installed }
     file { '/usr/local/bin/f3backup':
-        source  => 'puppet:///modules/f3backup/f3backup',
+        source  => "puppet:///modules/${module_name}/f3backup",
         mode    => '0755',
         require => Package['python-paramiko'],
     }
@@ -98,7 +98,7 @@ class f3backup::server (
         content => template('f3backup/f3backup.ini.erb'),
     }
     file { '/etc/f3backup-exclude.txt':
-        source  => 'puppet:///modules/f3backup/f3backup-exclude.txt',
+        source  => "puppet:///modules/${module_name}/f3backup-exclude.txt",
     }
 
     # The cron job to start it all

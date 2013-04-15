@@ -29,7 +29,7 @@ class percona::yumrepo ( $ensure = 'present' ) {
         owner  => 'root',
         group  => 'root',
         mode   => '0644',
-        source => 'puppet:///modules/percona/RPM-GPG-KEY-percona',
+        source => "puppet:///modules/${module_name}/RPM-GPG-KEY-percona",
         ensure => $ensure,
     }
 

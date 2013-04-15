@@ -7,7 +7,7 @@
 #    Whether yum-cron should be 'present' or 'absent'. Defaults to 'present'.
 #  $script_source:
 #    Puppet source to use for the /usr/local/sbin/yum-cron script.
-#    Default: 'puppet:///modules/rhel/yum-cron'
+#    Default: "puppet:///modules/${module_name}/yum-cron"
 #  $cron_command:
 #    The command to be executed from cron. Default: '/usr/local/sbin/yum-cron'
 #  $cron_user,
@@ -29,7 +29,7 @@
 #  }
 #
 class rhel::yum-cron (
-    $script_source    = 'puppet:///modules/rhel/yum-cron',
+    $script_source    = "puppet:///modules/${module_name}/yum-cron",
     $cron_command     = '/usr/local/sbin/yum-cron',
     $cron_user        = 'root',
     $cron_hour        = '10',

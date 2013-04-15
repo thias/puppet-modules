@@ -99,7 +99,7 @@ class moxi (
             owner  => 'bin',
             group  => 'bin',
             mode   => '0755',
-            source => 'puppet:///modules/moxi/moxi-init.d',
+            source => "puppet:///modules/${module_name}/moxi-init.d",
             before => Service['moxi-server'],
         }
     }

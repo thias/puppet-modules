@@ -21,7 +21,7 @@ class ipset::base inherits ipset::params {
         owner  => 'root',
         group  => 'root',
         mode   => '0755',
-        source => 'puppet:///modules/ipset/ipset_from_file',
+        source => "puppet:///modules/${module_name}/ipset_from_file",
     }
 
 }
