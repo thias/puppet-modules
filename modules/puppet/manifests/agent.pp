@@ -107,7 +107,7 @@ class puppet::agent (
             if $puppet_noop { $cmd_noop = ' --noop' } else { $cmd_noop = '' }
             # We might not care about the output when we have a Dashboard
             if $cron_silent {
-                $cron_command = "/usr/local/sbin/repuppet${cmd_noop} >/dev/null"
+                $cron_command = "/usr/local/sbin/repuppet${cmd_noop} &>/dev/null"
             } else {
                 $cron_command = '/usr/local/sbin/cron-repuppet'
                 file { '/usr/local/sbin/cron-repuppet':
