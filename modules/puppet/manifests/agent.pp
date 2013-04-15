@@ -20,7 +20,7 @@
 #
 class puppet::agent (
     $service            = true,
-    $sysconfig          = true,
+    $sysconfig          = $::puppet::params::sysconfig,
     $master             = $::puppetmaster,
     # Simple hourly cron job, only if the service is disabled
     $cron_enable        = false,
@@ -39,7 +39,7 @@ class puppet::agent (
     $puppet_port        = '8140',
     $puppet_log         = '/var/log/puppet/puppet.log',
     $puppet_extra_opts  = '--waitforcert=500'
-) {
+) inherits puppet::params {
 
     include puppet::common
 

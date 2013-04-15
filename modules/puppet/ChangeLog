@@ -1,7 +1,10 @@
+2013-04-15 - 0.5.0
 * Split out the catpuppetconf into a common class, to fix logic.
 * Clean up the master parameters by defaulting most to undef.
 * Add missing /etc/puppet/rack content when enabling passenger.
 * Silence stderr too from cron, to avoid puppet 3.x error emails.
+* Disable waitforcert in repuppet since it must be off for cron runs.
+* Configure sysconfig automatically in a new params class.
 
 2012-09-19 - 0.4.1
 * Add some more AVC lines to be allowed for passenger puppetmaster.
