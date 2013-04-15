@@ -75,7 +75,7 @@ class puppet::master (
             }
             if $selinux and $::selinux_enforced {
                 selinux::audit2allow { 'puppetservice':
-                    source => 'puppet:///modules/puppet/messages.puppetservice',
+                    source => "puppet:///modules/${module_name}/messages.puppetservice",
                 }
             }
         }
@@ -122,11 +122,11 @@ class puppet::master (
                 owner  => 'puppet',
                 group  => 'puppet',
                 mode   => '0644',
-                source => 'puppet:///modules/puppet/config.ru',
+                source => "puppet:///modules/${module_name}/config.ru",
             }
             if $selinux and $::selinux_enforced {
                 selinux::audit2allow { 'puppetpassenger':
-                    source => 'puppet:///modules/puppet/messages.puppetpassenger',
+                    source => "puppet:///modules/${module_name}/messages.puppetpassenger",
                 }
             }
         }
