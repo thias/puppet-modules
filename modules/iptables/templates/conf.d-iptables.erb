@@ -2,10 +2,10 @@
 
 # Location in which iptables initscript will save set rules on 
 # service shutdown
-IPTABLES_SAVE="<%= iptables_save %>"
+IPTABLES_SAVE="<%= @iptables_save %>"
 
 # Options to pass to iptables-save and iptables-restore 
-SAVE_RESTORE_OPTIONS="<%= save_restore_options %>"
+SAVE_RESTORE_OPTIONS="<%= @save_restore_options %>"
 
 # Save state on stopping iptables
-SAVE_ON_STOP="<%= save_on_stop %>"
+SAVE_ON_STOP="<%= @save_on_stop %>"

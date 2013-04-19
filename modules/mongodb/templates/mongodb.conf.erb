@@ -1,15 +1,15 @@
 # mongodb.conf
 
 #where to log
-logpath=<%= logpath %>
+logpath=<%= @logpath %>
 
 # fork and run in background
 fork = true
 
-bind_ip = <%= bind_ip %>
-port = <%= port %>
+bind_ip = <%= @bind_ip %>
+port = <%= @port %>
 
-dbpath=<%= dbpath %>
+dbpath=<%= @dbpath %>
 
 pidfilepath=/var/run/mongodb/mongodb.pid
 
@@ -18,14 +18,14 @@ pidfilepath=/var/run/mongodb/mongodb.pid
 
 # Turn on/off security.  Off is currently the default
 #noauth = true
-<% if auth == 'true' -%>
+<% if @auth == 'true' -%>
 auth = true
 <% else -%>
 #auth = true
 <% end -%>
 
 # Verbose logging output.
-<% if verbose == 'true' -%>
+<% if @verbose == 'true' -%>
 verbose = true
 <% else -%>
 #verbose = true
@@ -33,14 +33,14 @@ verbose = true
 
 # Inspect all client data for validity on receipt (useful for
 # developing drivers)
-<% if objcheck == 'true' -%>
+<% if @objcheck == 'true' -%>
 objcheck = true
 <% else -%>
 #objcheck = true
 <% end -%>
 
 # Enable db quota management
-<% if quota == 'true' -%>
+<% if @quota == 'true' -%>
 quota = true
 <% else -%>
 #quota = true
@@ -52,8 +52,8 @@ quota = true
 #   2=R
 #   3=both
 #   7=W+some reads
-<% if oplog != '0' -%>
-oplog = <%= oplog %>
+<% if @oplog != '0' -%>
+oplog = <%= @oplog %>
 <% else -%>
 #oplog = 0
 <% end -%>
@@ -92,10 +92,10 @@ oplog = <%= oplog %>
 # Replication Options
 
 # in replicated mongo databases, specify here whether this is a slave or master
-<% if slave == 'true' -%>
-slave = <%= slave %>
+<% if @slave == 'true' -%>
+slave = <%= @slave %>
 <% if @source -%>
-source = <%= source %>
+source = <%= @source %>
 <% else -%>
 #source = master.example.com
 <% end -%>
@@ -104,16 +104,16 @@ source = <%= source %>
 #source = master.example.com
 <% end -%>
 # Slave only: specify a single database to replicate
-<% if slave == 'true' and @only -%>
-only = <%= only %>
+<% if @slave == 'true' and @only -%>
+only = <%= @only %>
 <% else -%>
 #only = master.example.com
 <% end -%>
 # or
-<% if master == 'true' -%>
-master = <%= master %>
+<% if @master == 'true' -%>
+master = <%= @master %>
 <% if @source -%>
-source = <%= source %>
+source = <%= @source %>
 <% else -%>
 #source = slave.example.com
 <% end -%>
@@ -124,43 +124,43 @@ source = <%= source %>
 
 # Address of a server to pair with.
 <% if @pairwith -%>
-pairwith = <%= pairwith %>
+pairwith = <%= @pairwith %>
 <% else -%>
 #pairwith = <server:port>
 <% end -%>
 # Address of arbiter server.
 <% if @arbiter -%>
-arbiter = <%= arbiter %>
+arbiter = <%= @arbiter %>
 <% else -%>
 #arbiter = <server:port>
 <% end -%>
 # Automatically resync if slave data is stale
 <% if @autoresync -%>
-autoresync = <%= autoresync %>
+autoresync = <%= @autoresync %>
 <% else -%>
 #autoresync
 <% end -%>
 # Custom size for replication operation log.
 <% if @oplogSize -%>
-oplogSize = <%= oplogSize %>
+oplogSize = <%= @oplogSize %>
 <% else -%>
 #oplogSize = <MB>
 <% end -%>
 # Size limit for in-memory storage of op ids.
 <% if @opIdMem -%>
-opIdMem = <%= opIdMem %>
+opIdMem = <%= @opIdMem %>
 <% else -%>
 #opIdMem = <bytes>
 <% end -%>
 <% if @rest -%>
-rest = <%= rest %>
+rest = <%= @rest %>
 <% end -%>
 <% if @replSet -%>
-replSet = <%= replSet %>
+replSet = <%= @replSet %>
 <% end -%>
 <% if @keyFile -%>
-keyFile = <%= keyFile %>
+keyFile = <%= @keyFile %>
 <% end -%>
 <% if @smallfiles -%>
-smallfiles = <%= smallfiles %>
+smallfiles = <%= @smallfiles %>
 <% end -%>

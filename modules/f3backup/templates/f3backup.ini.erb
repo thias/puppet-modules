@@ -4,10 +4,10 @@
 
 [default]
 ; Where to store the backups
-backupdir = <%= backup_home %>/f3backup
+backupdir = <%= @backup_home %>/f3backup
 
 ; Number of threads
-threads = <%= threads %>
+threads = <%= @threads %>
 
 ; Default priority (lower value means higher priority)
 priority = 10
@@ -17,41 +17,41 @@ logdir = /var/log/f3backup
 
 ; Prefix to prepend to the node log file names. Can use python strftime values:
 ; http://docs.python.org/library/time.html#time.strftime
-lognameprefix = <%= lognameprefix %>
+lognameprefix = <%= @lognameprefix %>
 
 ; Different types of backup. Will be done in the same order as specified here.
 ; Valid options: rdiff-backup, mysql, command
-backups = <% if backup_rdiff %>rdiff-backup, <% end %><% if backup_mysql %>mysql, <% end %><% if backup_command %>command<% end %>
-<% if backup_rdiff -%>
+backups = <% if @backup_rdiff %>rdiff-backup, <% end %><% if @backup_mysql %>mysql, <% end %><% if @backup_command %>command<% end %>
+<% if @backup_rdiff -%>
 
 [rdiff-backup]
 ; Files containing exclusion lists. The global is for all nodes.
 ; If multiple files are specified, they should be comma separated.
 ; Some tags can be used:
 ;   %server% : hostname
-global-exclude-file = <%= rdiff_global_exclude_file %>
+global-exclude-file = <%= @rdiff_global_exclude_file %>
 exclude-file =
-user = <%= rdiff_user %>
-path = <%= rdiff_path %>
+user = <%= @rdiff_user %>
+path = <%= @rdiff_path %>
 
 ; Optional extra parameters for rdiff-backup
-extra-parameters = <%= rdiff_extra_parameters %>
+extra-parameters = <%= @rdiff_extra_parameters %>
 
 ; How long backups are going to be kept
-keep = <%= rdiff_keep %>
+keep = <%= @rdiff_keep %>
 <% end -%>
-<% if backup_mysql -%>
+<% if @backup_mysql -%>
 
 [mysql]
 ; ssh user to connect for running the backup
-sshuser =  <%= mysql_sshuser %>
+sshuser =  <%= @mysql_sshuser %>
 ; ssh private key to be used
-sshkey = <%= backup_home %>/<%= mysql_sshkey %>
+sshkey = <%= @backup_home %>/<%= @mysql_sshkey %>
 <% end -%>
-<% if backup_command -%>
+<% if @backup_command -%>
 
 [command]
 ; Run a specific command on the backup server after the backup has finished
-command = <%= command_to_execute %>
+command = <%= @command_to_execute %>
 <% end -%>
 

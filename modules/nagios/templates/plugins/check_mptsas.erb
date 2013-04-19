@@ -23,7 +23,7 @@ use strict;
 use lib qw(<%= scope.lookupvar('nagios::client::plugin_dir') %>);
 use utils qw(%ERRORS);
 
-my $lsiutil = '<%= lsiutilbin %>';
+my $lsiutil = '<%= @lsiutilbin %>';
 my $status = $ERRORS{'OK'};
 my $output;
 my @controllers;

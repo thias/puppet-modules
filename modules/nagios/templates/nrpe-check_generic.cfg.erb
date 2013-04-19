@@ -1,2 +1,2 @@
-# Configuration for <%= title %> (from the generic template)
-command[<%= command %>]=<% if sudo %>sudo <% end %><%= scope.lookupvar('nagios::client::plugin_dir') %>/<%= plugin %><% if args %> <%= args %><% end %>
+# Configuration for <%= @title %> (from the generic template)
+command[<%= @command %>]=<% if @sudo %>sudo <% end %><%= scope.lookupvar('nagios::client::plugin_dir') %>/<%= @plugin %><% if @args %> <%= @args %><% end %>

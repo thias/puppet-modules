@@ -2,10 +2,10 @@
 
 // The prefix portion that we will match on
 //prefix=2a01:0123:4567:89aa:
-prefix=<%= prefix %>
+prefix=<%= @prefix %>
 
 // Which interface are we monitoring and using?
-interface = <%= interface %>
+interface = <%= @interface %>
 
 //**********************************
 //*** Black/Whitelisting ***********
@@ -21,11 +21,11 @@ interface = <%= interface %>
 //
 // listtype should be one of 'none', 'white' or 'black'
 // Must also precede the addrlist= items below.
-listtype = <%= listtype %>
+listtype = <%= @listtype %>
 //listtype = black
 //addrlist = 2a01:0123:4567:89aa:aaaa:bbbb:cccc:dddd
 //addrlist = 2a01:123:4567:89aa:dead:beef:dead:beef
-<% addrlist.each do |addr| -%>
+<% @addrlist.each do |addr| -%>
 addrlist = <%= addr %>
 <% end -%>
 //.
@@ -41,22 +41,22 @@ addrlist = <%= addr %>
 
 // Collect target data up to this many targets. Data can be
 // subsequently dumped via a USR2. 0 to disable.
-collectTargets = <%= collecttargets %>
+collectTargets = <%= @collecttargets %>
 
 // Set to 'false' to disable target link-layer option
 // on replies to unicasted NS
-linkOption = <%= linkoption %>
+linkOption = <%= @linkoption %>
 
 // If we rx NS for the local interface, if this option true
 // we ignore it (and let the kernel reply itself)
-ignoreLocal = <%= ignorelocal %>
+ignoreLocal = <%= @ignorelocal %>
 
 // Normally outbound NAs will have ROUTER flag set.
 // Can be disabled here.
-routerNA = <%= routerna %>
+routerNA = <%= @routerna %>
 
 // Normally set to max of 255. if wrong, NAs may be siltenyl ignored!
-maxHops = <%= maxhops %>
+maxHops = <%= @maxhops %>
 
 // $HeadURL: https://npd6.googlecode.com/svn/trunk/etc/npd6.conf $
 // $Id: npd6.conf 86 2012-03-01 11:35:23Z npd6Project $

@@ -43,7 +43,7 @@ class MembaseStats():
                              "ep_expired": {"description": "Number of times an item was expired", "unit": "", "type": "cumulative", "name": "expired_items"},
                              }
     
-    data_file_name = "<%= membase_data_file_name %>"
+    data_file_name = "<%= @membase_data_file_name %>"
     prev_stats = {}
     d_stats = {}
     list = False
@@ -80,7 +80,7 @@ class MembaseStats():
     
     def get_status(self):
         #str_stats = subprocess.Popen("/opt/membase/bin/ep_engine/management/stats 127.0.0.1:11210 all",
-        str_stats = subprocess.Popen("<%= membase_mbstats %> <%= membase_host %>:<%= membase_port %> all",
+        str_stats = subprocess.Popen("<%= @membase_mbstats %> <%= @membase_host %>:<%= @membase_port %> all",
                                      shell = True, stdout=subprocess.PIPE).communicate()[0]
         stats = str_stats.split('\n')
         for i in range(len(stats) - 1):

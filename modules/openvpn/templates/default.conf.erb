@@ -1,19 +1,19 @@
-dev <%= dev %>
-remote <%= remote %>
-<% if float -%>
+dev <%= @dev %>
+remote <%= @remote %>
+<% if @float -%>
 float
 <% end -%>
-# Local  : <%= ipaddress_local %>
-# Remote : <%= ipaddress_remote %>
-ifconfig <%= ipaddress_local %> <%= ipaddress_remote %>
-<% if !routes.empty? -%>
+# Local  : <%= @ipaddress_local %>
+# Remote : <%= @ipaddress_remote %>
+ifconfig <%= @ipaddress_local %> <%= @ipaddress_remote %>
+<% if !@routes.empty? -%>
 # Static routes
 <% routes.each do |route| -%>
 route <%= route %>
 <% end -%>
 <% end -%>
-secret <%= secret %>
-port <%= port %>
+secret <%= @secret %>
+port <%= @port %>
 
 comp-lzo
 user openvpn

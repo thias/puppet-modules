@@ -22,7 +22,7 @@ fi
 V=$(basename $(uname -r) .$(uname -m))
 
 # Format string to use
-STRING="<%= format_string %>"
+STRING="<%= @format_string %>"
 
 # Check for linux_logo first
 [ -x /usr/bin/linux_logo ] || exit 1

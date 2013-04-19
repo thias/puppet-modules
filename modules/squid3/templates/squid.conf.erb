@@ -779,10 +779,10 @@ http_access deny CONNECT !SSL_ports
 #
 # INSERT YOUR OWN RULE(S) HERE TO ALLOW ACCESS FROM YOUR CLIENTS
 #
-<% acl.each do |line| -%>
+<% @acl.each do |line| -%>
 acl <%= line %>
 <% end -%>
-<% http_access.each do |line| -%>
+<% @http_access.each do |line| -%>
 http_access <%= line %>
 <% end -%>
 
@@ -839,7 +839,7 @@ http_access deny all
 ##icp_access deny all
 #Default:
 # icp_access deny all
-<% icp_access.each do |line| -%>
+<% @icp_access.each do |line| -%>
 icp_access <%= line %>
 <% end -%>
 
@@ -1081,7 +1081,7 @@ icp_access <%= line %>
 #
 
 # Squid normally listens to port 3128
-<% http_port.each do |line| -%>
+<% @http_port.each do |line| -%>
 http_port <%= line %>
 <% end -%>
 
@@ -1335,7 +1335,7 @@ http_port <%= line %>
 #
 #Default:
 # none
-<% tcp_outgoing_address.each do |line| -%>
+<% @tcp_outgoing_address.each do |line| -%>
 tcp_outgoing_address <%= line %>
 <% end -%>
 
@@ -1923,8 +1923,8 @@ hierarchy_stoplist cgi-bin ?
 #	objects.
 #Default:
 # cache_mem 256 MB
-<% if cache_mem != "256 MB" -%>
-cache_mem <%= cache_mem %>
+<% if @cache_mem != "256 MB" -%>
+cache_mem <%= @cache_mem %>
 <% end -%>
 
 #  TAG: maximum_object_size_in_memory	(bytes)
@@ -2090,7 +2090,7 @@ cache_mem <%= cache_mem %>
 
 # Uncomment and adjust the following to add a disk cache directory.
 #cache_dir ufs /var/spool/squid 100 16 256
-<% cache_dir.each do |line| -%>
+<% @cache_dir.each do |line| -%>
 cache_dir <%= line %>
 <% end -%>
 
@@ -2310,7 +2310,7 @@ cache_dir <%= line %>
 #		access_log /var/log/squid/access.log squid
 #Default:
 # access_log /var/log/squid/access.log squid
-<% access_log.each do |line| -%>
+<% @access_log.each do |line| -%>
 access_log <%= line %>
 <% end -%>
 
@@ -2419,8 +2419,8 @@ access_log <%= line %>
 #		cache_store_log /var/log/squid/store.log
 #Default:
 # none
-<% if cache_store_log != "/var/log/squid/store.log" -%>
-cache_store_log <%= cache_store_log %>
+<% if @cache_store_log != "/var/log/squid/store.log" -%>
+cache_store_log <%= @cache_store_log %>
 <% end -%>
 
 #  TAG: cache_swap_state
@@ -2587,8 +2587,8 @@ cache_store_log <%= cache_store_log %>
 #	logged to this file and how often its rotated with "debug_options"
 #Default:
 # cache_log /var/log/squid/cache.log
-<% if cache_log != "/var/log/squid/cache.log" -%>
-cache_log <%= cache_log %>
+<% if @cache_log != "/var/log/squid/cache.log" -%>
+cache_log <%= @cache_log %>
 <% end -%>
 
 #  TAG: debug_options
@@ -2840,7 +2840,7 @@ coredump_dir /var/spool/squid
 #	See http://wiki.squid-cache.org/SquidFaq/SquidAcl for details.
 #Default:
 # none
-<% cache.each do |line| -%>
+<% @cache.each do |line| -%>
 cache <%= line %>
 <% end -%>
 
@@ -3163,8 +3163,8 @@ refresh_pattern .		0	20%	4320
 #	replies as required by RFC2616.
 #Default:
 # via on
-<% if via != "on" -%>
-via <%= via %>
+<% if @via != "on" -%>
+via <%= @via %>
 <% end -%>
 
 #  TAG: ie_refresh	on|off
@@ -3390,8 +3390,8 @@ via <%= via %>
 #	not handle it well..
 #Default:
 # ignore_expect_100 off
-<% if ignore_expect_100 != "off" -%>
-ignore_expect_100 <%= ignore_expect_100 %>
+<% if @ignore_expect_100 != "off" -%>
+ignore_expect_100 <%= @ignore_expect_100 %>
 <% end -%>
 
 # TIMEOUTS
@@ -3505,8 +3505,8 @@ ignore_expect_100 <%= ignore_expect_100 %>
 #	mail if the cache dies.  The default is "root."
 #Default:
 # cache_mgr root 
-<% if cache_mgr != "root" -%>
-cache_mgr <%= cache_mgr %>
+<% if @cache_mgr != "root" -%>
+cache_mgr <%= @cache_mgr %>
 <% end -%>
 
 #  TAG: mail_from
@@ -3995,11 +3995,11 @@ cache_mgr <%= cache_mgr %>
 #Default:
 # client_persistent_connections on
 # server_persistent_connections on
-<% if client_persistent_connections != 'on' -%>
-client_persistent_connections <%= client_persistent_connections %>
+<% if @client_persistent_connections != 'on' -%>
+client_persistent_connections <%= @client_persistent_connections %>
 <% end -%>
-<% if server_persistent_connections != 'on' -%>
-server_persistent_connections <%= server_persistent_connections %>
+<% if @server_persistent_connections != 'on' -%>
+server_persistent_connections <%= @server_persistent_connections %>
 <% end -%>
 
 #  TAG: persistent_connection_after_error
@@ -5304,8 +5304,8 @@ server_persistent_connections <%= server_persistent_connections %>
 #	X-Forwarded-For entries, and place itself as the sole entry.
 #Default:
 # forwarded_for on
-<% if forwarded_for != "on" -%>
-forwarded_for <%= forwarded_for %>
+<% if @forwarded_for != "on" -%>
+forwarded_for <%= @forwarded_for %>
 <% end -%>
 
 #  TAG: cachemgr_passwd

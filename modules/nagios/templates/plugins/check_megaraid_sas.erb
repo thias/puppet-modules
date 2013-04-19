@@ -49,7 +49,7 @@ if ( $opt_h ) {
 	exit;
 }
 
-my $megaclibin = '<%= megaclibin %>';  # the full path to your MegaCli binary
+my $megaclibin = '<%= @megaclibin %>';  # the full path to your MegaCli binary
 my $megacli = "sudo $megaclibin";      # how we actually call MegaCli
 my $megapostopt = '-NoLog';            # additional options to call at the end of MegaCli arguments
 

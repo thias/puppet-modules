@@ -8,24 +8,24 @@
 #
 
 [global]
-	workgroup = <%= workgroup %>
-	server string = <%= server_string %>
-<% if !netbios_name.empty? -%>
-	netbios name = <%= netbios_name %>
+	workgroup = <%= @workgroup %>
+	server string = <%= @server_string %>
+<% if !@netbios_name.empty? -%>
+	netbios name = <%= @netbios_name %>
 <% end -%>
-<% if !interfaces.empty? -%>
-	interfaces = <%= interfaces.join(' ') %>
+<% if !@interfaces.empty? -%>
+	interfaces = <%= @interfaces.join(' ') %>
 <% end -%>
-<% if !hosts_allow.empty? -%>
-	hosts allow = <%= hosts_allow.join(' ') %>
+<% if !@hosts_allow.empty? -%>
+	hosts allow = <%= @hosts_allow.join(' ') %>
 <% end -%>
-	log file = <%= log_file %>
-	max log size = <%= max_log_size %>
-	security = <%= security %>
+	log file = <%= @log_file %>
+	max log size = <%= @max_log_size %>
+	security = <%= @security %>
 <% if @map_to_guest -%>
-	map to guest = <%= map_to_guest %>
+	map to guest = <%= @map_to_guest %>
 <% end -%>
-	passdb backend = <%= passdb_backend %>
+	passdb backend = <%= @passdb_backend %>
 <% if @domain_master -%>
 	domain master = yes 
 <% end -%>
@@ -41,11 +41,11 @@
 <% if @preferred_master -%>
 	preferred master = <%= @preferred_master %>
 <% end -%>
-<% extra_global_options.each do |line| -%>
+<% @extra_global_options.each do |line| -%>
 	<%= line %>
 <% end -%>
 
-<% shares.sort_by {|key, value| key}.each do |key,value| -%>
+<% @shares.sort_by {|key, value| key}.each do |key,value| -%>
 [<%= key %>]
 <% value.each do |line| -%>
 	<%= line %>

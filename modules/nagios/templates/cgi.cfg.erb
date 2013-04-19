@@ -116,7 +116,7 @@ use_ssl_authentication=0
 # not use authorization.  You may use an asterisk (*) to
 # authorize any user who has authenticated to the web server.
 
-authorized_for_system_information=<%= cgi_authorized_for_system_information %>
+authorized_for_system_information=<%= @cgi_authorized_for_system_information %>
 
 
 
@@ -128,7 +128,7 @@ authorized_for_system_information=<%= cgi_authorized_for_system_information %>
 # an asterisk (*) to authorize any user who has authenticated
 # to the web server.
 
-authorized_for_configuration_information=<%= cgi_authorized_for_configuration_information %>
+authorized_for_configuration_information=<%= @cgi_authorized_for_configuration_information %>
 
 
 
@@ -141,7 +141,7 @@ authorized_for_configuration_information=<%= cgi_authorized_for_configuration_in
 # You may use an asterisk (*) to authorize any user who has
 # authenticated to the web server.
 
-authorized_for_system_commands=<%= cgi_authorized_for_system_commands %>
+authorized_for_system_commands=<%= @cgi_authorized_for_system_commands %>
 
 
 
@@ -154,8 +154,8 @@ authorized_for_system_commands=<%= cgi_authorized_for_system_commands %>
 # to authorize any user who has authenticated to the web server.
 
 
-authorized_for_all_services=<%= cgi_authorized_for_all_services %>
-authorized_for_all_hosts=<%= cgi_authorized_for_all_hosts %>
+authorized_for_all_services=<%= @cgi_authorized_for_all_services %>
+authorized_for_all_hosts=<%= @cgi_authorized_for_all_hosts %>
 
 
 
@@ -168,8 +168,8 @@ authorized_for_all_hosts=<%= cgi_authorized_for_all_hosts %>
 # authorization).  You may use an asterisk (*) to authorize any
 # user who has authenticated to the web server.
 
-authorized_for_all_service_commands=<%= cgi_authorized_for_all_service_commands %>
-authorized_for_all_host_commands=<%= cgi_authorized_for_all_host_commands %>
+authorized_for_all_service_commands=<%= @cgi_authorized_for_all_service_commands %>
+authorized_for_all_host_commands=<%= @cgi_authorized_for_all_host_commands %>
 
 
 
@@ -225,7 +225,7 @@ authorized_for_all_host_commands=<%= cgi_authorized_for_all_host_commands %>
 #       4 = Circular
 #       5 = Circular (Marked Up)
 
-default_statusmap_layout=<%= cgi_default_statusmap_layout %>
+default_statusmap_layout=<%= @cgi_default_statusmap_layout %>
 
 
 

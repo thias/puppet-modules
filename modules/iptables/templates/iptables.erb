@@ -9,94 +9,94 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :CLOSED - [0:0]
-<% chains_filter.sort_by {|key,value| key}.each do |key,value| -%>
+<% @chains_filter.sort_by {|key,value| key}.each do |key,value| -%>
 :<%= key %> - [0:0]
 <% end -%>
-<% if knock -%>
+<% if @knock -%>
 :KNOCK-INPUT - [0:0]
 :KNOCK-MAIN - [0:0]
 <% end -%>
 -A INPUT -i lo -j ACCEPT
-<% if protectpriv -%>
+<% if @protectpriv -%>
 # Drop "private" packets arriving on the public interface
 # (we don't want to be doing that if we only have a single private interface!)
--A INPUT -i <%= ethpub -%> -s 10.0.0.0/8 -j DROP
--A INPUT -i <%= ethpub -%> -s 172.16.0.0/12 -j DROP
--A INPUT -i <%= ethpub -%> -s 192.168.0.0/16 -j DROP
+-A INPUT -i <%= @ethpub -%> -s 10.0.0.0/8 -j DROP
+-A INPUT -i <%= @ethpub -%> -s 172.16.0.0/12 -j DROP
+-A INPUT -i <%= @ethpub -%> -s 192.168.0.0/16 -j DROP
 <% end -%>
-<% raw_rules_filter.each do |line| -%>
+<% @raw_rules_filter.each do |line| -%>
 <%= line %>
 <% end -%>
-<% if !vrrp.empty? -%>
-<% vrrp.each do |int| -%>
+<% if !@vrrp.empty? -%>
+<% @vrrp.each do |int| -%>
 -A INPUT -i <%= int -%> -p vrrp -j ACCEPT
 <% end -%>
 <% end -%>
-<% if ospf -%>
-<% ospf.each do |int| -%>
+<% if @ospf -%>
+<% @ospf.each do |int| -%>
 -A INPUT -i <%= int %> -p ospf -j ACCEPT
 <% end -%>
 <% end -%>
-<% tcpports.each do |port| -%>
+<% @tcpports.each do |port| -%>
 -A INPUT -p tcp -m tcp --dport <%= port %> -j ACCEPT
 <% end -%>
-<% srctcpports.sort_by {|key, value| key}.each do |key,value| -%>
+<% @srctcpports.sort_by {|key, value| key}.each do |key,value| -%>
 <% value.each do |src| -%>
 -A INPUT -p tcp -m tcp -s <%= src %> --dport <%= key %> -j ACCEPT
 <% end -%>
 <% end -%>
-<% srcudpports.sort_by {|key, value| key}.each do |key,value| -%>
+<% @srcudpports.sort_by {|key, value| key}.each do |key,value| -%>
 <% value.each do |src| -%>
 -A INPUT -p udp -m udp -s <%= src %> --dport <%= key %> -j ACCEPT
 <% end -%>
 <% end -%>
-<% udpports.each do |port| -%>
+<% @udpports.each do |port| -%>
 -A INPUT -p udp -m udp --dport <%= port %> -j ACCEPT
 <% end -%>
-<% lsnraddrs.each do |lsnraddr| -%>
+<% @lsnraddrs.each do |lsnraddr| -%>
 -A INPUT -s <%= lsnraddr %> -p tcp -m tcp --dport 1521:1531 -j ACCEPT
 <% end -%>
-<% sipaddrs.each do |sipaddr| -%>
+<% @sipaddrs.each do |sipaddr| -%>
 -A INPUT -s <%= sipaddr %> -p udp -m udp --dport 5060 -j ACCEPT
 <% end -%>
-<% privtcpports.each do |port| -%>
--A INPUT -i <%= ethpriv %> -p tcp -m tcp --dport <%= port %> -j ACCEPT
+<% @privtcpports.each do |port| -%>
+-A INPUT -i <%= @ethpriv %> -p tcp -m tcp --dport <%= port %> -j ACCEPT
 -A INPUT -i tun+ -p tcp -m tcp --dport <%= port %> -j ACCEPT
 <% end -%>
-<% privudpports.each do |port| -%>
--A INPUT -i <%= ethpriv %> -p udp -m udp --dport <%= port %> -j ACCEPT
+<% @privudpports.each do |port| -%>
+-A INPUT -i <%= @ethpriv %> -p udp -m udp --dport <%= port %> -j ACCEPT
 -A INPUT -i tun+ -p udp -m udp --dport <%= port %> -j ACCEPT
 <% end -%>
-<% if hosts_ssh -%>
+<% if @hosts_ssh -%>
 # Accept ssh connections from a limited number of networks
-<% hosts_ssh.each do |host| -%>
+<% @hosts_ssh.each do |host| -%>
 -A INPUT -s <%= host %> -p tcp -m tcp --dport 22 -j ACCEPT
 <% end -%>
 <% end -%>
-<% if hosts_nrpe -%>
+<% if @hosts_nrpe -%>
 # Accept nrpe connections from the nagios server
-<% hosts_nrpe.each do |host| -%>
+<% @hosts_nrpe.each do |host| -%>
 -A INPUT -s <%= host %> -p tcp -m tcp --dport 5666 -j ACCEPT
 <% end -%>
 <% end -%>
-<% if hosts_snmp -%>
+<% if @hosts_snmp -%>
 # Accept snmp connections from the main graphing server + LANs
-<% hosts_snmp.each do |host| -%>
+<% @hosts_snmp.each do |host| -%>
 -A INPUT -s <%= host %> -p udp -m udp --dport 161 -j ACCEPT
 <% end -%>
 <% end -%>
-<% if openvpn -%>
+<% if @openvpn -%>
 # Accept OpenVPN connections from a limited number of networks
-<% openvpn_host.each do |host| -%>
--A INPUT -s <%= host %> -i <%= ethpub %> -p <%= openvpn_prot %> -m <%= openvpn_prot %> --dport <%= openvpn_port %> -j ACCEPT
+<% @openvpn_host.each do |host| -%>
+-A INPUT -s <%= host %> -i <%= @ethpub %> -p <%= @openvpn_prot %> -m <%= @openvpn_prot %> --dport <%= @openvpn_port %> -j ACCEPT
 <% end -%>
 <% end -%>
 # Stateful firewall (beware of filling up the connection tracking table)
--A INPUT <%= mstate %> RELATED,ESTABLISHED -j ACCEPT
-<% if icmp_limit_enable -%>
+-A INPUT <%= @mstate %> RELATED,ESTABLISHED -j ACCEPT
+<% if @icmp_limit_enable -%>
 # Limit ICMP requests globally (prevent DoS)
 -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
--A INPUT -p icmp -m limit --limit <%= icmp_limit %> -j ACCEPT
+-A INPUT -p icmp -m limit --limit <%= @icmp_limit %> -j ACCEPT
 -A INPUT -p icmp -j DROP
 <% else -%>
 # Accept all ICMP
@@ -110,11 +110,11 @@
 -A INPUT -p udp -m udp --sport 67 --dport 68 -j DROP
 # Drop multicast messages
 -A INPUT -p igmp -d 224.0.0.1 -j DROP
-<% if vrrp.empty? -%>
+<% if @vrrp.empty? -%>
 # Drop broadcard VRRP messages
 -A INPUT -p vrrp -j DROP
 <% end -%>
-<% if knock -%>
+<% if @knock -%>
 # Port knocking
 -A INPUT -j KNOCK-MAIN
 <% end -%>
@@ -122,60 +122,60 @@
 -A INPUT -j LOG --log-level 7
 # Default to sending "connection refused" messages instead of silently dropping
 -A INPUT -j CLOSED
-<% if icmp_limit_enable -%>
+<% if @icmp_limit_enable -%>
 # Limit ICMP replies globally (prevent DoS)
--A OUTPUT -p icmp -m limit --limit <%= icmp_limit %> -j ACCEPT
+-A OUTPUT -p icmp -m limit --limit <%= @icmp_limit %> -j ACCEPT
 -A OUTPUT -p icmp -j DROP
 <% end -%>
 # Custom table to send back "connection refused" messages
 -A CLOSED -j REJECT --reject-with icmp-port-unreachable
-<% if knock -%>
+<% if @knock -%>
 # Port knocking magic
 -A KNOCK-INPUT -m recent --set --name KNOCK1 --rsource -j CLOSED
-<% knocktcpopen.each do |port| -%>
--A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT
+<% @knocktcpopen.each do |port| -%>
+-A KNOCK-MAIN -p tcp <%= @mstate %> NEW -m tcp --dport <%= port %> -m recent --rcheck --name KNOCK1 --rsource -j ACCEPT
 <% end -%>
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knocktwo %> <%= mstate %> NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED
--A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT
--A KNOCK-MAIN -p tcp -m tcp ! --dport <%= knockone %> <%= mstate %> NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED
--A KNOCK-MAIN -p tcp <%= mstate %> NEW -m tcp --dport <%= knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= @knocktwo %> <%= @mstate %> NEW -m recent --remove --name KNOCK1 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp <%= @mstate %> NEW -m tcp --dport <%= @knocktwo %> -m recent --rcheck --name KNOCK0 --rsource -j KNOCK-INPUT
+-A KNOCK-MAIN -p tcp -m tcp ! --dport <%= @knockone %> <%= @mstate %> NEW -m recent --remove --name KNOCK0 --rsource -j CLOSED
+-A KNOCK-MAIN -p tcp <%= @mstate %> NEW -m tcp --dport <%= @knockone %> -m recent --set --name KNOCK0 --rsource -j CLOSED
 <% end -%>
-<% chains_filter.sort_by {|key, value| key}.each do |key,value| -%>
+<% @chains_filter.sort_by {|key, value| key}.each do |key,value| -%>
 <% value.each do |line| -%>
 -A <%= key %> <%= line %>
 <% end -%>
 <% end -%>
 COMMIT
-<% if masq or !raw_rules_nat.empty? or !redirect_tcp_port.empty? or !dnat_tcp_port.empty? -%>
+<% if @masq or !@raw_rules_nat.empty? or !@redirect_tcp_port.empty? or !@dnat_tcp_port.empty? -%>
 
 # NAT table, used for masquerading and DNAT
 *nat
 :PREROUTING ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
-<% raw_rules_nat.each do |line| -%>
+<% @raw_rules_nat.each do |line| -%>
 <%= line %>
 <% end -%>
-<% if !redirect_tcp_port.empty? -%>
-<% redirect_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
+<% if !@redirect_tcp_port.empty? -%>
+<% @redirect_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
 # Redirect TCP traffic arriving on port <%= key %> to local port <%= value %>
 -A PREROUTING -p tcp -m tcp --dport <%= key %> -j REDIRECT --to-ports <%= value %>
 <% end -%>
 <% end -%>
-<% if !dnat_tcp_port.empty? -%>
-<% dnat_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
+<% if !@dnat_tcp_port.empty? -%>
+<% @dnat_tcp_port.sort_by {|key, value| key}.each do |key,value| -%>
 # Redirect TCP traffic arriving on port <%= key %> to remote <%= value %>
 -A PREROUTING -p tcp -m tcp --dport <%= key %> -j DNAT --to-destination <%= value %>
 <% end -%>
 <% end -%>
-<% if masq -%>
--A POSTROUTING -s 10.0.0.0/8 -o <%= ethpub -%> -j MASQUERADE
--A POSTROUTING -s 172.16.0.0/12 -o <%= ethpub -%> -j MASQUERADE
--A POSTROUTING -s 192.168.0.0/16 -o <%= ethpub -%> -j MASQUERADE
+<% if @masq -%>
+-A POSTROUTING -s 10.0.0.0/8 -o <%= @ethpub -%> -j MASQUERADE
+-A POSTROUTING -s 172.16.0.0/12 -o <%= @ethpub -%> -j MASQUERADE
+-A POSTROUTING -s 192.168.0.0/16 -o <%= @ethpub -%> -j MASQUERADE
 <% end -%>
 COMMIT
 <% end -%>
-<% if not fwmark.empty? -%>
+<% if not @fwmark.empty? -%>
 
 # MANGLE table, used for marking packets
 *mangle
@@ -184,7 +184,7 @@ COMMIT
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
-<% fwmark.sort_by {|key, value| key}.each do |key,value| -%>
+<% @fwmark.sort_by {|key, value| key}.each do |key,value| -%>
 <% value.each do |markrule| -%>
 -A PREROUTING <%= markrule %> -j MARK --set-mark <%= key %>
 <% end -%>

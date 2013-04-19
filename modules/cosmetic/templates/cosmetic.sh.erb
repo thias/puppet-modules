@@ -5,10 +5,10 @@ if [ -n "$BASH_VERSION" -o -n "$KSH_VERSION" -o -n "$ZSH_VERSION" ]; then
 fi
 
 # Add history timestamp and ignore duplicate lines
-export HISTTIMEFORMAT="<%= histtimeformat %>"
+export HISTTIMEFORMAT="<%= @histtimeformat %>"
 export HISTCONTROL=ignoredups
 
-<% if ps1 -%>
-export PS1="<%= ps1 %>"
+<% if @ps1 -%>
+export PS1="<%= @ps1 %>"
 
 <% end -%>

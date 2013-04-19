@@ -14,7 +14,7 @@ logfile = /var/log/nagiosgraph/nagiosgraph.log
 cgilogfile = /var/log/nagiosgraph/nagiosgraph-cgi.log
 
 # Location of nagios performance data log file.
-perflog = <%= perflog %>
+perflog = <%= @perflog %>
 
 # Directory in which to store RRD files
 rrddir = /var/spool/nagiosgraph/rrd
@@ -155,7 +155,7 @@ plotas = LINE2
 plotasLINE1 = load5,data;load15,data
 plotasLINE2 = 
 plotasLINE3 =
-plotasAREA = <%= plotasarea %>
+plotasAREA = <%= @plotasarea %>
 plotasTICK = 
 
 # Data sources that should be stacked.
@@ -186,13 +186,13 @@ stack = system,data;user,data;nice,data
 lineformat = warn=LINE1,D0D050;crit=LINE1,D05050
 
 # Graphs to show in host-service page (day, week, month, quarter, year)
-timeall = <%= timeall %>
+timeall = <%= @timeall %>
 # Graphs to show in host page
-timehost = <%= timehost %>
+timehost = <%= @timehost %>
 # Graphs to show in service page
-timeservice = <%= timeservice %>
+timeservice = <%= @timeservice %>
 # Graphs to show in group page
-timegroup = <%= timegroup %>
+timegroup = <%= @timegroup %>
 
 # Time periods that should default to expanded state.  If not specified here,
 # the period will default to a collapsed state.

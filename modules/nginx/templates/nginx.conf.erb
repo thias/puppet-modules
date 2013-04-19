@@ -1,10 +1,10 @@
 # Puppet generated nginx configuration file
 # You want to read http://wiki.nginx.org/NginxModules
 
-user <%= user %>;
-worker_processes <%= worker_processes %>;
-<% if worker_rlimit_nofile -%>
-worker_rlimit_nofile <%= worker_rlimit_nofile %>;
+user <%= @user %>;
+worker_processes <%= @worker_processes %>;
+<% if @worker_rlimit_nofile -%>
+worker_rlimit_nofile <%= @worker_rlimit_nofile %>;
 <% end -%>
 error_log /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
@@ -12,70 +12,70 @@ pid /var/run/nginx.pid;
 events {
 
     # max_clients = worker_processes * worker_connections
-    worker_connections <%= worker_connections %>;
+    worker_connections <%= @worker_connections %>;
 
 }
-<% if env -%>
+<% if @env -%>
 
 # Global environment variables
-<% env.each do |envline| %>env <%= envline %>;<% end %>
+<% @env.each do |envline| %>env <%= envline %>;<% end %>
 <% end -%>
 
 http {
 
     include /etc/nginx/mime.types;
-    default_type <%= default_type %>;
+    default_type <%= @default_type %>;
 
-    sendfile <%= sendfile %>;
-    tcp_nopush <%= tcp_nopush %>;
+    sendfile <%= @sendfile %>;
+    tcp_nopush <%= @tcp_nopush %>;
 
-    keepalive_timeout <%= keepalive_timeout %>;
-    keepalive_requests <%= keepalive_requests %>;
-    send_timeout <%= send_timeout %>;
+    keepalive_timeout <%= @keepalive_timeout %>;
+    keepalive_requests <%= @keepalive_requests %>;
+    send_timeout <%= @send_timeout %>;
 
     log_format main '$remote_addr - $remote_user [$time_local] "$request" '
                     '$status $body_bytes_sent "$http_referer" '
                     '"$http_user_agent" "$http_x_forwarded_for"';
 
     # Logging of trivial open() errors resulting in 404 to error log
-    log_not_found <%= log_not_found %>;
+    log_not_found <%= @log_not_found %>;
 
     # Send back the version in the error pages?
-    server_tokens <%= server_tokens %>;
+    server_tokens <%= @server_tokens %>;
 
     # Files to serve when directories are requested
-    index <%= index %>;
+    index <%= @index %>;
 
     # Automatic directory indexing
-    autoindex <%= autoindex %>;
+    autoindex <%= @autoindex %>;
 
     # Defaults to on, but it's a problem for trailing slash redirections
-    server_name_in_redirect <%= server_name_in_redirect %>;
+    server_name_in_redirect <%= @server_name_in_redirect %>;
 
     # Increase the maximum length of a virtual host entry
-    server_names_hash_bucket_size <%= server_names_hash_bucket_size %>;
+    server_names_hash_bucket_size <%= @server_names_hash_bucket_size %>;
 
     # Compression
-    gzip <%= gzip %>;
-<% if gzip == "on" -%>
+    gzip <%= @gzip %>;
+<% if @gzip == "on" -%>
     gzip_disable "msie6";
-    gzip_min_length <%= gzip_min_length %>;
-    gzip_types <%= gzip_types %>;
+    gzip_min_length <%= @gzip_min_length %>;
+    gzip_types <%= @gzip_types %>;
 <% end -%>
-<% if geoip_country -%>
+<% if @geoip_country -%>
 
     # GeoIP country database
-    geoip_country <%= geoip_country %>;
+    geoip_country <%= @geoip_country %>;
 <% end -%>
-<% if geoip_city -%>
+<% if @geoip_city -%>
 
     # GeoIP city database
-    geoip_city <%= geoip_city %>;
+    geoip_city <%= @geoip_city %>;
 <% end -%>
-<% if !upstream.empty? -%>
+<% if !@upstream.empty? -%>
 
     # Upstreams
-<% upstream.sort_by {|key,value| key}.each do |key,value| -%>
+<% @upstream.sort_by {|key,value| key}.each do |key,value| -%>
 <% key.each do |upstream| -%>
     upstream <%= upstream %> {
 <% value.each do |line| -%>
@@ -86,21 +86,21 @@ http {
 <% end -%>
 <% end -%>
 <% if @fastcgi_buffers -%>
-fastcgi_buffers <%= fastcgi_buffers %>;
+fastcgi_buffers <%= @fastcgi_buffers %>;
 <% end -%>
 <% if @fastcgi_buffer_size -%>
-fastcgi_buffer_size <%= fastcgi_buffer_size %>;
+fastcgi_buffer_size <%= @fastcgi_buffer_size %>;
 <% end -%>
 <% if @proxy_buffers -%>
-proxy_buffers <%= proxy_buffers %>;
+proxy_buffers <%= @proxy_buffers %>;
 <% end -%>
 <% if @proxy_buffer_size -%>
-proxy_buffer_size <%= proxy_buffer_size %>;
+proxy_buffer_size <%= @proxy_buffer_size %>;
 <% end -%>
-<% if !http_raw_lines.empty? -%>
+<% if !@http_raw_lines.empty? -%>
 
     # Other
-<% http_raw_lines.empty.each do |line| -%>
+<% @http_raw_lines.empty.each do |line| -%>
     <%= line %>;
 <% end -%>
 <% end -%>

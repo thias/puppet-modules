@@ -40,8 +40,8 @@ start() {
         echo
         exit 1
     fi
-<% if thin -%>
-    /usr/bin/thin -u <%= user %> -g <%= user %> -e <%= thin_environment %> -c /opt/graylog2-web -d -P ${pidfile} start
+<% if @thin -%>
+    /usr/bin/thin -u <%= @user %> -g <%= @user %> -e <%= @thin_environment %> -c /opt/graylog2-web -d -P ${pidfile} start
 <% else -%>
     echo -n "unsupported web server type..."
     failure
