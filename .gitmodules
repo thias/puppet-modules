@@ -1,0 +1,51 @@
+[submodule "modules/npd6"]
+	path = modules/npd6
+	url = ../puppet-npd6
+[submodule "modules/apache_httpd"]
+	path = modules/apache_httpd
+	url = ../puppet-apache_httpd
+[submodule "modules/bind"]
+	path = modules/bind
+	url = ../puppet-bind
+[submodule "modules/csync2"]
+	path = modules/csync2
+	url = ../puppet-csync2
+[submodule "modules/dhcpd"]
+	path = modules/dhcpd
+	url = ../puppet-dhcpd
+[submodule "modules/elasticsearch"]
+	path = modules/elasticsearch
+	url = ../puppet-elasticsearch
+[submodule "modules/git"]
+	path = modules/git
+	url = ../puppet-git
+[submodule "modules/keepalived"]
+	path = modules/keepalived
+	url = ../puppet-keepalived
+[submodule "modules/lsyncd"]
+	path = modules/lsyncd
+	url = ../puppet-lsyncd
+[submodule "modules/memcached"]
+	path = modules/memcached
+	url = ../puppet-memcached
+[submodule "modules/moxi"]
+	path = modules/moxi
+	url = ../puppet-moxi
+[submodule "modules/php"]
+	path = modules/php
+	url = ../puppet-php
+[submodule "modules/puppet"]
+	path = modules/puppet
+	url = ../puppet-puppet
+[submodule "modules/sysctl"]
+	path = modules/sysctl
+	url = ../puppet-sysctl
+[submodule "modules/tuned"]
+	path = modules/tuned
+	url = ../puppet-tuned
+[submodule "modules/xinetd"]
+	path = modules/xinetd
+	url = ../puppet-xinetd
+[submodule "modules/couchbase"]
+	path = modules/couchbase
+	url = ../puppet-couchbase

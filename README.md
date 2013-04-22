@@ -15,6 +15,9 @@ all specificties outside of modules, yet providing means to inteface them
 cleanly. A good example would be the ISC BIND DNS server, for which zone files
 installed with the provided definition automatically reload named when changed.
 
+Most of these modules can be downloaded from the Puppet Forge here :
+http://forge.puppetlabs.com/thias
+
 Support
 -------
 
@@ -26,5 +29,5 @@ http://dl.marmotte.net/puppet/doc/
 
 The latest source for these modules can be found at https://github.com/thias
 
-Copyright (c) 2011 Matthias Saou - http://matthias.saou.eu/
+Copyright (c) 2011-2013 Matthias Saou - http://matthias.saou.eu/
 
