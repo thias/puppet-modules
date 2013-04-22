@@ -49,3 +49,6 @@
 [submodule "modules/couchbase"]
 	path = modules/couchbase
 	url = ../puppet-couchbase
+[submodule "modules/ovh"]
+	path = modules/ovh
+	url = ../puppet-ovh

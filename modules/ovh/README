@@ -1,8 +1,0 @@
-ovh
-
-This module manages configuration specific to OVH. See http://www.ovh.com/ for
-more details.
-
-* `ovh::oco::check` : Manage OvhCheckOut checks
-* `ovh::oco::sshkey` : Manage the OVH support team SSH key's presence
-
