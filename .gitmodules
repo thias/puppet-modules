@@ -52,3 +52,6 @@
 [submodule "modules/ovh"]
 	path = modules/ovh
 	url = ../puppet-ovh
+[submodule "modules/quagga"]
+	path = modules/quagga
+	url = ../puppet-quagga
