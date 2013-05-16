@@ -55,3 +55,6 @@
 [submodule "modules/quagga"]
 	path = modules/quagga
 	url = ../puppet-quagga
+[submodule "modules/resolvconf"]
+	path = modules/resolvconf
+	url = ../puppet-resolvconf
