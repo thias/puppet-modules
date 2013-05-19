@@ -70,3 +70,9 @@
 [submodule "modules/libvirt"]
 	path = modules/libvirt
 	url = git@github.com:thias/puppet-libvirt
+[submodule "modules/openvpn"]
+	path = modules/openvpn
+	url = git@github.com:thias/puppet-openvpn
+[submodule "modules/nagios"]
+	path = modules/nagios
+	url = git@github.com:thias/puppet-nagios
