@@ -58,3 +58,15 @@
 [submodule "modules/resolvconf"]
 	path = modules/resolvconf
 	url = ../puppet-resolvconf
+[submodule "modules/tlsfiles"]
+	path = modules/tlsfiles
+	url = git@github.com:thias/puppet-tlsfiles
+[submodule "modules/nginx"]
+	path = modules/nginx
+	url = git@github.com:thias/puppet-nginx
+[submodule "modules/gdnsd"]
+	path = modules/gdnsd
+	url = git@github.com:thias/puppet-gdnsd
+[submodule "modules/libvirt"]
+	path = modules/libvirt
+	url = git@github.com:thias/puppet-libvirt
