@@ -1,7 +1,0 @@
-# nagios process writing
-avc:  denied  { create } for  pid=2585 comm="nagios" name="x" scontext=unconfined_u:system_r:nagios_t:s0 tcontext=unconfined_u:object_r:var_spool_t:s0 tclass=dir
-avc:  denied  { create read write open getattr lock } for  pid=4705 comm="nagios" name="disk___%2F.rrd" scontext=unconfined_u:system_r:nagios_t:s0 tcontext=unconfined_u:object_r:var_spool_t:s0 tclass=file
-# apache process reading
-avc:  denied  { read } for  pid=2511 comm="showgraph.cgi" name="rrd" dev=vda1 ino=136243 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:var_spool_t:s0 tclass=dir
-avc:  denied  { getattr read open } for  pid=5832 comm="show.cgi" path="/var/spool/nagiosgraph/rrd/x/swap___swap.rrd" dev=vda1 ino=136432 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:var_spool_t:s0 tclass=file
-avc:  denied  { setattr } for  pid=9053 comm="showgraph.cgi" name="fontconfig" dev=vda1 ino=134715 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:fonts_cache_t:s0 tclass=dir
