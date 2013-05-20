@@ -76,3 +76,12 @@
 [submodule "modules/nagios"]
 	path = modules/nagios
 	url = git@github.com:thias/puppet-nagios
+[submodule "modules/vsftpd"]
+	path = modules/vsftpd
+	url = git@github.com:thias/puppet-vsftpd
+[submodule "modules/mongodb"]
+	path = modules/mongodb
+	url = git@github.com:thias/puppet-mongodb
+[submodule "modules/ipset"]
+	path = modules/ipset
+	url = git@github.com:thias/puppet-ipset
