@@ -1,6 +1,0 @@
-vsftpd
-
-This module enables and configures a vsftpd FTP server instance.
-
-* `vsftpd` : Enable and configure the vsftpd FTP server
-
