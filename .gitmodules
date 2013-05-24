@@ -97,3 +97,6 @@
 [submodule "modules/geoip"]
 	path = modules/geoip
 	url = ../puppet-geoip
+[submodule "modules/mailman"]
+	path = modules/mailman
+	url = ../puppet-mailman
