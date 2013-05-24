@@ -100,3 +100,6 @@
 [submodule "modules/mailman"]
 	path = modules/mailman
 	url = ../puppet-mailman
+[submodule "modules/samba"]
+	path = modules/samba
+	url = ../puppet-samba
