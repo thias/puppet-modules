@@ -60,28 +60,28 @@
 	url = ../puppet-resolvconf
 [submodule "modules/tlsfiles"]
 	path = modules/tlsfiles
-	url = git@github.com:thias/puppet-tlsfiles
+	url = ../puppet-tlsfiles
 [submodule "modules/nginx"]
 	path = modules/nginx
-	url = git@github.com:thias/puppet-nginx
+	url = ../puppet-nginx
 [submodule "modules/gdnsd"]
 	path = modules/gdnsd
-	url = git@github.com:thias/puppet-gdnsd
+	url = ../puppet-gdnsd
 [submodule "modules/libvirt"]
 	path = modules/libvirt
-	url = git@github.com:thias/puppet-libvirt
+	url = ../puppet-libvirt
 [submodule "modules/openvpn"]
 	path = modules/openvpn
-	url = git@github.com:thias/puppet-openvpn
+	url = ../puppet-openvpn
 [submodule "modules/nagios"]
 	path = modules/nagios
-	url = git@github.com:thias/puppet-nagios
+	url = ../puppet-nagios
 [submodule "modules/vsftpd"]
 	path = modules/vsftpd
-	url = git@github.com:thias/puppet-vsftpd
+	url = ../puppet-vsftpd
 [submodule "modules/mongodb"]
 	path = modules/mongodb
-	url = git@github.com:thias/puppet-mongodb
+	url = ../puppet-mongodb
 [submodule "modules/ipset"]
 	path = modules/ipset
-	url = git@github.com:thias/puppet-ipset
+	url = ../puppet-ipset
