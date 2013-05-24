@@ -91,3 +91,6 @@
 [submodule "modules/selinux"]
 	path = modules/selinux
 	url = ../puppet-selinux
+[submodule "modules/squid3"]
+	path = modules/squid3
+	url = ../puppet-squid3
