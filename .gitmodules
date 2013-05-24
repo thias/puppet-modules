@@ -94,3 +94,6 @@
 [submodule "modules/squid3"]
 	path = modules/squid3
 	url = ../puppet-squid3
+[submodule "modules/geoip"]
+	path = modules/geoip
+	url = ../puppet-geoip
