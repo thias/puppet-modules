@@ -85,3 +85,6 @@
 [submodule "modules/ipset"]
 	path = modules/ipset
 	url = ../puppet-ipset
+[submodule "modules/dovecot"]
+	path = modules/dovecot
+	url = ../puppet-dovecot
