@@ -88,3 +88,6 @@
 [submodule "modules/dovecot"]
 	path = modules/dovecot
 	url = ../puppet-dovecot
+[submodule "modules/selinux"]
+	path = modules/selinux
+	url = ../puppet-selinux
