@@ -103,3 +103,6 @@
 [submodule "modules/samba"]
 	path = modules/samba
 	url = ../puppet-samba
+[submodule "modules/glusterfs"]
+	path = modules/glusterfs
+	url = ../puppet-glusterfs
