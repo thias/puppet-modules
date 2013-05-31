@@ -106,3 +106,6 @@
 [submodule "modules/glusterfs"]
 	path = modules/glusterfs
 	url = ../puppet-glusterfs
+[submodule "modules/ntp"]
+	path = modules/ntp
+	url = ../puppet-ntp
