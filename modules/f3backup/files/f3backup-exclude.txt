@@ -1,7 +1,7 @@
 **/lost+found
 /backup/**
 /cgroup/**
-/dev/shm/**
+/dev/**
 /mnt/**
 /opt/fedora-ds/admin-serv/logs/cgisock.*
 /opt/fedora-ds/slapd-*/logs/*
