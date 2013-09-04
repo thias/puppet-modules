@@ -112,3 +112,6 @@
 [submodule "modules/postfix"]
 	path = modules/postfix
 	url = ../puppet-postfix
+[submodule "modules/samba4"]
+	path = modules/samba4
+	url = ../puppet-samba4
