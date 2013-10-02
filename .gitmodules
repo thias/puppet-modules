@@ -115,3 +115,9 @@
 [submodule "modules/samba4"]
 	path = modules/samba4
 	url = ../puppet-samba4
+[submodule "modules/cosmetic"]
+	path = modules/cosmetic
+	url = ../puppet-cosmetic
+[submodule "modules/ssh"]
+	path = modules/ssh
+	url = ../puppet-ssh
