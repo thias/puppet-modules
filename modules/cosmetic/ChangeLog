@@ -1,5 +1,0 @@
-2012-07-18 - 0.1.4
-* Fix the profile file's mode, it doesn't need to be +x.
-* Add a useful example for setting $ps1 red.
-* Clean up the module.
-

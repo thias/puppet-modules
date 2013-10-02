@@ -1,8 +1,0 @@
-= Summary
-
-Summary::  Cosmetic changes, such as issue/motd messages
-Requires:: n/a
-Author::   Matthias Saou <matthias@saou.eu>
-License::  Apache License 2.0
-Tested::   puppet-2.6.8
-
