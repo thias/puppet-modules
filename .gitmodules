@@ -121,3 +121,6 @@
 [submodule "modules/ssh"]
 	path = modules/ssh
 	url = ../puppet-ssh
+[submodule "modules/root"]
+	path = modules/root
+	url = ../puppet-root
