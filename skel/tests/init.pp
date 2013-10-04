@@ -1,1 +1,1 @@
-include skel
+include '::skel'
