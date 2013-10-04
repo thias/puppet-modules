@@ -18,6 +18,9 @@ installed with the provided definition automatically reload named when changed.
 Most of these modules can be downloaded from the Puppet Forge here :
 http://forge.puppetlabs.com/thias
 
+The stable modules are under 'modules' and are all git sub-modules of other
+git repositories. The modules which are still work in progress are under 'modules-wip'. Pull requests are welcome!
+
 Support
 -------
 
