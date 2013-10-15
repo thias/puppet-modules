@@ -1,8 +1,0 @@
-name 'thias-rhel'
-version '0.0.1'
-source 'git://github.com/thias/puppet-modules/modules/rhel'
-author 'Matthias Saou'
-license 'Apache 2.0'
-summary 'Red Hat Enterprise Linux module'
-description "Red Hat Enterprise Linux specific changes and tweaks."
-project_page 'http://glee.thias.es/puppet'

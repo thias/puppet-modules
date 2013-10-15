@@ -1,6 +1,0 @@
-rhel
-
-Red Hat Enterprise Linux specific changes and tweaks.
-
-* `rhel::yum-cron` : Enable and manage a cron job for yum update runs
-

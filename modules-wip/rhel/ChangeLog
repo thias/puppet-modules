@@ -1,5 +1,0 @@
-* Add rhel::net::ifalias to manage network device aliases.
-
-2012-07-16 - 0.0.1
-* Initial module release.
-
