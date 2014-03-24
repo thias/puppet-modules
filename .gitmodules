@@ -133,3 +133,6 @@
 [submodule "modules/graylog2"]
 	path = modules/graylog2
 	url = git@github.com:thias/puppet-graylog2
+[submodule "modules/fooacl"]
+	path = modules/fooacl
+	url = ../puppet-fooacl
