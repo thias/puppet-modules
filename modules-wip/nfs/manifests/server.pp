@@ -32,24 +32,28 @@ class nfs::server (
     $secure_nfs          = 'no',
     $rpcgssdargs         = '',
     $rpcsvcgssdargs      = '',
-    $idmapd_domain       = $::domain
-) {
+    $idmapd_domain       = $::domain,
+    # Params
+    $service_nfs         = $::nfs::params::service_nfs,
+    $service_lockd       = $::nfs::params::service_lockd,
+    $service_idmapd      = $::nfs::params::service_idmapd,
+) inherits ::nfs::params {
 
     package { 'nfs-utils': ensure => installed }
 
     file { '/etc/exports':
         source  => $exports_source,
         content => $exports_content,
-        notify  => Service['nfs'],
+        notify  => Service[$service_nfs],
     }
 
-    include nfs::rpcbind
-    service { 'nfs':
+    include '::nfs::rpcbind'
+    service { $service_nfs:
         require   => Service['rpcbind'],
         subscribe => File['/etc/sysconfig/nfs'],
         enable    => true,
         ensure    => running,
-        restart   => '/sbin/service nfs reload',
+        restart   => "service ${service_nfs} reload",
         # Returns zero even when stopped :-(
         #hasstatus => true,
         status    => '/sbin/pidof nfsd',
@@ -63,7 +67,7 @@ class nfs::server (
 
     if $mountd_nfs_v2 == 'no' and $mountd_nfs_v3 == 'no' and $nfsv4 == true {
         # Not needed for NFSv4, stop/disable
-        service { 'nfslock':
+        service { $service_lockd:
             require   => Package['nfs-utils'],
             enable    => false,
             ensure    => stopped,
@@ -75,7 +79,7 @@ class nfs::server (
 
     # Mandatory for NFSv4, required for NFSv4 only
     if $nfsv4 == true {
-        service { 'rpcidmapd':
+        service { $service_idmapd:
             require   => Package['nfs-utils'],
             subscribe => File['/etc/sysconfig/nfs'],
             enable    => true,
@@ -87,7 +91,7 @@ class nfs::server (
             content => template('nfs/idmapd.conf.erb'),
         }
     } else {
-        service { 'rpcidmapd':
+        service { $service_idmapd:
             require   => Package['nfs-utils'],
             enable    => false,
             ensure    => stopped,
@@ -98,7 +102,7 @@ class nfs::server (
     # NFSv2/v3 specific
     if $mountd_nfs_v2 == 'yes' or $mountd_nfs_v3 == 'yes' {
         # RHEL4/5 vs. Fedora/RHEL6+
-        service { 'nfslock':
+        service { $service_lockd:
             require   => Package['nfs-utils'],
             subscribe => File['/etc/sysconfig/nfs'],
             enable    => true,
