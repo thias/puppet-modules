@@ -1,0 +1,8 @@
+name 'thias-yubikey'
+version '0.1.0'
+source 'git://github.com/thias/puppet-yubikey'
+author 'Matthias Saou'
+license 'Apache 2.0'
+summary 'YubiKey module'
+description "Install, enable and configure YubiKey related services."
+project_page 'https://github.com/thias/puppet-yubikey'

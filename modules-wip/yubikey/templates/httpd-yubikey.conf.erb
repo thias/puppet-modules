@@ -1,0 +1,21 @@
+# We don't use .htaccess, since we can easily centralize here.
+
+# KSM
+<Directory <%= wsapi_root %>>
+  # FileInfo for rewrite rules, Options for php_value
+  #AllowOverride FileInfo Options
+  
+  RewriteEngine on
+  RewriteRule ^([^/\.\?]+)(\?.*)?$ $1.php$2 [L]
+  php_value include_path ".:/etc/ykksm:/usr/share/ykksm"
+
+  Options +FollowSymlinks
+</Directory>
+
+# Val
+<Directory <%= wsapi_root %>/2.0>
+  RewriteEngine on
+  RewriteRule ^([^/\.\?]+)(\?.*)?$ $1.php$2 [L]
+  php_value include_path ".:/etc/ykval:/usr/share/ykval"
+</Directory>
+
