@@ -136,3 +136,6 @@
 [submodule "modules/fooacl"]
 	path = modules/fooacl
 	url = ../puppet-fooacl
+[submodule "modules/rabbitmq"]
+	path = modules/rabbitmq
+	url = ../puppet-rabbitmq
