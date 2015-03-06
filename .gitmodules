@@ -139,3 +139,6 @@
 [submodule "modules/rabbitmq"]
 	path = modules/rabbitmq
 	url = ../puppet-rabbitmq
+[submodule "modules/elrsyslog"]
+	path = modules/elrsyslog
+	url = ../puppet-elrsyslog
