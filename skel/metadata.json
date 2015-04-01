@@ -36,7 +36,6 @@
     "version_requirement": ">=2.7.20 <4.0.0"
     }
   ],
-  "description": "Skeleton module.",
   "dependencies": [
     {
     "name": "puppetlabs/stdlib",
