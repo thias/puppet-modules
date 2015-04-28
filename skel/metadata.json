@@ -4,8 +4,8 @@
   "author": "Matthias Saou",
   "license": "Apache-2.0",
   "summary": "Skeleton module",
-  "source": "https://github.com/thias/puppet-skel",
-  "project_page": "https://forge.puppetlabs.com/thias/skel",
+  "source": "git://github.com/thias/puppet-skel",
+  "project_page": "https://github.com/thias/puppet-skel",
   "issues_url": "https://github.com/thias/puppet-skel/issues",
   "tags": ["skel", "foo"],
   "operatingsystem_support": [
@@ -33,7 +33,7 @@
     },
     {
     "name": "puppet",
-    "version_requirement": ">=2.7.20 <4.0.0"
+    "version_requirement": ">=2.7.20 <4.1.0"
     }
   ],
   "dependencies": [
